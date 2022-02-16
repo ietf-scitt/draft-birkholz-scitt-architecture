@@ -1,7 +1,7 @@
 ---
 title: An Architecture for Trustworthy Supply Chain Ledger Services
 abbrev: SCITT Architecture
-docname: draft-birkholz-scitt-receipts-latest
+docname: draft-birkholz-scitt-architecture-latest
 stand_alone: true
 ipr: trust200902
 area: Security
