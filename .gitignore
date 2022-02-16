@@ -1,0 +1,16 @@
+*~
+/*-[0-9][0-9].xml
+archive.json
+draft-birkholz-scitt-architecture.xml
+*.html
+lib
+*.pdf
+*.redxml
+.refcache
+report.xml
+*.swp
+.tags
+.targets.mk
+*.txt
+*.upload
+venv/
