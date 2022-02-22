@@ -41,11 +41,17 @@ A transparent and authentic ledger service in support of a supply chain's integr
 
 # Introduction
 
-Introduction
+The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one. This memo specifies such a system called a Transparency Ledger (TL). Transparency in the context supply chains always a well-scoped quality for each instance of a TL. Transparency does not imply everybody, unconditionally. A TL always limits the entities with the authority to include claims into the TL system. On the other hand. Analogously, a TL typically limits the entities to which transparency is granted. Nevertheless, it is of great import to provide global interoperability for a multitude of instances as the composition and configuration of supply chains is ever changing and always in flux.
+
+A TL provides visibility into claims made by supply chain entities and their sub-system. These claims Digital Supply Chain Artifacts (DSCA). More importantly, a TL vouches for specific and well-defined metadata about these claims, including "when was the DSCA recorded by the TL", "who issued the DSCA to the TL", or "what type of DSCA are stored in the TL". In fact, a DSCA can be opaque to the TL, if so desired. The metadata that must be transparent and that has to warrant trust are about how DSCAs are handled by a component of the TL system, its inherent trustworthiness characteristics, and a record of the timeliness and accuracy of its operations.
 
 ## Requirements Notation
 
 {::boilerplate bcp14-tagged}
+
+# Use Cases
+
+
 
 {: #mybody}
 # Digital Artifacts in Supply Chains
@@ -65,7 +71,7 @@ Security Considerations
 See Body {{mybody}}.
 
 --- back
-    
+
 # Attic
 
-Not ready to throw these texts into the trash bin yet.    
+Not ready to throw these texts into the trash bin yet.
