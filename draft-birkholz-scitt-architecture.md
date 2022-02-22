@@ -67,8 +67,8 @@ This memo specifies the architecture for Transparency Service (TS) to systematic
 
 Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementary security guarantees:
 
-1.) artifacts must be authenticated by their issuers; and
-2.) an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
+1. artifacts must be authenticated by their issuers; and
+2. an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
 
 Transparency in the context supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent everybody, unconditionally.
@@ -83,6 +83,19 @@ In fact, a itself DSCA can be opaque to the TS, if so desired.
 The metadata that must always be transparent and that have to warrant trust are about how released DSCAs are processed by the distinguishable components of the TS, their inherent trustworthiness characteristics, and a record of the timeliness and accuracy of their operations.
 
 These trustworthiness assertions are essential for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+
+The TS specified in this architecture cater two types of audiences: 
+
+1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
+2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
+
+DSCA Issuers rely on being discoverable and represented as the responsible parties for released DSCAs by the TS in a believable manner.
+Analogously, DSCA Consumers rely on verifiable trustworthiness assertions associated with DSCA and their processing in a believable manner.
+If trust can be put into the operations that record DSCA in a secure, append-only ledger in an online operation, the same trust can be put into a corresponding receipt about that operation issued by the TS in online or offline operations.
+
+The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
+The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later).
+The core components are based on the Concise Signing and Encryption standard specified in {{COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
 
 ## Requirements Notation
 
