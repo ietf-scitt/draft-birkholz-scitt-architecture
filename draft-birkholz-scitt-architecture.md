@@ -62,9 +62,35 @@ This draft describes the architecture, detailing a signed **envelope format** fo
 
 The format and verification process for ledger-based transparency receipts are described in  [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html).
 
+The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
+This memo specifies the architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
+
+Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementary security guarantees:
+
+1.) artifacts must be authenticated by their issuers; and
+2.) an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
+
+Transparency in the context supply chains is always a well-scoped quality for each instance of a TS.
+Transparency does not imply being transparent everybody, unconditionally.
+A TS always limits the entities that have the authority to release new claims to the TS.
+Analogously, a TS typically limits the entities to which transparency into released claims is granted.
+Nevertheless, it is of great import to provide global interoperability for a multitude of TS instances as the composition and configuration of supply chain entities and their system components is ever changing and always in flux.
+
+A TS provides visibility into claims produced by supply chain entities and their sub-systems.
+These claims are called Digital Supply Chain Artifacts (DSCA).
+More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TL".
+In fact, a itself DSCA can be opaque to the TS, if so desired.
+The metadata that must always be transparent and that have to warrant trust are about how released DSCAs are processed by the distinguishable components of the TS, their inherent trustworthiness characteristics, and a record of the timeliness and accuracy of their operations.
+
+These trustworthiness assertions are essential for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+
 ## Requirements Notation
 
 {::boilerplate bcp14-tagged}
+
+# Use Cases
+
+
 
 {: #mybody}
 
@@ -443,6 +469,9 @@ See Body {{mybody}}.
 # Attic
 
 Not ready to throw these texts into the trash bin yet.
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> first paragaphs for next meeting, more to come before then
