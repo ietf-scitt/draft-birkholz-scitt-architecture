@@ -53,7 +53,7 @@ The resulting architecture is intended to enable multi-layer interoperability to
 # Introduction
 
 The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
-This memo specifies the architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
+This memo specifies an architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
 
 Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementary security guarantees:
 
