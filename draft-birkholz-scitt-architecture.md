@@ -51,17 +51,6 @@ The resulting architecture is intended to enable multi-layer interoperability to
 
 # Introduction
 
-We describe an architecture to systematically protect supply chains for digital artifacts.
-
-This involves two complementary security guarantees: artifacts must be authenticated by their issuers; and their release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
-
-Holding issuers accountable for the artifacts they release and (more generally)
-principals accountable for the claims they make about such artifacts.
-
-This draft describes the architecture, detailing a signed **envelope format** for issuing claims about artifacts and a protocol for attaching counter-signed receipts to these envelopes as evidence of registration in a transparency ledger.
-
-The format and verification process for ledger-based transparency receipts are described in  [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html).
-
 The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
 This memo specifies the architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
 
@@ -70,32 +59,33 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 1. artifacts must be authenticated by their issuers; and
 2. an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
 
-Transparency in the context supply chains is always a well-scoped quality for each instance of a TS.
-Transparency does not imply being transparent everybody, unconditionally.
+Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
+Transparency does not imply being transparent to everybody, unconditionally.
 A TS always limits the entities that have the authority to release new claims to the TS.
 Analogously, a TS typically limits the entities to which transparency into released claims is granted.
-Nevertheless, it is of great import to provide global interoperability for a multitude of TS instances as the composition and configuration of supply chain entities and their system components is ever changing and always in flux.
+Nevertheless, it is of great import to provide global interoperability for a all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims produced by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
-More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TL".
-In fact, a itself DSCA can be opaque to the TS, if so desired.
-The metadata that must always be transparent and that have to warrant trust are about how released DSCAs are processed by the distinguishable components of the TS, their inherent trustworthiness characteristics, and a record of the timeliness and accuracy of their operations.
+More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TS".
+In fact, a DSCA itself can be opaque to the TS, if so desired.
+It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
 
-These trustworthiness assertions are essential for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
 
-The TS specified in this architecture cater two types of audiences: 
+The TS specified in this architecture caters two types of audiences: 
 
 1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
 2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
 
 DSCA Issuers rely on being discoverable and represented as the responsible parties for released DSCAs by the TS in a believable manner.
-Analogously, DSCA Consumers rely on verifiable trustworthiness assertions associated with DSCA and their processing in a believable manner.
-If trust can be put into the operations that record DSCA in a secure, append-only ledger in an online operation, the same trust can be put into a corresponding receipt about that operation issued by the TS in online or offline operations.
+Analogously, DSCA Consumers rely on verifiable trustworthiness assertions associated with DSCAs and their processing in a believable manner.
+If trust can be put into the operations that record DSCAs in a secure, append-only ledger via an online operation, the same trust can be put into a corresponding receipt that is the result of these online operations issued by the TS and that can be validated in offline operations.
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later).
 The core components are based on the Concise Signing and Encryption standard specified in {{COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
+The format and verification process for ledger-based transparency receipts are described in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
 ## Requirements Notation
 
@@ -483,8 +473,11 @@ See Body {{mybody}}.
 
 Not ready to throw these texts into the trash bin yet.
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
 =======
 >>>>>>> first paragaphs for next meeting, more to come before then
+=======
+>>>>>>> d5d14210d810abc27f9183ea695a2e5c51f775d0
