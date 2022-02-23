@@ -94,7 +94,34 @@ The format and verification process for ledger-based transparency receipts are d
 
 # Use Cases
 
+<!--An Architecture for Trustworthy Digital Supply Chain Transparency Services
+> ADL: probably mode to appendix - no application should be discussed in ID body
+-->
+This section presents representative and solution-agnostic use cases to illustrate the scope of SCITT and the processing of Digital Supply Chain Artifacts.
 
+## Cold Chains for Seafood
+
+Once seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness mandating a continuous storing temperature between 1\°C and 0°C (or -18°C and lower for frozen seafood). The temperature is recorded adhering to certain compliance standards automatically by cooling units and (sometimes manually). Batches of seafood can be split or aggregated during their before arriving in a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.
+
+## Maintenance Telemetry from Truck Fleets
+
+Measurements from Electronic Control Units (ECUs) that are components of fleets of trucks are recorded while they are on the road in support of supply chain logistics. Continuously recorded measurements are aggregated in batches by each truck and handed off to a telemetry store via mobile Internet or whenever the truck is in close proximity to a WiFi gate. Telemetry records stored are the fuel for machine learning approaches or prediction models based on AI methods. Telemetry records are considered confidential and are only exposed to other supply chain entities that are able to make their compliance to certain security standards transparent (or can present other contractual trust relationships).
+
+## Public Software Bill of Materials (SBOM) Ledger
+
+Public SBOM ledger
+  > No need to separate firmware?.
+  - from source code to binaries
+  - can we keep track of the provenance of software artifacts?
+  - can we share the cost of reviewing software across the industry?
+
+## Confidential Computing
+
+- Confidential Computing
+  - how can clients that connect to a CC service for the first time validate their attestation results?
+  - how to automatically patch a CC service? Trust, but audit later.
+  - automated software updates
+  - in particular for implementing SCITT services.
 
 {: #mybody}
 
