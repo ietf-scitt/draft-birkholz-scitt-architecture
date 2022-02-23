@@ -35,6 +35,7 @@ author:
   country: UK
 
 normative:
+  RFC8152: COSE
 
 informative:
   I-D.draft-birkholz-scitt-receipts:
@@ -73,7 +74,7 @@ It is the metadata that must always be transparent and that must warrant trust. 
 
 These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
 
-The TS specified in this architecture caters two types of audiences: 
+The TS specified in this architecture caters two types of audiences:
 
 1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
 2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
@@ -84,7 +85,7 @@ If trust can be put into the operations that record DSCAs in a secure, append-on
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later).
-The core components are based on the Concise Signing and Encryption standard specified in {{COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
+The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
 The format and verification process for ledger-based transparency receipts are described in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
 ## Requirements Notation
