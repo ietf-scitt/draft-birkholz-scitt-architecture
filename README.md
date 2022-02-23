@@ -1,6 +1,6 @@
-# An Architecture for Trustworthy Supply Chain Ledger Services
+# An Architecture for Trustworthy Digital Supply Chain Transparency Services
 
-This is the working area for the individual Internet-Draft, "An Architecture for Trustworthy Supply Chain Ledger Services".
+This is the working area for the individual Internet-Draft, "An Architecture for Trustworthy Digital Supply Chain Transparency Services".
 
 * [Editor's Copy](https://ietf-scitt.github.io/draft-birkholz-scitt-architecture/#go.draft-birkholz-scitt-architecture.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-birkholz-scitt-architecture)
