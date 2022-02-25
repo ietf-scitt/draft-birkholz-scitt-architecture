@@ -96,6 +96,41 @@ The format and verification process for ledger-based transparency receipts are d
 
 
 
+# Terminology
+
+The terms defined in this section have special meaning in the context of Supply Chain Integrity, Transparency, and Trust throughout this document. When used in text, the corresponding terms are capitalized. To ensure readability, only a core set of terms is included in this section.[^1]
+
+[^1]: This list it a bucket today and subject to churn.
+{: source="Henk"}
+
+Artifact:
+
+: tbd
+
+Claims:
+
+: tbd
+
+Feed:
+
+: tbd
+
+Issuer:
+
+: tbd
+
+Ledger:
+
+: tbd
+
+Profile:
+
+: tbd
+
+Receipt:
+
+: tbd
+
 {: #mybody}
 
 # High-level architecture
