@@ -117,11 +117,11 @@ Envelope:
 
 Feed:
 
-: tbd
+: An identifier for a sequence of Transparent Claims
 
 Issuer:
 
-: signing statements, making them a Claim, issuing/sending them to the
+: originator of named statements, signing statements, thereby refining them to a Claim, and issuing/sending Claims to the Transparency Service.
 
 Ledger:
 
