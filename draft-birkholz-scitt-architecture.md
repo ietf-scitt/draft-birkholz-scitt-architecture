@@ -96,6 +96,54 @@ The format and verification process for ledger-based transparency receipts are d
 
 
 
+# Terminology
+
+The terms defined in this section have special meaning in the context of Supply Chain Integrity, Transparency, and Trust throughout this document. When used in text, the corresponding terms are capitalized. To ensure readability, only a core set of terms is included in this section.[^1]
+
+[^1]: This list is a bucket today and subject to churn.
+{: source="Henk"}
+
+Artifact:
+
+: the physical or non-physical thing that is moving along the supply chain.
+
+Claim:
+
+: a non-repudiable statement about an artifact encoded as a COSE payload provided by the issuer.
+
+Envelope:
+
+: a container that includes the metadata added to a Statement, making it a Claim. Effectively, a COSE envelope with headers, signature, and potentially the statement included as the COSE payload.
+
+Feed:
+
+: An identifier of an Artifact for a series of Transparent Claims. Effectively, a new COSE header attribute that contains a name given to the Artifact given by the Issuer.
+
+Issuer:
+
+: originator of named statements, signing statements, thereby refining them to a Claim, and issuing/sending Claims to the Transparency Service.
+
+Ledger:
+
+: a COSE-based merkle tree allowing for append-only operations to add Claims
+
+Profile:
+
+: tbd
+
+Receipt:
+
+: a COSE countersignature that is a proof of inclusion specific to a Claim in a ledger.
+
+Transparent Claim:
+
+: a Claim processed by the Transparency Service, added to the ledger, and augmented by a Receipt.
+
+Transparency Service:
+
+: the thing that operates on the ledger, including auditing and querying
+via trusted operations
+
 {: #mybody}
 
 # High-level architecture
