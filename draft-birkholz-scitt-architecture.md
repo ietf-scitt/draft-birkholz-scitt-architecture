@@ -100,16 +100,16 @@ The format and verification process for ledger-based transparency receipts are d
 
 The terms defined in this section have special meaning in the context of Supply Chain Integrity, Transparency, and Trust throughout this document. When used in text, the corresponding terms are capitalized. To ensure readability, only a core set of terms is included in this section.[^1]
 
-[^1]: This list it a bucket today and subject to churn.
+[^1]: This list is a bucket today and subject to churn.
 {: source="Henk"}
 
 Artifact:
 
-: tbd
+: the physical or non-physical thing that is moving along the supply chain
 
-Claims:
+Claim:
 
-: tbd
+: a non-repudiable statement about an artifact encoded in payload provided by the issuer
 
 Feed:
 
