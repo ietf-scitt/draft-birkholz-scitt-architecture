@@ -119,6 +119,10 @@ Artifact:
 
 : the physical or non-physical item that is moving along the supply chain.
 
+Statement:
+
+: any serializable information about an Artifact. To help interpretation of statement, they must be tagged with a media type (as specified in RFC6838) 
+
 Claim:
 
 : an identifiable and non-repudiable statement about an Artifact made by an Issuer. In SCITT, claims are encoded as COSE signed objects; the payload of the COSE structure contains the statement.
