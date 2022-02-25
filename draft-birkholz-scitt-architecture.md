@@ -117,7 +117,7 @@ Envelope:
 
 Feed:
 
-: An identifier for a sequence of Transparent Claims
+: An identifier of an Artifact for a series of Transparent Claims. Effectively, a new COSE header attribute that contains a name given to the Artifact given by the Issuer.
 
 Issuer:
 
