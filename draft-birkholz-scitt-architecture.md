@@ -133,7 +133,7 @@ Profile:
 
 Receipt:
 
-: tbd
+: a COSE countersignature that is a proof of inclusion specific to a Claim in a ledger.
 
 Transparent Claim:
 
