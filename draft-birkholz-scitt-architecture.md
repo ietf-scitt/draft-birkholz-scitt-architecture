@@ -121,7 +121,7 @@ Issuer:
 
 Ledger:
 
-: tbd
+: a COSE-based merkle tree allowing for append-only operations to add Claims
 
 Profile:
 
