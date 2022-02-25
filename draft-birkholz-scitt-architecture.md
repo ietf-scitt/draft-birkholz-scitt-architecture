@@ -131,6 +131,11 @@ Receipt:
 
 : tbd
 
+Transparency Service:
+
+: the thing that operates on the ledger, including auditing and querying
+via trusted operations
+
 {: #mybody}
 
 # High-level architecture
