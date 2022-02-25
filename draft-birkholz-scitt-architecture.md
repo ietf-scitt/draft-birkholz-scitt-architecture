@@ -111,6 +111,10 @@ Claim:
 
 : a non-repudiable statement about an artifact encoded in payload provided by the issuer
 
+Envelope:
+
+: a container that includes the metadata added to a Statement, making it a Claim. Effectively, a COSE envelope with headers, signature, and potentially the statement included as the payload.
+
 Feed:
 
 : tbd
