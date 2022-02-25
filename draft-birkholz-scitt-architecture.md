@@ -105,15 +105,15 @@ The terms defined in this section have special meaning in the context of Supply 
 
 Artifact:
 
-: the physical or non-physical thing that is moving along the supply chain
+: the physical or non-physical thing that is moving along the supply chain.
 
 Claim:
 
-: a non-repudiable statement about an artifact encoded in payload provided by the issuer
+: a non-repudiable statement about an artifact encoded as a COSE payload provided by the issuer.
 
 Envelope:
 
-: a container that includes the metadata added to a Statement, making it a Claim. Effectively, a COSE envelope with headers, signature, and potentially the statement included as the payload.
+: a container that includes the metadata added to a Statement, making it a Claim. Effectively, a COSE envelope with headers, signature, and potentially the statement included as the COSE payload.
 
 Feed:
 
@@ -133,7 +133,7 @@ Profile:
 
 Receipt:
 
-:
+: tbd
 
 Transparent Claim:
 
