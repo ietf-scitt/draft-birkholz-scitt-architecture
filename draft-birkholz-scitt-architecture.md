@@ -148,15 +148,17 @@ via trusted operations
 
 # High-level architecture
 
+SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
+
 ## Principals
+
+### Transparency services
+
+As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
 
 ### Issuers and claims
 
 Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
-
-### Transparency services
-
- Operating the ledger, its verifiable data structure, plus auxiliary storage/index. We use ledger to refer to the current (final) contents registered at the transparency service.
 
 ### Verifiers
  including users, and anyone else
@@ -521,12 +523,3 @@ See Body {{mybody}}.
 # Attic
 
 Not ready to throw these texts into the trash bin yet.
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> first paragaphs for next meeting, more to come before then
-=======
->>>>>>> d5d14210d810abc27f9183ea695a2e5c51f775d0
