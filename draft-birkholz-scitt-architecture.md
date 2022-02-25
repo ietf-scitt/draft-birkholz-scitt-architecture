@@ -117,7 +117,7 @@ Feed:
 
 Issuer:
 
-: tbd
+: signing statements, making them a Claim, issuing/sending them to the
 
 Ledger:
 
@@ -129,7 +129,11 @@ Profile:
 
 Receipt:
 
-: tbd
+:
+
+Transparent Claim:
+
+: a Claim processed by the Transparency Service, added to the ledger, and augmented by a Receipt.
 
 Transparency Service:
 
