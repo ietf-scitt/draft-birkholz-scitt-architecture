@@ -93,8 +93,20 @@ The format and verification process for ledger-based transparency receipts are d
 {::boilerplate bcp14-tagged}
 
 # Use Cases
+> Henk has lock on this section. Allen also interested in writing here.
+> The plan is to keep application details to this subsection.
 
+- Public SBOM ledger
+  > No need to separate firmware?.
+  - from source code to binaries
+  - can we keep track of the provenance of software artifacts?
+  - can we share the cost of reviewing software across the industry?
 
+- Confidential Computing
+  - how can clients that connect to a CC service for the first time validate their attestation reports?
+  - how to automatically patch a CC service? Trust, but audit later.
+  - automated software updates
+  - in particular for implementing SCITT services.
 
 # Terminology
 
@@ -105,65 +117,51 @@ The terms defined in this section have special meaning in the context of Supply 
 
 Artifact:
 
-: the physical or non-physical thing that is moving along the supply chain.
+: the physical or non-physical item that is moving along the supply chain.
 
 Claim:
 
-: a non-repudiable statement about an artifact encoded as a COSE payload provided by the issuer.
-
-Envelope:
-
-: a container that includes the metadata added to a Statement, making it a Claim. Effectively, a COSE envelope with headers, signature, and potentially the statement included as the COSE payload.
-
-Feed:
-
-: An identifier of an Artifact for a series of Transparent Claims. Effectively, a new COSE header attribute that contains a name given to the Artifact given by the Issuer.
+: an identifiable and non-repudiable statement about an Artifact made by an Issuer. In SCITT, claims are encoded as COSE signed objects; the payload of the COSE structure contains the statement.
 
 Issuer:
 
-: originator of named statements, signing statements, thereby refining them to a Claim, and issuing/sending Claims to the Transparency Service.
+: the originator of named statements, which are signed into claims submitted to a Transparency Service for registration. The Issuer may be the owner or author of the Artifact, or a completely independent third party.
+
+Envelope:
+
+: the metadata added to the Statement by the Issuer to make it a Claim. It contains the identity of the issuer and other information to help Verifiers identify the Artifact referred in the statement. A Claim binds the Envelope to the statement. In COSE, the envelope consists of protected headers.
+
+Feed:
+
+: An identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Ledger on a Transparency Service contains a sequence of claims about the same Artifact.
+ In COSE, feed is one of the protected headers of the envelope.
 
 Ledger:
 
-: a COSE-based merkle tree allowing for append-only operations to add Claims
-
-Profile:
-
-: tbd
-
-Receipt:
-
-: a COSE countersignature that is a proof of inclusion specific to a Claim in a ledger.
-
-Transparent Claim:
-
-: a Claim processed by the Transparency Service, added to the ledger, and augmented by a Receipt.
+: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple ledger formats to accomodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
 Transparency Service:
 
-: the thing that operates on the ledger, including auditing and querying
-via trusted operations
+: the entity that maintains and extends the Ledger, and endorses its state. A Transparency Service can be a complicated distributed system, and SCITT requires the TS to provide many security guarantees about its ledger. The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
+
+Receipt:
+
+: a Receipt is a special form of COSE countersignature for claims that embeds cryptographic evidence that the claim is recorded in the ledger. It consists of a ledger-specific inclusion proof, a signature by the transparency service of the state of the ledger, and additional metadata (contained in the countersignature protected headers) to assist in auditing.
+
+Registration:
+
+: the process of submitting a claim to a transparency service, storing it in the ledger and producing the Receipt returned to the submitter.
+
+Transparent Claim:
+
+: a Claim that is augmented with a receipt of its registration. A Transparent Claim remains a valid Claim (as the receipt is carred in the countersignature), and may be registered again in a different TS.
 
 {: #mybody}
 
-# High-level architecture
+# Definition of Transparency
+In this document, we use a definition of transparency built over abstract notions of ledgers and receipts. Existing transparency systems such as Certificate Transparency (CT) are instances of this definition.
 
-SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
-
-## Principals
-
-### Transparency services
-
-As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
-
-### Issuers and claims
-
-Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
-
-### Verifiers
- including users, and anyone else
-
-## What is transparency
+A *claim* is an identifiable and non-repudiable statement made by an *issuer*.
 
 - Claims can be issued and endorsed by principals (issuers).
 
@@ -182,7 +180,6 @@ Anyone with access to the ledger can independenly verify the ledger consistency 
 
 Reputable issuers are thus incentivized to carefully review their artifacts before signing them.
 
-### Ledgers and Receipts
 
 A ledger is a consistent, append-only, publicly available record of entries.
 
@@ -190,23 +187,23 @@ A receipt is an offline, universally-verifiable proof that an entry has been rec
 
 Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
+# High-level architecture
 
-## Use cases (informative, briefly discussed or entirely omitted)
+SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
 
-> ADL: probably mode to appendix - no application should be discussed in ID body
-> The plan is to keep application details to this subsection.
+## Principals
 
-- Public SBOM ledger
-  > No need to separate firmware?.
-  - from source code to binaries
-  - can we keep track of the provenance of software artifacts?
-  - can we share the cost of reviewing software across the industry?
+### Transparency services
 
-- Confidential Computing
-  - how can clients that connect to a CC service for the first time validate their attestation reports?
-  - how to automatically patch a CC service? Trust, but audit later.
-  - automated software updates
-  - in particular for implementing SCITT services.
+As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
+
+### Issuers and claims
+
+Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
+
+### Verifiers
+ including users, and anyone else
+
 
 # SCITT Transparency Service
 
