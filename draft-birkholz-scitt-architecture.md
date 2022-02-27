@@ -276,17 +276,19 @@ Untrusted. Replicated. Indexed.
 
 SCITT issuers are identified using DID, which provides a flexible, decentralized identity framework.
 
-MUST support at least did:web for bootstrapping identities from domain ownership via https certificates.
+The service MAY support the `did:web` method for bootstrapping identities from domain ownership via https certificates.
 
-The transparency service MUST resolve the issuer DID before registering their artifacts.
+The service MUST resolve the issuer DID before registering their claims. 
 
-The transparency service SHOULD publicly record a transcript of the DID resolution at the time of registration.
+The service SHOULD record a transcript of the DID resolution at the time of registration.
 
 The service can cache and re-use DID resolution.
 - Evidence capture?
-- What does it mean in terms of transcript?
+- What does it mean in terms of transcript? 
 
-> The rest is based on an earlier syntactic spec.
+> Details TBD. We could e.g. include a digest of the DID document at the time of registration in the leaf, or introduce another kind of record in the ledger. 
+
+> The rest of this section is based on an earlier syntactic spec.
 
 Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
@@ -378,24 +380,31 @@ Claim formats include:
 
 ## Registering Signed Claims.
 
-The same signed envelope can be independently registered in multiple ledgers.
+The same claim may be independently registered in multiple TS. 
 
-Registation steps in the ledger
+To register a claim, the service performs the following steps: 
 
 1. Client authentication.
 
    So far, implementation-specific, and unrelated to the issuer identity.
 
-2. Issuer identification: binding the claimed issuer identity to their envelope signing key. See resolution below.
+2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)     
 
-2. Envelope validation.
+> Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN of the new claim increments the claim of these prior claims.  
 
-   This involves verifying the headers, but not the payload.
-3. Envelope signature verification.
-4. Commit to the ledger.
-5. Issue receipt.
+3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.  
 
-   This ordering matters, so that the ledger can back up any receipt.
+4. Envelope validation. The service MUST check that the envelope has a payload and the protected headers listed above. The service MAY additionally verify the payload format and content. 
+
+5. The service MAY apply an additional service-specific registration policy. The service SHOULD document this step, and MAY record additional evidence to enable its replayability.  
+
+6. Commit to the ledger.
+
+7. Sign and return receipt. 
+
+The last two steps MAY be shared between a batch of claims recorded in the ledger. 
+
+The service MUST ensure that the claim is committed before releasing its receipt, so that it can always back up the receipt by releasing the corresponding entry in the ledger. Conversely, the service MAY re-issue receipts for the ledger content, for instance after a transient fault during claim registration. 
 
 ## Verifying Transparent Signed Claims
 
