@@ -41,7 +41,7 @@ informative:
   I-D.draft-birkholz-scitt-receipts:
 
 --- abstract
----
+
 A transparent and authentic ledger service in support of a supply chain's integrity, transparency, and trust requires all peers that contribute to the ledgers operations to be trustworthy and authentic.
 
 In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
@@ -420,7 +420,7 @@ Verification steps:
 3. Freshness/revocation?
 4. Validate format of the envelope contents.
 
-> Steps 2 and 3 are still TBD.
+> Steps 2 and 3 are still TBD; the client should verify the issuer signature against the issuers' DID document at the time of registration.
 
 Once verified, the claims together with their authenticated issuer and transparent ledger identities can be used as input to an authorization policy.
 
