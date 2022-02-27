@@ -41,7 +41,7 @@ informative:
   I-D.draft-birkholz-scitt-receipts:
 
 --- abstract
-
+---
 A transparent and authentic ledger service in support of a supply chain's integrity, transparency, and trust requires all peers that contribute to the ledgers operations to be trustworthy and authentic.
 
 In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
@@ -62,17 +62,20 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent to everybody, unconditionally.
-A TS always limits the entities that have the authority to release new claims to the TS.
-Analogously, a TS typically limits the entities to which transparency into released claims is granted.
-Nevertheless, it is of great import to provide global interoperability for a all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+Each instance may enforce its own policy for authorizing entities to register their claims on the TS. 
+Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims produced by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
 More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TS".
-In fact, a DSCA itself can be opaque to the TS, if so desired.
+Conversely, a DSCA itself can be opaque to the TS, if so desired.
 It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
 
-These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs. 
+Hence, issuers may register new claims about their artifacts, but they cannot delete or alter 
+earlier claims, or hide their claims from third parties such as auditors. 
+
+Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on hardware attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.  
 
 The TS specified in this architecture caters two types of audiences:
 
