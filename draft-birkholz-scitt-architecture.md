@@ -62,7 +62,7 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent to everybody, unconditionally.
-Each instance may enforce its own policy for authorizing entities to register their claims on the TS. 
+Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
 Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims produced by supply chain entities and their sub-systems.
@@ -71,11 +71,11 @@ More importantly, a TS vouches for specific and well-defined metadata about thes
 Conversely, a DSCA itself can be opaque to the TS, if so desired.
 It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
 
-These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs. 
-Hence, issuers may register new claims about their artifacts, but they cannot delete or alter 
-earlier claims, or hide their claims from third parties such as auditors. 
+These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
+earlier claims, or hide their claims from third parties such as auditors.
 
-Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on hardware attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.  
+Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on hardware attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.
 
 The TS specified in this architecture caters two types of audiences:
 
@@ -115,7 +115,6 @@ Measurements from Electronic Control Units (ECUs) that are components of fleets 
 ## Public Software Bill of Materials (SBOM) Ledger
 
 Public SBOM ledger
-=======
 - Public SBOM ledger
   > No need to separate firmware?.
   - from source code to binaries
@@ -143,7 +142,7 @@ Artifact:
 
 Statement:
 
-: any serializable information about an Artifact. To help interpretation of statement, they must be tagged with a media type (as specified in RFC6838) 
+: any serializable information about an Artifact. To help interpretation of statement, they must be tagged with a media type (as specified in RFC6838)
 
 Claim:
 
@@ -297,15 +296,15 @@ SCITT issuers are identified using DID, which provides a flexible, decentralized
 
 The service MAY support the `did:web` method for bootstrapping identities from domain ownership via https certificates.
 
-The service MUST resolve the issuer DID before registering their claims. 
+The service MUST resolve the issuer DID before registering their claims.
 
 The service SHOULD record a transcript of the DID resolution at the time of registration.
 
 The service can cache and re-use DID resolution.
 - Evidence capture?
-- What does it mean in terms of transcript? 
+- What does it mean in terms of transcript?
 
-> Details TBD. We could e.g. include a digest of the DID document at the time of registration in the leaf, or introduce another kind of record in the ledger. 
+> Details TBD. We could e.g. include a digest of the DID document at the time of registration in the leaf, or introduce another kind of record in the ledger.
 
 > The rest of this section is based on an earlier syntactic spec.
 
@@ -399,31 +398,31 @@ Claim formats include:
 
 ## Registering Signed Claims.
 
-The same claim may be independently registered in multiple TS. 
+The same claim may be independently registered in multiple TS.
 
-To register a claim, the service performs the following steps: 
+To register a claim, the service performs the following steps:
 
 1. Client authentication.
 
    So far, implementation-specific, and unrelated to the issuer identity.
 
-2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)     
+2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)
 
-> Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN of the new claim increments the claim of these prior claims.  
+> Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN of the new claim increments the claim of these prior claims.
 
-3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.  
+3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.
 
-4. Envelope validation. The service MUST check that the envelope has a payload and the protected headers listed above. The service MAY additionally verify the payload format and content. 
+4. Envelope validation. The service MUST check that the envelope has a payload and the protected headers listed above. The service MAY additionally verify the payload format and content.
 
-5. The service MAY apply an additional service-specific registration policy. The service SHOULD document this step, and MAY record additional evidence to enable its replayability.  
+5. The service MAY apply an additional service-specific registration policy. The service SHOULD document this step, and MAY record additional evidence to enable its replayability.
 
 6. Commit to the ledger.
 
-7. Sign and return receipt. 
+7. Sign and return receipt.
 
-The last two steps MAY be shared between a batch of claims recorded in the ledger. 
+The last two steps MAY be shared between a batch of claims recorded in the ledger.
 
-The service MUST ensure that the claim is committed before releasing its receipt, so that it can always back up the receipt by releasing the corresponding entry in the ledger. Conversely, the service MAY re-issue receipts for the ledger content, for instance after a transient fault during claim registration. 
+The service MUST ensure that the claim is committed before releasing its receipt, so that it can always back up the receipt by releasing the corresponding entry in the ledger. Conversely, the service MAY re-issue receipts for the ledger content, for instance after a transient fault during claim registration.
 
 ## Verifying Transparent Signed Claims
 
