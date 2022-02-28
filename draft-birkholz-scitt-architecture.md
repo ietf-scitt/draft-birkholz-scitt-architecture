@@ -339,7 +339,7 @@ The unprotected header may contain the following parameters:
 
 In CDDL ([RFC 8610](https://datatracker.ietf.org/doc/html/rfc8610)) notation, the envelope is defined as follows:
 
-```
+~~~~CDDL
 SCITT_Envelope = COSE_Sign1_Tagged
 
 COSE_Sign1_Tagged = #6.18(COSE_Sign1)
@@ -371,7 +371,7 @@ Unprotected_Header = {
 }
 
 COSE_X509 = bstr / [ 2*certs: bstr ]
-```
+~~~~
 
 # Protocols
 
