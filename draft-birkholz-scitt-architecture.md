@@ -121,13 +121,32 @@ Public SBOM ledger
   - can we keep track of the provenance of software artifacts?
   - can we share the cost of reviewing software across the industry?
 
+> While there is no need to limit SBOM to firmware, third-party firmware is a concrete example and may improve readability.
+
 ## Confidential Computing
 
-- Confidential Computing
-  - how can clients that connect to a CC service for the first time validate their attestation results?
-  - how to automatically patch a CC service? Trust, but audit later.
-  - automated software updates
-  - in particular for implementing SCITT services.
+Confidential Computing leverages trusted execution environments (TEEs)
+to operate services in isolation, with hardware-based integrity and
+confidentiality protection.  When clients connects to such a service,
+the service presents attestation evidence that typically includes a
+platform certificate for its TEE and a measurement of the software it
+runs in this TEE. The client verifies the evidence before using the
+service.
+
+But how can clients verify it is a valid measurement for the service?
+And how can operators update the service, e.g., to mitigate a new
+security vulnerability, without notifying all clients that they should
+use a new measurement?
+
+A supply chain that maintains a public record of the successive
+software releases for the service, recording both their measurements
+and their provenance (source code, build reports, audit reports,...)
+can provide all clients with this information, while holding service
+developers and operators accountable for the software they release for
+the service.
+
+> Where to provide more details? Cutting for now: For instance, a signed excerpt of this record can be distributed with the service software, and attached to its attestation evidence, enabling clients to confirm the software image for their service has been released by a given issuer and registered on a given transparency ledger. 
+
 
 # Terminology
 
@@ -181,6 +200,10 @@ Transparent Claim:
 
 : a Claim that is augmented with a receipt of its registration. A Transparent Claim remains a valid Claim (as the receipt is carred in the countersignature), and may be registered again in a different TS.
 
+Verifier: 
+
+: the entity that consumes Transparent Claims, verifying their proofs and inspecting their statements, either before using their Artifacts, or later to audit their supply chain.  
+
 {: #mybody}
 
 # Definition of Transparency
@@ -218,6 +241,10 @@ SCITT provides an interoperability framework to verify the transparency of arbit
 
 ## Principals
 
+Our protocol involves three main roles: Issuers, TS, and Verifiers.
+
+> Now subsubmed by the terminology. 
+
 ### Transparency services
 
 As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
@@ -227,7 +254,6 @@ As a decentralized system, SCITT allows anyone to operate their own instance of 
 Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
 
 ### Verifiers
- including users, and anyone else
 
 
 # SCITT Transparency Service
@@ -256,21 +282,42 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
   RATS? proof-of-work?
 
-### Consistency
-Everyone with access to the ledger sees the same sequence of registered entries.
 
 ### Finality
-Ledger is append-only; once registered, its entries cannot be modified or deleted (although they may be superceded by nwer entries).
 
-### Replayability
+The ledger is append-only: once a claim is registered, it cannot be modified, deleted, or moved. 
 
-> Can it cover client authentication and DID resolution?
+In particular, once a receipt is returned for a given claim, the claim and any preceding entry in the ledger become immutable, and the receipt provides universally-verifiable evidence of this property. 
 
-### Auditing
+### Consistency
+
+There is no fork in the ledger: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any receipts they have collected.  
+
+### Replayability and Auditing
+
+Everyone with access to the ledger can check the correctness of its contents. In particular, 
+
+- the TS defines and enforces deterministic registration policies 
+that can be re-evaluated based solely on the contents of the ledger,
+and must then yield the same result. 
+
+- The ordering of entries, their cryptographic contents, and the ledger governance
+may be non-deterministic, but they must be verifiable. 
+
+- The TS may additionally support verifiability of client authentication and access control. 
 
 ### Governance and Bootstrapping
 
-  > Their specification is out of scope: we rely on ledger-specific, out-of-band protocols for it.
+The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ). 
+
+Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them. 
+
+- Governance may be based in a consortium of members that are jointly responsible for the TS, 
+or automated based on the contents of an auxiliary governance TS.  
+
+- Governance typically involves additional records in the ledger to enable its auditing. Hence, the ledger may contain both transparent claims and governance entries.  
+
+- Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis. 
 
 ## Caching / Query service
 
