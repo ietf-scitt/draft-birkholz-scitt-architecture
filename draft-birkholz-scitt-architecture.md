@@ -49,7 +49,7 @@ In this document, the supply chain context is illustrated using problem statemen
 The resulting architecture is intended to enable multi-layer interoperability to produce and leverage believable trust assertions while maintaining a minimal adoption threshold.
 
 --- middle
----
+
 # Introduction
 
 The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
@@ -145,7 +145,7 @@ can provide all clients with this information, while holding service
 developers and operators accountable for the software they release for
 the service.
 
-> Where to provide more details? Cutting for now: For instance, a signed excerpt of this record can be distributed with the service software, and attached to its attestation evidence, enabling clients to confirm the software image for their service has been released by a given issuer and registered on a given transparency ledger. 
+> Where to provide more details? Cutting for now: For instance, a signed excerpt of this record can be distributed with the service software, and attached to its attestation evidence, enabling clients to confirm the software image for their service has been released by a given issuer and registered on a given transparency ledger.
 
 
 # Terminology
@@ -200,9 +200,9 @@ Transparent Claim:
 
 : a Claim that is augmented with a receipt of its registration. A Transparent Claim remains a valid Claim (as the receipt is carred in the countersignature), and may be registered again in a different TS.
 
-Verifier: 
+Verifier:
 
-: the entity that consumes Transparent Claims, verifying their proofs and inspecting their statements, either before using their Artifacts, or later to audit their supply chain.  
+: the entity that consumes Transparent Claims, verifying their proofs and inspecting their statements, either before using their Artifacts, or later to audit their supply chain.
 
 {: #mybody}
 
@@ -232,21 +232,15 @@ Anyone with access to the ledger can independenly verify its consistency and rev
 Reputable issuers are thus incentivized to carefully review their artifacts before signing them. Similarly, reputable TS are incentivized to secure their ledger, inasmuch as any inconsistency can easily be pinpointed by any third party with read access to the ledger. 
 
 
-# High-level architecture
+# Architecture Overview
 
-SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
+SCITT provides an interoperability framework to verify the transparency of claims about artifacts that can be registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence. As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger. Similarly, the issuance of claims is fully decentralized: statements are endorsed by issuers using Distributed Identity schemes, which cover a wide range of distributed PKI implementations.
 
-Our protocol involves three main roles: Issuers, TS, and Verifiers.
-
-> Now subsubmed by the terminology. We will informally describe what each of them do, to be refined in the protocols. 
-
-As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
-
-Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
+In this section, we describe at a high level the three main roles in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
 
 ## Claim Issuance
 
-> Issuers, Claims, and Envelopes.  
+> Issuers, Claims, and Envelopes.
 
 COSE is generic, every application needs to constrain it to their own use cases, in this case the SCITT use cases.
 
@@ -285,45 +279,45 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
 #### Finality
 
-The ledger is append-only: once a claim is registered, it cannot be modified, deleted, or moved. 
+The ledger is append-only: once a claim is registered, it cannot be modified, deleted, or moved.
 
-In particular, once a receipt is returned for a given claim, the claim and any preceding entry in the ledger become immutable, and the receipt provides universally-verifiable evidence of this property. 
+In particular, once a receipt is returned for a given claim, the claim and any preceding entry in the ledger become immutable, and the receipt provides universally-verifiable evidence of this property.
 
 #### Consistency
 
-There is no fork in the ledger: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any receipts they have collected.  
+There is no fork in the ledger: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any receipts they have collected.
 
 #### Replayability and Auditing
 
-Everyone with access to the ledger can check the correctness of its contents. In particular, 
+Everyone with access to the ledger can check the correctness of its contents. In particular,
 
-- the TS defines and enforces deterministic registration policies 
+- the TS defines and enforces deterministic registration policies
 that can be re-evaluated based solely on the contents of the ledger,
-and must then yield the same result. 
+and must then yield the same result.
 
 - The ordering of entries, their cryptographic contents, and the ledger governance
-may be non-deterministic, but they must be verifiable. 
+may be non-deterministic, but they must be verifiable.
 
-- The TS may additionally support verifiability of client authentication and access control. 
+- The TS may additionally support verifiability of client authentication and access control.
 
 #### Governance and Bootstrapping
 
-The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ). 
+The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ).
 
-Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them. 
+Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them.
 
-- Governance may be based in a consortium of members that are jointly responsible for the TS, 
-or automated based on the contents of an auxiliary governance TS.  
+- Governance may be based in a consortium of members that are jointly responsible for the TS,
+or automated based on the contents of an auxiliary governance TS.
 
-- Governance typically involves additional records in the ledger to enable its auditing. Hence, the ledger may contain both transparent claims and governance entries.  
+- Governance typically involves additional records in the ledger to enable its auditing. Hence, the ledger may contain both transparent claims and governance entries.
 
-- Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis. 
+- Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
 
 ## Verifying Transparent Claims
 
 # Claim Issuance, Registration, and Verification
 
-> Now merging detailed syntax and protocols. 
+> Now merging detailed syntax and protocols.
 
 **Format of signed claims / envelope**
 
