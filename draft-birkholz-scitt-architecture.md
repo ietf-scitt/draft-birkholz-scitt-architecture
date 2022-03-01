@@ -240,34 +240,20 @@ In this section, we describe at a high level the three main roles in SCITT: issu
 
 ## Claim Issuance
 
-> Issuers, Claims, and Envelopes.
+Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
+There exist many different methods to create an distribute DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
 
-COSE is generic, every application needs to constrain it to their own use cases, in this case the SCITT use cases.
+## Transparency Service (TS)
 
+The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
 
-## Transparency Service
+These 3 components (identity, ledger and registration endpoint) constitute the trusted part of the transparency service. While the goal of SCITT is to support different implementations of a TS, all implementations MUST satisfy a set of requirements that are designed to minimize the trust required in TS operators and guarantee the auditability of their management.
 
-SCITT aims to support many different implementations of transparency ledgers, as long as they satisfy a set of requirements that aim to limit the trust that participants need to have in their operators. Unlike Certificate Transparency, we do not assume that the honestly of transparency services is enforced by external audit, as this approach does not scale to the large amount of instances necessary to protect the software supply chain at scale.
+In addition, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as possible, the ledger should carry enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
 ### Service Identity and Keying
 
 > Details TBD, e.g. discovery, rekeying, revocation, delegation (e.g. to replicas); this may  require its own subsection, or left underspecified as ledger-specific details.
-
-### Receipt Issuance
-
-Compact, universally verifiable proof that claims are registered in the ledger.
-
-Enabling offline verification of registration in the ledger. Signed with key that chains to service identity
-
-### Caching / Query service
-
-Untrusted. Replicated. Indexed.
-
-> This service could extract (read) receipts from the ledger.
-
-### Ledger Security Requirements
-
-The main requirements for the transparency service are
 
 #### Attestability of service identity
 
@@ -276,6 +262,12 @@ Enabling remote authentication of the hardware platforms and software TCB that r
   Hardware attestation report, binding a public key for receipt verification to the long-term transparency service identity.
 
   RATS? proof-of-work?
+
+### Ledger Requirements
+
+There are many different candidate verifiable datat structures that may be used to implement the ledger, such as historical Merkle Trees, sparse Merkle Trees, full blockchains, and many other variants. SCITT requires the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
+
+Since the details of how to verify a receipt are specific to the data strcture, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger:
 
 #### Finality
 
@@ -313,7 +305,15 @@ or automated based on the contents of an auxiliary governance TS.
 
 - Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
 
+### Caching / Query service
+
+Untrusted. Replicated. Indexed.
+
+> This service could extract (read) receipts from the ledger.
+
 ## Verifying Transparent Claims
+
+
 
 # Claim Issuance, Registration, and Verification
 
