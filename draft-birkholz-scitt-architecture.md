@@ -207,33 +207,30 @@ Verifier:
 {: #mybody}
 
 # Definition of Transparency
+
+> Overlapping with the terminology and architecture? 
+
 In this document, we use a definition of transparency built over abstract notions of ledgers and receipts. Existing transparency systems such as Certificate Transparency (CT) are instances of this definition.
 
-A *claim* is an identifiable and non-repudiable statement made by an *issuer*.
+A *claim* is an identifiable and non-repudiable statement made by an *issuer*. The issuer selects additional metadata and attaches a proof of endorsement, i.e., a signature using the identity key of the issuer that binds the statement and its metadata. Claims can be made *transparent* by attaching a proof of registration by a TS, i.e., a receipt that countersigns the claim and witnesses its inclusion in the ledger of a TS.  
 
-- Claims can be issued and endorsed by principals (issuers).
 
-- Signed Claims can be counter-signed by SCITT ledgers.
-
-An artifact (e.g. a firmware binary) is transparent if it comes with valid transparent signed claims.
-
-- The signature proves the artifact has been issued by the signer, with the associated metadata.
-
-- The receipt proves this artifact and associated metadata has been recorded by the ledger.
+An artifact (e.g. a firmware binary) is *transparent* if it comes with valid transparent claims.
+The signature proves the artifact has been issued by the signer, with the associated metadata.
+The receipt proves this artifact and associated metadata has been recorded by the ledger.
 
 Transparency does not prevent dishonest or compromised issuers, but it holds them accountable:
 any artifact that may be used to target a particular user that checks for receipts must have been recorded in the tamper-proof ledger, and will be subject to scrutiny and auditing by other parties.
 
-Anyone with access to the ledger can independenly verify the ledger consistency and review the list of claims registered by its issuers.
+Transparency is implemented by a ledger that provides a consistent, append-only, publicly available record of entries. The TS protects the ledger using a combination of trusted hardware, replication, and cryptographic evidence.  
 
-Reputable issuers are thus incentivized to carefully review their artifacts before signing them.
-
-
-A ledger is a consistent, append-only, publicly available record of entries.
-
-A receipt is an offline, universally-verifiable proof that an entry has been recorded in the ledger.
-
+A receipt is an offline, universally-verifiable proof that an entry is recorded in the ledger.
 Receipts do not expire, but it is possible to append new entries that subsume older entries.
+
+Anyone with access to the ledger can independenly verify its consistency and review the complete list of claims registered by its issuers. 
+
+Reputable issuers are thus incentivized to carefully review their artifacts before signing them. Similarly, reputable TS are incentivized to secure their ledger, inasmuch as any inconsistency can easily be pinpointed by any third party with read access to the ledger. 
+
 
 # High-level architecture
 
