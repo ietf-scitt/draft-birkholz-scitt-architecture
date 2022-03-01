@@ -243,6 +243,9 @@ In this section, we describe at a high level the three main roles in SCITT: issu
 Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
 There exist many different methods to create an distribute DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
 
+While issuers may update their DID document, for instance to add new signing keys or algorithms, 
+they should not change any prior keys---unless they intend to revoke all claims issued with those keys. 
+
 ## Transparency Service (TS)
 
 The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
@@ -313,7 +316,26 @@ Untrusted. Replicated. Indexed.
 
 ## Verifying Transparent Claims
 
+For a given Artifact, Verifiers take as trusted inputs 
+its Issuer identity and DID document,
+its Feed, and 
+its TS receipt-verification key. 
 
+When presented with a transparent claim for the Artifact, 
+they verify its Issuer identity, signature, and receipt.
+They may additionally apply a validation policy based on the protected headers 
+and the statement itself, which may include security-critical Artifact-specific details.  
+
+Some verifiers may systematically resolve the issuer DID to fetch  
+their latest DID document. This strictly enforces the revocation of compromised keys: 
+once the issuer has updated its document to mark a key as revoked, 
+all claims signed with this key will be rejected. 
+Others may delegate DID resolution to a trusted third party and/or cache its results. 
+
+Some verifiers may decide to skip the DID-based signature verification, 
+relying on the TS registration policy and the scrutiny of other verifiers. 
+Although this weakens their guarantees against key revocation, or against a corrupt TS, 
+they can still keep the receipt and blame the issuer or the TS at a later point.  
 
 # Claim Issuance, Registration, and Verification
 
