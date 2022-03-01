@@ -49,7 +49,7 @@ In this document, the supply chain context is illustrated using problem statemen
 The resulting architecture is intended to enable multi-layer interoperability to produce and leverage believable trust assertions while maintaining a minimal adoption threshold.
 
 --- middle
-
+---
 # Introduction
 
 The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
@@ -239,42 +239,46 @@ Receipts do not expire, but it is possible to append new entries that subsume ol
 
 SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
 
-## Principals
-
 Our protocol involves three main roles: Issuers, TS, and Verifiers.
 
-> Now subsubmed by the terminology. 
-
-### Transparency services
+> Now subsubmed by the terminology. We will informally describe what each of them do, to be refined in the protocols. 
 
 As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
 
-### Issuers and claims
-
 Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
 
-### Verifiers
+## Claim Issuance
+
+> Issuers, Claims, and Envelopes.  
+
+COSE is generic, every application needs to constrain it to their own use cases, in this case the SCITT use cases.
 
 
-# SCITT Transparency Service
+## Transparency Service
 
 SCITT aims to support many different implementations of transparency ledgers, as long as they satisfy a set of requirements that aim to limit the trust that participants need to have in their operators. Unlike Certificate Transparency, we do not assume that the honestly of transparency services is enforced by external audit, as this approach does not scale to the large amount of instances necessary to protect the software supply chain at scale.
 
-## Service Identity and Keying
+### Service Identity and Keying
 
 > Details TBD, e.g. discovery, rekeying, revocation, delegation (e.g. to replicas); this may  require its own subsection, or left underspecified as ledger-specific details.
 
-## Receipt Issuance
+### Receipt Issuance
 
 Compact, universally verifiable proof that claims are registered in the ledger.
 
 Enabling offline verification of registration in the ledger. Signed with key that chains to service identity
 
-## Ledger Security Requirements
+### Caching / Query service
+
+Untrusted. Replicated. Indexed.
+
+> This service could extract (read) receipts from the ledger.
+
+### Ledger Security Requirements
 
 The main requirements for the transparency service are
 
-### Attestability of service identity
+#### Attestability of service identity
 
 Enabling remote authentication of the hardware platforms and software TCB that run the transparency service.
 
@@ -282,18 +286,17 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
   RATS? proof-of-work?
 
-
-### Finality
+#### Finality
 
 The ledger is append-only: once a claim is registered, it cannot be modified, deleted, or moved. 
 
 In particular, once a receipt is returned for a given claim, the claim and any preceding entry in the ledger become immutable, and the receipt provides universally-verifiable evidence of this property. 
 
-### Consistency
+#### Consistency
 
 There is no fork in the ledger: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any receipts they have collected.  
 
-### Replayability and Auditing
+#### Replayability and Auditing
 
 Everyone with access to the ledger can check the correctness of its contents. In particular, 
 
@@ -306,7 +309,7 @@ may be non-deterministic, but they must be verifiable.
 
 - The TS may additionally support verifiability of client authentication and access control. 
 
-### Governance and Bootstrapping
+#### Governance and Bootstrapping
 
 The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ). 
 
@@ -319,13 +322,11 @@ or automated based on the contents of an auxiliary governance TS.
 
 - Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis. 
 
-## Caching / Query service
+## Verifying Transparent Claims
 
-Untrusted. Replicated. Indexed.
+# Claim Issuance, Registration, and Verification
 
-> This service could extract (read) receipts from the ledger.
-
-# SCITT COSE Envelopes
+> Now merging detailed syntax and protocols. 
 
 **Format of signed claims / envelope**
 
@@ -338,6 +339,8 @@ Untrusted. Replicated. Indexed.
 >  Envelopes MAY include additional protected and unprotected headers.
 
 ## Issuer Identity
+
+> To be split between architecture subsections
 
 SCITT issuers are identified using DID, which provides a flexible, decentralized identity framework.
 
@@ -357,12 +360,7 @@ The service can cache and re-use DID resolution.
 
 Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
-### Why?
-
-COSE is generic, every application needs to constrain it to their own use cases, in this case the SCITT use cases.
-
 ##  SCITT COSE profile
-
 
 [TODO] describe semantics of `iss` and how it can be used together with `kid` to identity a verification method in a resolved DID document
 
@@ -511,7 +509,7 @@ We'd like to attach multiple receipts to the same signed claims, each receipt en
 
 # SCITT REST API
 
-> We may omit most of the details, or put it in an appendix.
+> We may summarize in the architecture, and put the rest in an appendix.
 
 ## Messages
 
