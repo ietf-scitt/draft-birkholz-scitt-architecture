@@ -42,7 +42,8 @@ informative:
 
 --- abstract
 
-A transparent and authentic ledger service in support of a supply chain's integrity, transparency, and trust requires all peers that contribute to the ledgers operations to be trustworthy and authentic.
+Supply Chain transparency requires organizations to accurately identify and collect data from all links in the supply chain and to communicate this information both internally and externally at the level of detail required or desired. Supply Chain 
+transparency is of paramount importance in todays digital world, to address security challenges and risks posed to supply chain.
 
 In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
 
