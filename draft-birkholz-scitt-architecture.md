@@ -53,30 +53,36 @@ The resulting architecture is intended to enable multi-layer interoperability to
 
 # Introduction
 
-The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
+The need for an understandable, scalable and resilient system that supports 
+trust and transparency for various kinds of existing and emerging supply chains is a global one.
 This memo specifies an architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
 
 Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementary security guarantees:
 
 1. artifacts must be authenticated by their issuers; and
-2. an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
+2. artifacts must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently and consistently reviewed.
 
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent to everybody, unconditionally.
 Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
 Nevertheless, it is of great importance to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
-A TS provides visibility into claims produced by supply chain entities and their sub-systems.
+A TS provides visibility into claims issued by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
-More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TS".
-Conversely, a DSCA itself can be opaque to the TS, if so desired.
-It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
+A TS vouches for specific and well-defined metadata about these DSCAs.
+Some metadata is selected (and signed) by the issuer, indicating, e.g.,
+"who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version";  
+whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., 
+"when was the DSCA registered in the ledger".
+The DSCA contents can be opaque to the TS, if so desired: 
+it is the metadata that must always be transparent in order to  warrant trust. 
 
-These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs.
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on system attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.
+Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, 
+thereby holding the organization that operates it accountable. 
 
 The TS specified in this architecture caters two types of audiences:
 
@@ -122,13 +128,32 @@ Public SBOM ledger
   - can we keep track of the provenance of software artifacts?
   - can we share the cost of reviewing software across the industry?
 
+> While there is no need to limit SBOM to firmware, third-party firmware is a concrete example and may improve readability.
+
 ## Confidential Computing
 
-- Confidential Computing
-  - how can clients that connect to a CC service for the first time validate their attestation results?
-  - how to automatically patch a CC service? Trust, but audit later.
-  - automated software updates
-  - in particular for implementing SCITT services.
+Confidential Computing leverages trusted execution environments (TEEs)
+to operate services in isolation, with hardware-based integrity and
+confidentiality protection.  When clients connects to such a service,
+the service presents attestation evidence that typically includes a
+platform certificate for its TEE and a measurement of the software it
+runs in this TEE. The client verifies the evidence before using the
+service.
+
+But how can clients verify it is a valid measurement for the service?
+And how can operators update the service, e.g., to mitigate a new
+security vulnerability, without notifying all clients that they should
+use a new measurement?
+
+A supply chain that maintains a public record of the successive
+software releases for the service, recording both their measurements
+and their provenance (source code, build reports, audit reports,...)
+can provide all clients with this information, while holding service
+developers and operators accountable for the software they release for
+the service.
+
+> Where to provide more details? Cutting for now: For instance, a signed excerpt of this record can be distributed with the service software, and attached to its attestation evidence, enabling clients to confirm the software image for their service has been released by a given issuer and registered on a given transparency ledger.
+
 
 # Terminology
 
@@ -182,74 +207,65 @@ Transparent Claim:
 
 : a Claim that is augmented with a receipt of its registration. A Transparent Claim remains a valid Claim (as the receipt is carred in the countersignature), and may be registered again in a different TS.
 
+Verifier:
+
+: the entity that consumes Transparent Claims, verifying their proofs and inspecting their statements, either before using their Artifacts, or later to audit their supply chain.
+
 {: #mybody}
 
 # Definition of Transparency
+
+> Overlapping with the terminology and architecture?
+
 In this document, we use a definition of transparency built over abstract notions of ledgers and receipts. Existing transparency systems such as Certificate Transparency (CT) are instances of this definition.
 
-A *claim* is an identifiable and non-repudiable statement made by an *issuer*.
+A *claim* is an identifiable and non-repudiable statement made by an *issuer*. The issuer selects additional metadata and attaches a proof of endorsement, i.e., a signature using the identity key of the issuer that binds the statement and its metadata. Claims can be made *transparent* by attaching a proof of registration by a TS, i.e., a receipt that countersigns the claim and witnesses its inclusion in the ledger of a TS.
 
-- Claims can be issued and endorsed by principals (issuers).
 
-- Signed Claims can be counter-signed by SCITT ledgers.
-
-An artifact (e.g. a firmware binary) is transparent if it comes with valid transparent signed claims.
-
-- The signature proves the artifact has been issued by the signer, with the associated metadata.
-
-- The receipt proves this artifact and associated metadata has been recorded by the ledger.
+An artifact (e.g. a firmware binary) is *transparent* if it comes with valid transparent claims.
+The signature proves the artifact has been issued by the signer, with the associated metadata.
+The receipt proves this artifact and associated metadata has been recorded by the ledger.
 
 Transparency does not prevent dishonest or compromised issuers, but it holds them accountable:
 any artifact that may be used to target a particular user that checks for receipts must have been recorded in the tamper-proof ledger, and will be subject to scrutiny and auditing by other parties.
 
-Anyone with access to the ledger can independenly verify the ledger consistency and review the list of claims registered by its issuers.
+Transparency is implemented by a ledger that provides a consistent, append-only, publicly available record of entries. The TS protects the ledger using a combination of trusted hardware, replication, and cryptographic evidence.
 
-Reputable issuers are thus incentivized to carefully review their artifacts before signing them.
-
-
-A ledger is a consistent, append-only, publicly available record of entries.
-
-A receipt is an offline, universally-verifiable proof that an entry has been recorded in the ledger.
-
+A receipt is an offline, universally-verifiable proof that an entry is recorded in the ledger.
 Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
-# High-level architecture
+Anyone with access to the ledger can independenly verify its consistency and review the complete list of claims registered by its issuers.
 
-SCITT provides an interoperability framework to verify the transparency of arbitrary digital artifacts registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence.
-
-## Principals
-
-### Transparency services
-
-As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger
-
-### Issuers and claims
-
-Claims are non-repudiable statements made by issuers. In SCITT, many claims are made by authors, reviewers and distributors of digital artifacts, including source and binary packages, firmware, audit reports, etc.
-
-### Verifiers
- including users, and anyone else
+Reputable issuers are thus incentivized to carefully review their artifacts before signing them. Similarly, reputable TS are incentivized to secure their ledger, inasmuch as any inconsistency can easily be pinpointed by any third party with read access to the ledger.
 
 
-# SCITT Transparency Service
+# Architecture Overview
 
-SCITT aims to support many different implementations of transparency ledgers, as long as they satisfy a set of requirements that aim to limit the trust that participants need to have in their operators. Unlike Certificate Transparency, we do not assume that the honestly of transparency services is enforced by external audit, as this approach does not scale to the large amount of instances necessary to protect the software supply chain at scale.
+SCITT provides an interoperability framework to verify the transparency of claims about artifacts that can be registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence. As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger. Similarly, the issuance of claims is fully decentralized: statements are endorsed by issuers using Distributed Identity schemes, which cover a wide range of distributed PKI implementations.
 
-## Service Identity and Keying
+In this section, we describe at a high level the three main roles in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
+
+## Claim Issuance
+
+Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
+There exist many different methods to create an distribute DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+
+While issuers may update their DID document, for instance to add new signing keys or algorithms, 
+they should not change any prior keys---unless they intend to revoke all claims issued with those keys. 
+
+## Transparency Service (TS)
+
+The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
+
+These 3 components (identity, ledger and registration endpoint) constitute the trusted part of the transparency service. While the goal of SCITT is to support different implementations of a TS, all implementations MUST satisfy a set of requirements that are designed to minimize the trust required in TS operators and guarantee the auditability of their management.
+
+In addition, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as possible, the ledger should carry enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
+
+### Service Identity and Keying
 
 > Details TBD, e.g. discovery, rekeying, revocation, delegation (e.g. to replicas); this may  require its own subsection, or left underspecified as ledger-specific details.
 
-## Receipt Issuance
-
-Compact, universally verifiable proof that claims are registered in the ledger.
-
-Enabling offline verification of registration in the ledger. Signed with key that chains to service identity
-
-## Ledger Security Requirements
-
-The main requirements for the transparency service are
-
-### Attestability of service identity
+#### Attestability of service identity
 
 Enabling remote authentication of the hardware platforms and software TCB that run the transparency service.
 
@@ -257,29 +273,80 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
   RATS? proof-of-work?
 
-### Consistency
-Everyone with access to the ledger sees the same sequence of registered entries.
+### Ledger Requirements
 
-### Finality
-Ledger is append-only; once registered, its entries cannot be modified or deleted (although they may be superceded by nwer entries).
+There are many different candidate verifiable datat structures that may be used to implement the ledger, such as historical Merkle Trees, sparse Merkle Trees, full blockchains, and many other variants. SCITT requires the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
 
-### Replayability
+Since the details of how to verify a receipt are specific to the data strcture, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger:
 
-> Can it cover client authentication and DID resolution?
+#### Finality
 
-### Auditing
+The ledger is append-only: once a claim is registered, it cannot be modified, deleted, or moved.
 
-### Governance and Bootstrapping
+In particular, once a receipt is returned for a given claim, the claim and any preceding entry in the ledger become immutable, and the receipt provides universally-verifiable evidence of this property.
 
-  > Their specification is out of scope: we rely on ledger-specific, out-of-band protocols for it.
+#### Consistency
 
-## Caching / Query service
+There is no fork in the ledger: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any receipts they have collected.
+
+#### Replayability and Auditing
+
+Everyone with access to the ledger can check the correctness of its contents. In particular,
+
+- the TS defines and enforces deterministic registration policies
+that can be re-evaluated based solely on the contents of the ledger,
+and must then yield the same result.
+
+- The ordering of entries, their cryptographic contents, and the ledger governance
+may be non-deterministic, but they must be verifiable.
+
+- The TS may additionally support verifiability of client authentication and access control.
+
+#### Governance and Bootstrapping
+
+The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ).
+
+Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them.
+
+- Governance may be based in a consortium of members that are jointly responsible for the TS,
+or automated based on the contents of an auxiliary governance TS.
+
+- Governance typically involves additional records in the ledger to enable its auditing. Hence, the ledger may contain both transparent claims and governance entries.
+
+- Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
+
+### Caching / Query service
 
 Untrusted. Replicated. Indexed.
 
 > This service could extract (read) receipts from the ledger.
 
-# SCITT COSE Envelopes
+## Verifying Transparent Claims
+
+For a given Artifact, Verifiers take as trusted inputs 
+its Issuer identity and DID document,
+its Feed, and 
+its TS receipt-verification key. 
+
+When presented with a transparent claim for the Artifact, 
+they verify its Issuer identity, signature, and receipt.
+They may additionally apply a validation policy based on the protected headers 
+and the statement itself, which may include security-critical Artifact-specific details.  
+
+Some verifiers may systematically resolve the issuer DID to fetch  
+their latest DID document. This strictly enforces the revocation of compromised keys: 
+once the issuer has updated its document to mark a key as revoked, 
+all claims signed with this key will be rejected. 
+Others may delegate DID resolution to a trusted third party and/or cache its results. 
+
+Some verifiers may decide to skip the DID-based signature verification, 
+relying on the TS registration policy and the scrutiny of other verifiers. 
+Although this weakens their guarantees against key revocation, or against a corrupt TS, 
+they can still keep the receipt and blame the issuer or the TS at a later point.  
+
+# Claim Issuance, Registration, and Verification
+
+> Now merging detailed syntax and protocols.
 
 **Format of signed claims / envelope**
 
@@ -292,6 +359,8 @@ Untrusted. Replicated. Indexed.
 >  Envelopes MAY include additional protected and unprotected headers.
 
 ## Issuer Identity
+
+> To be split between architecture subsections
 
 SCITT issuers are identified using DID, which provides a flexible, decentralized identity framework.
 
@@ -311,12 +380,7 @@ The service can cache and re-use DID resolution.
 
 Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
-### Why?
-
-COSE is generic, every application needs to constrain it to their own use cases, in this case the SCITT use cases.
-
 ##  SCITT COSE profile
-
 
 [TODO] describe semantics of `iss` and how it can be used together with `kid` to identity a verification method in a resolved DID document
 
@@ -465,7 +529,7 @@ We'd like to attach multiple receipts to the same signed claims, each receipt en
 
 # SCITT REST API
 
-> We may omit most of the details, or put it in an appendix.
+> We may summarize in the architecture, and put the rest in an appendix.
 
 ## Messages
 
