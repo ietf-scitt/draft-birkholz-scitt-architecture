@@ -50,7 +50,7 @@ In this document, the supply chain context is illustrated using problem statemen
 The resulting architecture is intended to enable multi-layer interoperability to produce and leverage believable trust assertions while maintaining a minimal adoption threshold.
 
 --- middle
----
+
 # Introduction
 
 The need for an understandable, scalable and resilient system that supports 
@@ -288,11 +288,12 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
 ### Registration Policy
 
-The registration policy takes as input the protected headers (but not the statement) of the claim to be registered 
+Each transparency service is parameterized by a Registration Policy 
+that takes as input the protected headers (but not the statement) of the claim to be registered 
 and the ledger (possibly including prior transparent claims from the same `issuer` and `feed`). 
 
-In particular, the `reg_info` header provides an extensible mechanism 
-that lets the issuer select the parts of the registration policy to be applied to a given claim. 
+The `reg_info` header provides an extensible mechanism that lets the issuer selects which tagged inputs to include,
+adnd thus parameterize the registration policy to be applied to each claim. 
 
 Future revisions of this note will specify a default policy that MUST be enforced for every tag present in `reg_info` and supported by the TS. For example, a `release_note` may be uninterpreted, whereas a `sequence number` may be accepted only if its value is either 1 if this is the first claim for this `feed` or n+1 if the last registered claim for this feed had `sequence number` n.  
 
