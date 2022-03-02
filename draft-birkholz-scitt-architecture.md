@@ -50,7 +50,7 @@ In this document, the supply chain context is illustrated using problem statemen
 The resulting architecture is intended to enable multi-layer interoperability to produce and leverage believable trust assertions while maintaining a minimal adoption threshold.
 
 --- middle
-
+---
 # Introduction
 
 The need for an understandable, scalable and resilient system that supports 
@@ -200,7 +200,7 @@ Receipt:
 
 Registration:
 
-: the process of submitting a claim to a transparency service, storing it in the ledger and producing the Receipt returned to the submitter.
+: the process of submitting a claim to a transparency service, applying its registration policy, storing it in the ledger and producing the Receipt returned to the submitter.
 
 Transparent Claim:
 
@@ -240,23 +240,37 @@ Reputable issuers are thus incentivized to carefully review their artifacts befo
 
 # Architecture Overview
 
-SCITT provides an interoperability framework to verify the transparency of claims about artifacts that can be registered across many different ledgers. Although instances of SCITT transparency services may differ in their implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence. As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, which maintains its own ledger. Similarly, the issuance of claims is fully decentralized: statements are endorsed by issuers using Distributed Identity schemes, which cover a wide range of distributed PKI implementations.
+SCITT provides an interoperability framework to verify the transparency of claims about artifacts that can be registered across multiple ledgers. Although instances of SCITT transparency services may differ in their policies and implementations, SCITT aims to enforce a common baseline accountability guarantee for auditors and consumers of transparency evidence. As a decentralized system, SCITT allows anyone to operate their own instance of a transparency service, maintaining their own ledger. Similarly, the issuance of claims is fully decentralized: statements are endorsed by issuers using Distributed Identity schemes, which cover a wide range of distributed PKI implementations.
 
 In this section, we describe at a high level the three main roles in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
 
 ## Claim Issuance
 
-Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
-There exist many different methods to create an distribute DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+### Issuer Identity 
 
-While issuers may update their DID document, for instance to add new signing keys or algorithms, 
-they should not change any prior keys---unless they intend to revoke all claims issued with those keys. 
+Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
+There exist many different methods to create and distribute a DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+
+Issuers SHOULD use fixed identifiers for their artifacts; they may update their DID manifest, for instance to add new signing keys or algorithms, but they should not remove or change any prior keys---unless they intend to revoke all claims issued with those keys. 
+
+### Issuance Policy
+
+To make a claim about a given artifact, the issuer selects its statement and metadata, format them as a COSE envelope, then sign it with their current DID key. 
+
+The metadata consists of fixed protected headers, including the `issuer` DID, a `feed` that indicates the name given by the issuer to the artifact, a `cty` that indicates the type and format of the statement, and a `reg_info` that collects optional, tagged inputs for registering the claim, such as a version string or a timestamp.   
+
+The issuer is responsible for the claims it signs, hence it SHOULD apply an conservative issuance policy: 
+it may for instance review the claim, authenticate and authorize additional parties that request the issuance or provide its contents, and enforce a uniform naming and versioning convention. 
+
+Once signed, the claim may be registered to one or several TS, either by the issuer or by a third party. 
+The issuer cna then store or distribute these claims, together with the transparency receipts it has obtained. 
 
 ## Transparency Service (TS)
 
-The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
+The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims, and enforcing a registration policy.
+It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
 
-These 3 components (identity, ledger and registration endpoint) constitute the trusted part of the transparency service. While the goal of SCITT is to support different implementations of a TS, all implementations MUST satisfy a set of requirements that are designed to minimize the trust required in TS operators and guarantee the auditability of their management.
+These components (identity, ledger, registration policy, and registration endpoint) constitute the trusted part of the transparency service. While the goal of SCITT is to support different implementations of a TS, all implementations MUST satisfy a set of requirements that are designed to minimize the trust required in TS operators and guarantee the auditability of their management.
 
 In addition, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as possible, the ledger should carry enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
@@ -271,6 +285,21 @@ Enabling remote authentication of the hardware platforms and software TCB that r
   Hardware attestation report, binding a public key for receipt verification to the long-term transparency service identity.
 
   RATS? proof-of-work?
+
+### Registration Policy
+
+The registration policy takes as input the protected headers (but not the statement) of the claim to be registered 
+and the ledger (possibly including prior transparent claims from the same `issuer` and `feed`). 
+
+In particular, the `reg_info` header provides an extensible mechanism 
+that lets the issuer select the parts of the registration policy to be applied to a given claim. 
+
+Future revisions of this note will specify a default policy that MUST be enforced for every tag present in `reg_info` and supported by the TS. For example, a `release_note` may be uninterpreted, whereas a `sequence number` may be accepted only if its value is either 1 if this is the first claim for this `feed` or n+1 if the last registered claim for this feed had `sequence number` n.  
+
+The transparency service MUST document its registration policy and the `reg_info` tags it supports, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification.    
+
+The transparency service MAY apply additional policies. As an example, a TS for a sofware provider may 
+additionally authenticate and authorize the parties that submit claims for registration.  
 
 ### Ledger Requirements
 
