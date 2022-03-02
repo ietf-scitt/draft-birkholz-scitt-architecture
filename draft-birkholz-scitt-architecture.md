@@ -64,7 +64,7 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent to everybody, unconditionally.
 Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
-Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+Nevertheless, it is of great importance to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims produced by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
@@ -76,7 +76,7 @@ These trustworthiness assertions provide an essential basis for holding issuers 
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on hardware attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.
+Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on system attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.
 
 The TS specified in this architecture caters two types of audiences:
 
