@@ -52,30 +52,36 @@ The resulting architecture is intended to enable multi-layer interoperability to
 
 # Introduction
 
-The need for an understandable, scalable and resilient system that provides trustworthy transparency for various kinds of existing and emerging supply chains is a global one.
+The need for an understandable, scalable and resilient system that supports 
+trust and transparency for various kinds of existing and emerging supply chains is a global one.
 This memo specifies an architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
 
 Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementary security guarantees:
 
 1. artifacts must be authenticated by their issuers; and
-2. an artifact's release must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently reviewed.
+2. artifacts must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently and consistently reviewed.
 
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
-Transparency does not imply being transparent to everybody, unconditionally.
-Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
+Transparency does not imply being transparent to everybody unconditionally, and it can be superficial, inasmuch as a TS need not understand, or even access the details of the artifacts it protects.
+Different organizations may operate their own TS, each subject to their own policy for authorizing entities to register their artifacts. And the same artifacts may be recorded in multiple TS, trusted by different relying parties. 
 Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+
+> TS or SCITT? TS or TS instance? When to switch from artifacts to claims? 
 
 A TS provides visibility into claims produced by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
-More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA are stored in the TS".
+More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA is stored in the TS".
 Conversely, a DSCA itself can be opaque to the TS, if so desired.
 It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
+
+> Don't understand "that compose TS instances" here. 
 
 These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Crucially, trust in the TS itself can be supported by providing guarantees about their implementation, based on hardware attestation, and by holding them accountable, based on independent auditing of the correctness and consistency of their whole transparency ledger.
+Trust in the TS itself is supported both by protecting their implementation using replication and hardware attestation, and by enabling independent audits of the correctness and consistency of its ledger, 
+thereby holding the organization that operates it accountable. 
 
 The TS specified in this architecture caters two types of audiences:
 
