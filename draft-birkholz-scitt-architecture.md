@@ -42,7 +42,8 @@ informative:
 
 --- abstract
 
-A transparent and authentic ledger service in support of a supply chain's integrity, transparency, and trust requires all peers that contribute to the ledgers operations to be trustworthy and authentic.
+Supply Chain transparency requires organizations to accurately identify and collect data from all links in the supply chain and to communicate this information both internally and externally at the level of detail required or desired. Supply Chain 
+transparency is of paramount importance in todays digital world, to address security challenges and risks posed to supply chain.
 
 In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
 
@@ -62,9 +63,9 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 2. artifacts must be recorded in a secure, append-only ledger, so that their provenance and release history can be independently and consistently reviewed.
 
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
-Transparency does not imply being transparent to everybody unconditionally, and it can be superficial, inasmuch as a TS need not understand, or even access the details of the artifacts it protects.
-Different organizations may operate their own TS, each subject to their own policy for authorizing entities to register their artifacts. And the same artifacts may be recorded in multiple TS, trusted by different relying parties. 
-Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+Transparency does not imply being transparent to everybody, unconditionally.
+Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
+Nevertheless, it is of great importance to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims issued by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
@@ -80,7 +81,7 @@ Transparent claims provide a common basis for holding issuers accountable for th
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using replication and hardware attestation) and by enabling independent audits of the correctness and consistency of its ledger, 
+Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, 
 thereby holding the organization that operates it accountable. 
 
 The TS specified in this architecture caters two types of audiences:
