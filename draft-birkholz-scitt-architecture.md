@@ -66,21 +66,21 @@ Transparency does not imply being transparent to everybody unconditionally, and 
 Different organizations may operate their own TS, each subject to their own policy for authorizing entities to register their artifacts. And the same artifacts may be recorded in multiple TS, trusted by different relying parties. 
 Nevertheless, it is of great import to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
-> TS or SCITT? TS or TS instance? When to switch from artifacts to claims? 
-
-A TS provides visibility into claims produced by supply chain entities and their sub-systems.
+A TS provides visibility into claims issued by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
-More importantly, a TS vouches for specific and well-defined metadata about these DSCAs, including "when was the DSCA recorded by the TS", "who issued the DSCA to the TS", or "what type of DSCA is stored in the TS".
-Conversely, a DSCA itself can be opaque to the TS, if so desired.
-It is the metadata that must always be transparent and that must warrant trust. That metadata includes distinct details and believable trustworthiness characteristics about the distinguishable system components that compose TS instances as well as their operations involving DSCA.
+A TS vouches for specific and well-defined metadata about these DSCAs.
+Some metadata is selected (and signed) by the issuer, indicating, e.g.,
+"who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version";  
+whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., 
+"when was the DSCA registered in the ledger".
+The DSCA contents can be opaque to the TS, if so desired: 
+it is the metadata that must always be transparent in order to  warrant trust. 
 
-> Don't understand "that compose TS instances" here. 
-
-These trustworthiness assertions provide an essential basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for the claims they make about such DSCAs.
+Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs.
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation using replication and hardware attestation, and by enabling independent audits of the correctness and consistency of its ledger, 
+Trust in the TS itself is supported both by protecting their implementation (using replication and hardware attestation) and by enabling independent audits of the correctness and consistency of its ledger, 
 thereby holding the organization that operates it accountable. 
 
 The TS specified in this architecture caters two types of audiences:
