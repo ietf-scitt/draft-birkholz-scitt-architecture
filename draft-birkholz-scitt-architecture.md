@@ -131,27 +131,26 @@ Public SBOM ledger
 
 ## Confidential Computing
 
-Confidential Computing leverages trusted execution environments (TEEs)
-to operate services in isolation, with hardware-based integrity and
-confidentiality protection.  When clients connects to such a service,
-the service presents attestation evidence that typically includes a
-platform certificate for its TEE and a measurement of the software it
-runs in this TEE. The client verifies the evidence before using the
-service.
+Confidential Computing can leverage hardware-protected
+trusted execution environments (TEEs) to operate a machine-learning
+service on private data with strict isolation guarantees. 
+Hence, a data custodian can authorize the use of their data to run a specific machine learning task, 
+without having to trust the service operator with their private data. 
+To this end, the custodian connects to the TEE; 
+the TEE presents attestation evidence that includes 
+a hardware certificate and a software measurement for their task;
+The custodian verifies this evidence; 
+then releases their data to the TEE. 
 
-But how can clients verify it is a valid measurement for the service?
-And how can operators update the service, e.g., to mitigate a new
-security vulnerability, without notifying all clients that they should
-use a new measurement?
+But how can a custodian verify the software measurement for their task?
+And how can operators update their software, e.g., to mitigate security vulnerabilities, 
+without first convincing all custodians to update the measurements they trust? 
 
-A supply chain that maintains a public record of the successive
-software releases for the service, recording both their measurements
+A supply chain that maintains a transparent record of the successive
+software releases for machine-learning tasks, recording both their software measurements
 and their provenance (source code, build reports, audit reports,...)
-can provide all clients with this information, while holding service
-developers and operators accountable for the software they release for
-the service.
-
-> Where to provide more details? Cutting for now: For instance, a signed excerpt of this record can be distributed with the service software, and attached to its attestation evidence, enabling clients to confirm the software image for their service has been released by a given issuer and registered on a given transparency ledger.
+can provide data custodians with the information they need to authorize these tasks, 
+while holding the machine-learning operator accountable for the software they release for them.
 
 
 # Terminology
