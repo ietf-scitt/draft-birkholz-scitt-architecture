@@ -42,8 +42,8 @@ informative:
 
 --- abstract
 
-Supply Chain transparency requires organizations to accurately identify and collect data from all links in the supply chain and to communicate this information both internally and externally at the level of detail required or desired. Supply Chain 
-transparency is of paramount importance in todays digital world, to address security challenges and risks posed to supply chain.
+Supply Chain transparency requires organizations to accurately identify and collect data from all links in the supply chain and to communicate this information both internally and externally at the level of detail required or desired. Supply Chain
+transparency is of paramount importance in today's digital world to address security challenges and risks posed to the supply chain.
 
 In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
 
@@ -53,7 +53,7 @@ The resulting architecture is intended to enable multi-layer interoperability to
 
 # Introduction
 
-The need for an understandable, scalable and resilient system that supports 
+The need for an understandable, scalable and resilient system that supports
 trust and transparency for various kinds of existing and emerging supply chains is a global one.
 This memo specifies an architecture for Transparency Service (TS) to systematically protect supply chains for digital artifacts.
 
@@ -65,26 +65,26 @@ Supply Chain Integrity, Transparency and Trust (SCITT) involves two complementar
 Transparency in the context of supply chains is always a well-scoped quality for each instance of a TS.
 Transparency does not imply being transparent to everybody, unconditionally.
 Each instance may enforce its own policy for authorizing entities to register their claims on the TS.
-Nevertheless, it is of great importance to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+Nevertheless, it is of great importance to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components are ever changing and always in flux.
 
 A TS provides visibility into claims issued by supply chain entities and their sub-systems.
 These claims are called Digital Supply Chain Artifacts (DSCA).
 A TS vouches for specific and well-defined metadata about these DSCAs.
 Some metadata is selected (and signed) by the issuer, indicating, e.g.,
 "who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version";  
-whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., 
+whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g.,
 "when was the DSCA registered in the ledger".
-The DSCA contents can be opaque to the TS, if so desired: 
-it is the metadata that must always be transparent in order to  warrant trust. 
+The DSCA contents can be opaque to the TS, if so desired:
+it is the metadata that must always be transparent in order to  warrant trust.
 
 Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs.
 Hence, issuers may register new claims about their artifacts, but they cannot delete or alter
 earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, 
-thereby holding the organization that operates it accountable. 
+Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger,
+thereby holding the organization that operates it accountable.
 
-The TS specified in this architecture caters two types of audiences:
+The TS specified in this architecture caters to two types of audiences:
 
 1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
 2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
@@ -95,7 +95,7 @@ If trust can be put into the operations that record DSCAs in a secure, append-on
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later).
-The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
+The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle Tree that functions as the append-only ledger for DSCAs.
 The format and verification process for ledger-based transparency receipts are described in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
 ## Requirements Notation
@@ -113,7 +113,7 @@ This section presents representative and solution-agnostic use cases to illustra
 
 ## Cold Chains for Seafood
 
-Once seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness mandating a continuous storing temperature between 1{{{°}}}C and 0{{{°}}}C (or -18{{{°}}}C and lower for frozen seafood). The temperature is recorded by cooling units adhering to certain compliance standards automatically. Batches of seafood can be split or aggregated before arriving in a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.
+Once seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness mandating a continuous storing temperature between 1{{{°}}}C and 0{{{°}}}C (or -18{{{°}}}C and lower for frozen seafood). The temperature is recorded by cooling units adhering to certain compliance standards automatically. Batches of seafood can be split or aggregated before arriving on a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.
 
 ## Maintenance Telemetry from Truck Fleets
 
@@ -134,7 +134,7 @@ Public SBOM ledger
 
 Confidential Computing leverages trusted execution environments (TEEs)
 to operate services in isolation, with hardware-based integrity and
-confidentiality protection.  When clients connects to such a service,
+confidentiality protection.  When clients connect to such a service,
 the service presents attestation evidence that typically includes a
 platform certificate for its TEE and a measurement of the software it
 runs in this TEE. The client verifies the evidence before using the
@@ -189,7 +189,7 @@ Feed:
 
 Ledger:
 
-: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple ledger formats to accomodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
+: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple ledger formats to accommodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
 Transparency Service:
 
@@ -234,7 +234,7 @@ Transparency is implemented by a ledger that provides a consistent, append-only,
 A receipt is an offline, universally-verifiable proof that an entry is recorded in the ledger.
 Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
-Anyone with access to the ledger can independenly verify its consistency and review the complete list of claims registered by its issuers.
+Anyone with access to the ledger can independently verify its consistency and review the complete list of claims registered by its issuers.
 
 Reputable issuers are thus incentivized to carefully review their artifacts before signing them. Similarly, reputable TS are incentivized to secure their ledger, inasmuch as any inconsistency can easily be pinpointed by any third party with read access to the ledger.
 
@@ -248,14 +248,14 @@ In this section, we describe at a high level the three main roles in SCITT: issu
 ## Claim Issuance
 
 Before an issuer is able to produce claims, it must first create its (decentralized identifier)[https://www.w3.org/TR/did-core] (also known as a DID).
-There exist many different methods to create an distribute DID. Issuers MAY chose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+There exist many different methods to create and distribute DID. Issuers MAY choose the method they prefer, but with no guarantee that all transparency service will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD support the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its key manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
 
-While issuers may update their DID document, for instance to add new signing keys or algorithms, 
-they should not change any prior keys---unless they intend to revoke all claims issued with those keys. 
+While issuers may update their DID document, for instance to add new signing keys or algorithms,
+they should not change any prior keys---unless they intend to revoke all claims issued with those keys.
 
 ## Transparency Service (TS)
 
-The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must exposes an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
+The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims. It also maintains a service identity, which is used to endorse the state of the ledger. It must expose an endpoint for registration of claims, which is the main operation that extends the ledger and returns a receipt.
 
 These 3 components (identity, ledger and registration endpoint) constitute the trusted part of the transparency service. While the goal of SCITT is to support different implementations of a TS, all implementations MUST satisfy a set of requirements that are designed to minimize the trust required in TS operators and guarantee the auditability of their management.
 
@@ -275,9 +275,9 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
 ### Ledger Requirements
 
-There are many different candidate verifiable datat structures that may be used to implement the ledger, such as historical Merkle Trees, sparse Merkle Trees, full blockchains, and many other variants. SCITT requires the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
+There are many different candidate verifiable data structures that may be used to implement the ledger, such as historical Merkle Trees, sparse Merkle Trees, full blockchains, and many other variants. SCITT requires the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
 
-Since the details of how to verify a receipt are specific to the data strcture, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger:
+Since the details of how to verify a receipt are specific to the data structure, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger:
 
 #### Finality
 
@@ -323,25 +323,25 @@ Untrusted. Replicated. Indexed.
 
 ## Verifying Transparent Claims
 
-For a given Artifact, Verifiers take as trusted inputs 
+For a given Artifact, Verifiers take as trusted inputs
 its Issuer identity and DID document,
-its Feed, and 
-its TS receipt-verification key. 
+its Feed, and
+its TS receipt-verification key.
 
-When presented with a transparent claim for the Artifact, 
+When presented with a transparent claim for the Artifact,
 they verify its Issuer identity, signature, and receipt.
-They may additionally apply a validation policy based on the protected headers 
+They may additionally apply a validation policy based on the protected headers
 and the statement itself, which may include security-critical Artifact-specific details.  
 
 Some verifiers may systematically resolve the issuer DID to fetch  
-their latest DID document. This strictly enforces the revocation of compromised keys: 
-once the issuer has updated its document to mark a key as revoked, 
-all claims signed with this key will be rejected. 
-Others may delegate DID resolution to a trusted third party and/or cache its results. 
+their latest DID document. This strictly enforces the revocation of compromised keys:
+once the issuer has updated its document to mark a key as revoked,
+all claims signed with this key will be rejected.
+Others may delegate DID resolution to a trusted third party and/or cache its results.
 
-Some verifiers may decide to skip the DID-based signature verification, 
-relying on the TS registration policy and the scrutiny of other verifiers. 
-Although this weakens their guarantees against key revocation, or against a corrupt TS, 
+Some verifiers may decide to skip the DID-based signature verification,
+relying on the TS registration policy and the scrutiny of other verifiers.
+Although this weakens their guarantees against key revocation, or against a corrupt TS,
 they can still keep the receipt and blame the issuer or the TS at a later point.  
 
 # Claim Issuance, Registration, and Verification
@@ -378,7 +378,7 @@ The service can cache and re-use DID resolution.
 
 > The rest of this section is based on an earlier syntactic spec.
 
-Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
+Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings. Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
 ##  SCITT COSE profile
 
