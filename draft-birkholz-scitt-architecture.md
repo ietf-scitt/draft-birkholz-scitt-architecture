@@ -41,6 +41,7 @@ author:
   country: UK
 
 normative:
+  RFC8610: CDDL
   RFC8152: COSE
   RFC9162: CT
   RFC6838:
@@ -377,7 +378,7 @@ The unprotected header may contain the following parameters:
 
 - receipts (label: `TBD`, to be registered): Array of receipts, defined in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
-In CDDL ([RFC 8610](https://datatracker.ietf.org/doc/html/rfc8610)) notation, the envelope is defined as follows:
+In CDDL {{-CDDL}} notation, the envelope is defined as follows:
 
 ~~~~CDDL
 SCITT_Envelope = COSE_Sign1_Tagged
