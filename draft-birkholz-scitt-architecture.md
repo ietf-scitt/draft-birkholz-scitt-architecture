@@ -74,7 +74,7 @@ Transparent claims provide a common basis for holding issuers accountable for th
 
 Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization that operates it accountable. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
 
-The TS specified in this architecture caters two types of audiences:
+The TS specified in this architecture caters to two types of audiences:
 
 1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
 2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
@@ -84,6 +84,7 @@ Analogously, DSCA Consumers rely on verifiable trustworthiness assertions associ
 If trust can be put into the operations that record DSCAs in a secure, append-only ledger via an online operation, the same trust can be put into a corresponding receipt that is the result of these online operations issued by the TS and that can be validated in offline operations.
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
+
 The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
 The format and verification process for ledger-based transparency receipts are described in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
@@ -156,7 +157,7 @@ Feed:
 
 Ledger:
 
-: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple ledger formats to accomodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
+: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple ledger formats to accommodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
 Transparency Service:
 
@@ -358,7 +359,7 @@ The service can cache and re-use DID resolution.
 
 > The rest of this section is based on an earlier syntactic spec.
 
-Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
+Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings. Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
 ##  COSE profile for claims
 
