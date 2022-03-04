@@ -25,12 +25,18 @@ author:
   country: Germany
 - ins: A. Delignat-Lavaud
   name: Antoine Delignat-Lavaud
-  organization: Microsoft
+  organization: Microsoft Research
+  street: 21 Station Road
+  code: 'CB1 2FB'
+  city: Cambridge
   email: antdl@microsoft.com
   country: UK
 - ins: C. Fournet
   name: Cedric Fournet
-  organization: Microsoft
+  organization: Microsoft Research
+  street: 21 Station Road
+  code: 'CB1 2FB'
+  city: Cambridge
   email: fournet@microsoft.com
   country: UK
 
@@ -39,17 +45,11 @@ normative:
   RFC9162: CT
   RFC6838:
 
-informative:
-  I-D.draft-birkholz-scitt-receipts:
-
 --- abstract
 
-Supply Chain transparency requires organizations to accurately identify and collect data from all links in the supply chain and to communicate this information both internally and externally at the level of detail required or desired. Supply Chain
-transparency is of paramount importance in todays digital world, to address security challenges and risks posed to supply chain.
+Traceability of supply chains for physical and digital artifacts is a long standing, but increasingly serious security concern. The rise in popularity of verifiable data structures as a mechanism to make actors more accountable for breaching their compliance promises has found some successful applications to specific use cases (such as the supply chain for digital certificates), but lacks a generic and scalable architecture that can address a wider range of use cases.
 
-In this document, the supply chain context is illustrated using problem statements, requirements are derived from use case definitions, and architectural constituents are specified and illustrated in usage scenarios.
-
-The resulting architecture is intended to enable multi-layer interoperability to produce and leverage believable trust assertions while maintaining a minimal adoption threshold.
+We propose a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any transparency service, with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of transparency services with various auditing and compliance requirements.
 
 --- middle
 
@@ -230,9 +230,9 @@ The combination of ledger, identity, registration policy evaluation, and registr
 
 Beyond the trusted components, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer and feed. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as practical, the ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
-### Service Identity and Keying
+### Service identity and keying
 
-We assume that all TS have a public service identity, which must be known by verifiers when validating a receipt, and may have a corresponding private service key. Implementers of verifier libraries should not assume a service identity is necessarily a signing public keys, as it is technically possible to use other cryptographic techniques to endorse the ledger state in receipts.
+We assume that all TS have a public service identity, which must be known by verifiers when validating a receipt, and may have a corresponding private service key. This identity should be stable for the lifetime of the ledger, so that all receipts remain valid. TS operators MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
 #### Attestability of service identity
 
@@ -242,25 +242,37 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 
   RATS? proof-of-work?
 
-### Registration Policy
+### Registration policies
 
-Each transparency service is parameterized by a Registration Policy
-that takes as input the protected headers (but not the statement) of the claim to be registered
-and the ledger (possibly including prior transparent claims from the same `issuer` and `feed`).
+> **Editor's note**
+>
+> The initial version of this document assumes registration policies are set for the lifetime of the ledger, and that they apply to all issuers and feeds uniformly.
+> There is an ongoing discussion on how to make the design more flexible to allow per-issuer and per-feed registration policies, and whether such policies should be updatable or if a policy change requires a feed change.
+> Please contribute your comments to the SCITT mailing list.
 
-The `reg_info` header provides an extensible mechanism that lets the issuer selects which tagged inputs to include,
-adnd thus parameterize the registration policy to be applied to each claim.
+Each transparency service is initially configured with a set of registration policies, which will be applied for the lifetime of the ledger.
+A registration policy represents a predicate that takes as input the current ledger and the envelope of a new claim (including the `reg_info` header which contains customizable additional attributes) to register, and returns a boolean decision on whether the claim should be included on the ledger or not. A TS MUST ensure that all its registration policies return a positive decision before adding a claim to the ledger.
 
-Future revisions of this note will specify a default policy that MUST be enforced for every tag present in `reg_info` and supported by the TS. For example, a `release_note` may be uninterpreted, whereas a `sequence number` may be accepted only if its value is either 1 if this is the first claim for this `feed` or n+1 if the last registered claim for this feed had `sequence number` n.
+While registration policies are a burden for issuers (some may require them to maintain state to remember what they have signed before), they greatly help auditors and verifiers in making sense of the information on the ledger. For instance, if a TS doesn't apply any policy, all claims may be registered in a different order than they have been created, and old claims may be arbitrarily replayed, which makes it difficult to understand the logical history of an artifact.
 
-The transparency service MUST document its registration policy and the `reg_info` tags it supports, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification.
+There are two kinds of registration policies: named policies have standardized semantics that are uniform across all implementations of SCITT transparency services, while custom policies are opaque and may contain pointers to (or even inlined) policy descriptions (declarative or programmable).
 
-The transparency service MAY apply additional policies. As an example, a TS for a sofware provider may
-additionally authenticate and authorize the parties that submit claims for registration.
+Transparency services MUST advertise what registration policies are enforced by their service, including the list of required `reg_info` attributes, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification. Implementation of receipt verifiers SHOULD persist the list of registration policies associated with a service identity, and return the list of registration policies as an output of receipt validation. Auditors MUST re-apply the registration policy of every entry in the ledger to ensure that the ledger applied them correctly.
 
-### Ledger Requirements
+Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Similarly, policies may be used
 
-There are many different candidate verifiable datat structures that may be used to implement the ledger, such as historical Merkle Trees, sparse Merkle Trees, full blockchains, and many other variants. SCITT requires the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
+The table below defined an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
+
+Policy Name | Required `reg_info` attributes | Implementation
+---|---|---
+TimeLimited | `register_by: uint` | Returns true if now () < register_by. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts
+Sequential | `sequence_no: uint` | First, lookup in the ledger for a claim with the same issuer and feed. If one is found, returns true if and only if the `sequence_no` of the new claim is incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
+Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`
+NoReplay | None | Returns true if and only if the claim doesn't already appear in the ledger
+
+### Ledger security requirements
+
+There are many different candidate verifiable data structures that may be used to implement the ledger, such as chronological Merkle Trees, sparse/indexed Merkle Trees, full blockchains, and many other variants. We only require the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
 
 Since the details of how to verify a receipt are specific to the data strcture, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger.
 
@@ -299,26 +311,17 @@ Governance procedures, their auditing, and their transparency are implementation
 
 ## Verifying Transparent Claims
 
-For a given Artifact, Verifiers take as trusted inputs
-its Issuer identity and DID document,
-its Feed, and
-its TS receipt-verification key.
+For a given Artifact, Verifiers take as trusted inputs:
+1. the distributed identifier of the issuer (or its resolved key manifest)
+2. the expected name of the artifact (i.e. the `feed`)
+3. the list of service identities of trusted TS
 
-When presented with a transparent claim for the Artifact,
-they verify its Issuer identity, signature, and receipt.
-They may additionally apply a validation policy based on the protected headers
-and the statement itself, which may include security-critical Artifact-specific details.
+When presented with a transparent claim for the Artifact, they verify its Issuer identity, signature, and receipt.
+They may additionally apply a validation policy based on the protected headers present both in the envelope or in the countersignature and the statement itself, which may include security-critical Artifact-specific details.
 
-Some verifiers may systematically resolve the issuer DID to fetch
-their latest DID document. This strictly enforces the revocation of compromised keys:
-once the issuer has updated its document to mark a key as revoked,
-all claims signed with this key will be rejected.
-Others may delegate DID resolution to a trusted third party and/or cache its results.
+Some verifiers may systematically resolve the issuer DID to fetch their latest DID document. This strictly enforces the revocation of compromised keys: once the issuer has updated its document to remove a key identifier, all claims signed with this `kid` will be rejected. However, Others may delegate DID resolution to a trusted third party and/or cache its results.
 
-Some verifiers may decide to skip the DID-based signature verification,
-relying on the TS registration policy and the scrutiny of other verifiers.
-Although this weakens their guarantees against key revocation, or against a corrupt TS,
-they can still keep the receipt and blame the issuer or the TS at a later point.
+Some verifiers may decide to skip the DID-based signature verification, relying on the TS registration policy and the scrutiny of other verifiers. Although this weakens their guarantees against key revocation, or against a corrupt TS, they can still keep the receipt and blame the issuer or the TS at a later point.
 
 # Claim Issuance, Registration, and Verification
 
@@ -356,27 +359,23 @@ The service can cache and re-use DID resolution.
 
 Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
-##  SCITT COSE profile
+##  COSE profile for claims
 
-[TODO] describe semantics of `iss` and how it can be used together with `kid` to identity a verification method in a resolved DID document
-
-A SCITT COSE message is a tagged COSE_Sign1 message.
+A claim is a tagged COSE_Sign1 message.
 
 The protected header must contain the following registered parameters:
 
 - alg (label: `1`): Asymmetric signature algorithm as integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml)
 - payload type (label: `3`): Media type of payload as string, for example `application/spdx+json`
 - issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer as string, for example `did:web:example.com`
-
-Depending on the DID method the protected header must contain one or more of the following registered parameters:
-
-- kid (label: `4`): Key identifier as a UTF-8 string encoded as a byte string, required for `did:web`
-- x5c (label: `33`): X.509 certificate chain (including Root CA certificate), required for TBD
+- feed (label: `TBD`): the issuer's name for the artifact
+- registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies
+- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key
 
 
 The unprotected header may contain the following parameters:
 
-- receipts (label: `TBD`, to be registered): Array of SCITT receipts, defined in TBD
+- receipts (label: `TBD`, to be registered): Array of receipts, defined in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
 In CDDL ([RFC 8610](https://datatracker.ietf.org/doc/html/rfc8610)) notation, the envelope is defined as follows:
 
@@ -392,26 +391,27 @@ COSE_Sign1 = [
   signature : bstr
 ]
 
+Reg_Info = {
+  ? "register_by": uint,
+  ? "sequence_no": uint,
+  ? "issuance_ts": uint,
+  * tstr => any
+}
+
+; All protected headers are mandatory, to protect against faulty implementations of COSE
+; that may accidentally read a missing protected header from the unprotected headers.
 Protected_Header = {
-  ; mandatory
   1 => int               ; algorithm identifier
   3 => tstr              ; payload type
   258 => tstr            ; DID of issuer
-
-  ; mandatory depending on DID method
-  ? 4 => bstr            ; key identifier
-  ? 33 => COSE_X509      ; X.509 certificate chain, excluding Root CA certificate
-
-  ; optional experimental parameters
-  ? -65537 => tstr       ; Feed
-  ? -65538 => uint       ; SVN
+  259 => tstr            ; Feed
+  260 => Reg_Info        ; Registration policy info
+  261 => bstr            ; key selector
 }
 
 Unprotected_Header = {
-   ? 259 => SCITT_Receipt / [+ SCITT_Receipt]
+   ? 257 => SCITT_Receipt / [+ SCITT_Receipt]
 }
-
-COSE_X509 = bstr / [ 2*certs: bstr ]
 ~~~~
 
 # Protocols
