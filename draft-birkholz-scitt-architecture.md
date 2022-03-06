@@ -8,10 +8,14 @@ area: Security
 wg: TBD
 kw: Internet-Draft
 cat: std
+consensus: yes
+submissiontype: IETF
 pi:
   toc: yes
   sortrefs: yes
   symrefs: yes
+kramdown_options:
+  auto_id_prefix: sec-
 
 author:
 - ins: H. Birkholz
@@ -45,10 +49,19 @@ normative:
   RFC8152: COSE
   RFC9162: CT
   RFC6838:
+informative:
+  I-D.birkholz-scitt-receipts:
+    -: RECEIPTS
+    title: Countersigning COSE Envelopes in Transparency Services
+    target: https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html
+
+venue:
+  type: non-WG
+  mail: scitt@ietf.org
 
 --- abstract
 
-Traceability of physical and digital artifacts in supply chains is a long standing, but increasingly serious security concern. The rise in popularity of verifiable data structures as a mechanism to make actors more accountable for breaching their compliance promises has found some successful applications to specific use cases (such as the supply chain for digital certificates), but lacks a generic and scalable architecture that can address a wider range of use cases.
+Traceability of physical and digital artifacts in supply chains is a long-standing, but increasingly serious security concern. The rise in popularity of verifiable data structures as a mechanism to make actors more accountable for breaching their compliance promises has found some successful applications to specific use cases (such as the supply chain for digital certificates), but lacks a generic and scalable architecture that can address a wider range of use cases.
 
 This memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any transparency service, with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of transparency services with various auditing and compliance requirements.
 
@@ -63,16 +76,16 @@ It achieves this goal by enforcing the following complementary security guarante
 2. such statements must be registered on a secure append-only ledger so that their provenance and history can be independently and consistently audited;
 3. issuers can efficiently prove to any other party the registration of their claims; verifying this proof ensures that the issuer is consistent and non-equivocal when making claims.
 
-The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement on an, immutable, append-only, transparent ledger. The last guarantee is achieved by implementing the ledger using a verifiable data structure (such as a Merkle Tree), and by the requiring a transparency service (TS) that operates the ledger to endorse its state at the time of registration.
+The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement on an immutable, append-only, transparent ledger. The last guarantee is achieved by implementing the ledger using a verifiable data structure (such as a Merkle Tree), and by requiring a transparency service (TS) that operates the ledger to endorse its state at the time of registration.
 
-The guarantees and techniques used in this document generalize those of Certificate Transparency ({{-CT}}), which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each TS implements and operates its ledger. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full ledger, or keep some information on the ledger encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+The guarantees and techniques used in this document generalize those of Certificate Transparency {{-CT}}, which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each TS implements and operates its ledger. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full ledger, or keep some information on the ledger encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims issued by supply chain entities and their sub-systems. These claims are called Digital Supply Chain Artifacts (DSCA).
 A TS vouches for specific and well-defined metadata about these DSCAs. Some metadata is selected (and signed) by the issuer, indicating, e.g., "who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version"; whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., "when was the DSCA registered in the ledger". The DSCA contents can be opaque to the TS, if so desired: it is the metadata that must always be transparent in order to  warrant trust.
 
 Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs. Hence, issuers may register new claims about their artifacts, but they cannot delete or alter earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization that operates it accountable. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
+Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
 
 The TS specified in this architecture caters to two types of audiences:
 
@@ -85,8 +98,8 @@ If trust can be put into the operations that record DSCAs in a secure, append-on
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 
-The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a merkle tree that functions as the append-only ledger for DSCAs.
-The format and verification process for ledger-based transparency receipts are described in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
+The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle tree that functions as the append-only ledger for DSCAs.
+The format and verification process for ledger-based transparency receipts are described in {{-RECEIPTS}}.
 
 ## Requirements Notation
 
@@ -104,7 +117,7 @@ Software Bills of Materials (SBOM) help the authors, packagers, distributors, au
 
 ## Confidential Computing
 
-Confidential Computing can leverage hardware-protected trusted execution environments (TEEs) to operate cloud services that protect the confidentiality of data that they process. It relies on remote attestation, which allows the service to prove to remote users what is hash of its code, as measured and signed by the hardware.
+Confidential Computing can leverage hardware-protected trusted execution environments (TEEs) to operate cloud services that protect the confidentiality of data that they process. It relies on remote attestation, which allows the service to prove to remote users what is the cryptographic hash of its code, as measured and signed by the hardware. <!-- what is hash???  -->
 
 For instance, consider a speech recognition service that implements machine learning inference using a deep neural network model. The operator of the service wants to prove to its users that the service preserves the user's privacy, that is, the submitted recordings can only be used to detect voice commands but no other purpose (such as storing the recordings or detecting mentions of brand names for advertisement purposes).
 When the user connects to the TEE implementing the service, the TEE presents attestation evidence that includes a hardware certificate and a software measurement for their task; the user verifies this evidence before sending its recording.
@@ -117,7 +130,7 @@ and their provenance (source code, build reports, audit reports,...) can provide
 
 ## Cold Chains for Seafood
 
-Once seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness mandating a continuous storing temperature between 1{{{°}}}C and 0{{{°}}}C (or -18{{{°}}}C and lower for frozen seafood). The temperature is recorded by cooling units adhering to certain compliance standards automatically. Batches of seafood can be split or aggregated before arriving in a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.
+Once seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness <!-- ??? --> mandating a continuous storing temperature between 1 {{{°}}}C and 0 {{{°}}}C (or -18 {{{°}}}C and lower for frozen seafood). The temperature is recorded by cooling units adhering to certain compliance standards automatically. Batches of seafood can be split or aggregated before arriving in a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.
 
 ## Maintenance Telemetry from Truck Fleets
 
@@ -136,7 +149,7 @@ Artifact:
 
 Statement:
 
-: any serializable information about an Artifact. To help interpretation of statements, they must be tagged with a media type (as specified in {{RFC6838}})
+: any serializable information about an Artifact. To help interpretation of statements, they must be tagged with a media type (as specified in {{RFC6838}}).
 
 Claim:
 
@@ -148,12 +161,12 @@ Issuer:
 
 Envelope:
 
-: the metadata added to the Statement by the Issuer to make it a Claim. It contains the identity of the issuer and other information to help Verifiers identify the Artifact referred in the statement. A Claim binds the Envelope to the statement. In COSE, the envelope consists of protected headers.
+: the metadata added to the Statement by the Issuer to make it a Claim. It contains the identity of the issuer and other information to help Verifiers identify the Artifact referred in the Statement. A Claim binds the Envelope to the Statement. In COSE, the Envelope consists of protected headers.
 
 Feed:
 
 : An identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Ledger on a Transparency Service contains a sequence of claims about the same Artifact.
- In COSE, feed is one of the protected headers of the envelope.
+ In COSE, Feed is one of the protected headers of the Envelope.
 
 Ledger:
 
@@ -165,7 +178,7 @@ Transparency Service:
 
 Receipt:
 
-: a Receipt is a special form of COSE countersignature for claims that embeds cryptographic evidence that the claim is recorded in the ledger. It consists of a ledger-specific inclusion proof, a signature by the transparency service of the state of the ledger, and additional metadata (contained in the countersignature protected headers) to assist in auditing.
+: a Receipt is a special form of COSE countersignature for claims that embeds cryptographic evidence that the Claim is recorded in the Ledger. It consists of a ledger-specific inclusion proof, a signature by the transparency service of the state of the ledger, and additional metadata (contained in the countersignature protected headers) to assist in auditing.
 
 Registration:
 
@@ -185,22 +198,22 @@ Verifier:
 
 In this document, we use a definition of transparency built over abstract notions of ledgers and receipts. Existing transparency systems such as Certificate Transparency are instances of this definition.
 
-A *claim* is an identifiable and non-repudiable statement made by an *issuer*. The issuer selects additional metadata and attaches a proof of endorsement (in most cases, a signature) using the identity key of the issuer that binds the statement and its metadata. Claims can be made *transparent* by attaching a proof of registration by a TS, in the form of a receipt that countersigns the claim and witnesses its inclusion in the ledger of a TS. By extension, we may say an artifact (e.g. a firmware binary) is *transparent* if it comes with one or more transparent claims from its author or owner, though the contect should make it clear what type of claim is expected for a given artifact.
+A *claim* is an identifiable and non-repudiable statement made by an *issuer*. The issuer selects additional metadata and attaches a proof of endorsement (in most cases, a signature) using the identity key of the issuer that binds the statement and its metadata. Claims can be made *transparent* by attaching a proof of registration by a TS, in the form of a receipt that countersigns the claim and witnesses its inclusion in the ledger of a TS. By extension, we may say an artifact (e.g. a firmware binary) is *transparent* if it comes with one or more transparent claims from its author or owner, though the context should make it clear what type of claim is expected for a given artifact.
 
 Transparency does not prevent dishonest or compromised issuers, but it holds them accountable: any artifact that may be used to target a particular user that checks for receipts must have been recorded in the tamper-proof ledger, and will be subject to scrutiny and auditing by other parties.
 
 Transparency is implemented by a ledger that provides a consistent, append-only, publicly available record of entries. Implementations of TS may protect their ledger using a combination of trusted hardware, replication and consensus protocols, and cryptographic evidence. A receipt is an offline, universally-verifiable proof that an entry is recorded in the ledger. Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
-Anyone with access to the ledger can independenly verify its consistency and review the complete list of claims registered by each issuer. However, the ledgers of separate transparency services are generally disjoint, though it is possible to take a claim from one ledger and register it again on another (if its policy allows it), so the authorization of the issuer and of the ledger by the verifier of the receipt are generally independent.
+Anyone with access to the ledger can independently verify its consistency and review the complete list of claims registered by each issuer. However, the ledgers of separate transparency services are generally disjoint, though it is possible to take a claim from one ledger and register it again on another (if its policy allows it), so the authorization of the issuer and of the ledger by the verifier of the receipt are generally independent.
 
 Reputable issuers are thus incentivized to carefully review their statements before signing them into claims. Similarly, reputable TS are incentivized to secure their ledger, as any inconsistency can easily be pinpointed by any auditor with read access to the ledger. Some ledger formats may also support consistency auditing through receipts, that is, given two valid receipts the TS may be asked to produce a cryptographic proof that they are consistent. Failure to produce this proof can indicate that the TS operator misbehaved.
 
 # Architecture Overview
 
 The SCITT architecture consists of a very loose federation of transparency services, and a set of common formats and protocols for issuing, registering and auditing claims.
-In order to accomodate as many TS implementations as possible, this document only specifies the format of claims (which must be used by all issuers) and a very thin wrapper format for receipts, which specifies the TS identity and the ledger algorithm. Most of the details of the receipt's contents are specific to the ledger algorithm. The [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html) document defines two initial ledger algorithms (for historical and sparse Merkle Trees), but other ledger formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
+In order to accomodate as many TS implementations as possible, this document only specifies the format of claims (which must be used by all issuers) and a very thin wrapper format for receipts, which specifies the TS identity and the ledger algorithm. Most of the details of the receipt's contents are specific to the ledger algorithm. The {{-RECEIPTS}} document defines two initial ledger algorithms (for historical and sparse Merkle Trees), but other ledger formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
 
-In this section, we describe at a high level the three main roles in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
+In this section, we describe at a high level the three main roles and associated processes in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
 
 ## Claim Issuance
 
@@ -209,9 +222,9 @@ In this section, we describe at a high level the three main roles in SCITT: issu
 Before an issuer is able to produce claims, it must first create its [decentralized identifier](https://www.w3.org/TR/did-core) (also known as a DID).
 A DID can be *resolved* into a *key manifest* (a list of public keys indexed by a *key identifier*) using many different methods.
 
-Issuers MAY chose the DID method they prefer, but with no guarantee that all TS will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+Issuers MAY choose the DID method they prefer, but with no guarantee that all TS will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD support the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
 
-Issuers SHOULD use a consistent decentralized identifiers for all their artifacts, to simplify authorization by verifiers and auditing. They MAY update their DID manifest, for instance to refresh their signing keys or algorithms, but they should not remove or change any prior keys unless they intend to revoke all claims issued with those keys. This DID appears in the `issuer` header of the claim's envelope, while the version of the key from the manifest used to sign the claim is written in the `kid` header.
+Issuers SHOULD use consistent decentralized identifiers for all their artifacts, to simplify authorization by verifiers and auditing. They MAY update their DID manifest, for instance to refresh their signing keys or algorithms, but they SHOULD NOT remove or change any prior keys unless they intend to revoke all claims issued with those keys. This DID appears in the `issuer` header of the claim's envelope, while the version of the key from the manifest used to sign the claim is written in the `kid` header.
 
 ### Naming artifacts
 
@@ -226,7 +239,7 @@ Such metadata, meant to be interpreted by the TS during registration policy eval
 
 ## Transparency Service (TS)
 
-The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims, and enforcing a registration policy. It also maintains a service key, which is used to endorse the state of the ledger in receipts. All TS MUST expose standard endpoints for registration of claims and receipt issuance, which is described in [Section 9.1]. Each TS also defines its registration policy, which MUST apply to all entries in the ledger.
+The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims, and enforcing a registration policy. It also maintains a service key, which is used to endorse the state of the ledger in receipts. All TS MUST expose standard endpoints for registration of claims and receipt issuance, which is described in {{sec-messages}}. Each TS also defines its registration policy, which MUST apply to all entries in the ledger.
 
 The combination of ledger, identity, registration policy evaluation, and registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, ledger extension and endorsement may be protected by running in a TEE; the ledger may be replicated and a consensus algorithm such as PBFT be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
 
@@ -237,6 +250,8 @@ Beyond the trusted components, transparency services may operate additional endp
 We assume that all TS have a public service identity, which must be known by verifiers when validating a receipt, and may have a corresponding private service key. This identity should be stable for the lifetime of the ledger, so that all receipts remain valid. TS operators MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
 #### Attestability of service identity
+
+START EDITING HERE
 
 Enabling remote authentication of the hardware platforms and software TCB that run the transparency service.
 
@@ -253,30 +268,31 @@ Enabling remote authentication of the hardware platforms and software TCB that r
 > Please contribute your comments to the SCITT mailing list.
 
 Each transparency service is initially configured with a set of registration policies, which will be applied for the lifetime of the ledger.
-A registration policy represents a predicate that takes as input the current ledger and the envelope of a new claim (including the `reg_info` header which contains customizable additional attributes) to register, and returns a boolean decision on whether the claim should be included on the ledger or not. A TS MUST ensure that all its registration policies return a positive decision before adding a claim to the ledger.
+A registration policy represents a predicate that takes as input the current ledger and the envelope of a new claim to register (including the `reg_info` header which contains customizable additional attributes), and returns a Boolean decision on whether the claim should be included on the ledger or not. A TS MUST ensure that all its registration policies return a positive decision before adding a claim to the ledger.
 
 While registration policies are a burden for issuers (some may require them to maintain state to remember what they have signed before), they greatly help auditors and verifiers in making sense of the information on the ledger. For instance, if a TS doesn't apply any policy, all claims may be registered in a different order than they have been created, and old claims may be arbitrarily replayed, which makes it difficult to understand the logical history of an artifact.
 
-There are two kinds of registration policies: named policies have standardized semantics that are uniform across all implementations of SCITT transparency services, while custom policies are opaque and may contain pointers to (or even inlined) policy descriptions (declarative or programmable).
+There are two kinds of registration policies: (1) named policies have standardized semantics that are uniform across all implementations of SCITT transparency services, while (2) custom policies are opaque and may contain pointers to (or even inlined) policy descriptions (declarative or programmable).
 
 Transparency services MUST advertise what registration policies are enforced by their service, including the list of required `reg_info` attributes, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification. Implementation of receipt verifiers SHOULD persist the list of registration policies associated with a service identity, and return the list of registration policies as an output of receipt validation. Auditors MUST re-apply the registration policy of every entry in the ledger to ensure that the ledger applied them correctly.
 
 Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Similarly, policies may be used
 
-The table below defined an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
+{{tbl-initial-named-policies}} defines an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
 
 Policy Name | Required `reg_info` attributes | Implementation
 ---|---|---
 TimeLimited | `register_by: uint` | Returns true if now () < register_by. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts
-Sequential | `sequence_no: uint` | First, lookup in the ledger for a claim with the same issuer and feed. If one is found, returns true if and only if the `sequence_no` of the new claim is incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
+Sequential | `sequence_no: uint` | First, lookup in the ledger for claims with the same issuer and feed. If at least one is found, returns true if and only if the `sequence_no` of the new claim is the highest `sequence_no` in the existing claims incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
 Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`
 NoReplay | None | Returns true if and only if the claim doesn't already appear in the ledger
+{: #tbl-initial-named-policies title="An Initial Set of Named Policies"}
 
 ### Ledger security requirements
 
 There are many different candidate verifiable data structures that may be used to implement the ledger, such as chronological Merkle Trees, sparse/indexed Merkle Trees, full blockchains, and many other variants. We only require the ledger to support concise receipts (i.e. whose size grows at most logarithmically in the number of entries in the ledger). This does not necessarily rule out blockchains as a ledger, but may necessitate advanced receipt schemes that use arguments of knowledge and other verifiable computing techniques.
 
-Since the details of how to verify a receipt are specific to the data strcture, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in [draft-birkholw-scitt-receipts] using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger.
+Since the details of how to verify a receipt are specific to the data structure, we do not specify any particular ledger format in this document. Instead, we propose two initial formats for ledgers in {{-RECEIPTS}} using historical and sparse Merkle Trees. Beyond the format of receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the ledger.
 
 #### Finality
 
@@ -301,11 +317,11 @@ Everyone with access to the ledger can check the correctness of its contents. In
 
 #### Governance and Bootstrapping
 
-The TS must support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS ).
+The TS needs to support governance, with well-defined procedures for allocating resources to operate the ledger (e.g., for provisioning trusted hardware and registering their attestation materials in the ledger) and for updating its code (e.g., relying on transparent claims about code updates, secured on the ledger itself, or on some auxiliary TS).
 
 Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them.
 
-- Governance may be based in a consortium of members that are jointly responsible for the TS, or automated based on the contents of an auxiliary governance TS.
+- Governance may be based on a consortium of members that are jointly responsible for the TS, or automated based on the contents of an auxiliary governance TS.
 
 - Governance typically involves additional records in the ledger to enable its auditing. Hence, the ledger may contain both transparent claims and governance entries.
 
@@ -314,14 +330,15 @@ Governance procedures, their auditing, and their transparency are implementation
 ## Verifying Transparent Claims
 
 For a given Artifact, Verifiers take as trusted inputs:
-1. the distributed identifier of the issuer (or its resolved key manifest)
-2. the expected name of the artifact (i.e. the `feed`)
-3. the list of service identities of trusted TS
+
+1. the distributed identifier of the issuer (or its resolved key manifest),
+2. the expected name of the artifact (i.e. the `feed`),
+3. the list of service identities of trusted TS.
 
 When presented with a transparent claim for the Artifact, they verify its Issuer identity, signature, and receipt.
 They may additionally apply a validation policy based on the protected headers present both in the envelope or in the countersignature and the statement itself, which may include security-critical Artifact-specific details.
 
-Some verifiers may systematically resolve the issuer DID to fetch their latest DID document. This strictly enforces the revocation of compromised keys: once the issuer has updated its document to remove a key identifier, all claims signed with this `kid` will be rejected. However, Others may delegate DID resolution to a trusted third party and/or cache its results.
+Some verifiers may systematically resolve the issuer DID to fetch their latest DID document. This strictly enforces the revocation of compromised keys: once the issuer has updated its document to remove a key identifier, all claims signed with this `kid` will be rejected. However, others may delegate DID resolution to a trusted third party and/or cache its results.
 
 Some verifiers may decide to skip the DID-based signature verification, relying on the TS registration policy and the scrutiny of other verifiers. Although this weakens their guarantees against key revocation, or against a corrupt TS, they can still keep the receipt and blame the issuer or the TS at a later point.
 
@@ -359,7 +376,7 @@ The service can cache and re-use DID resolution.
 
 > The rest of this section is based on an earlier syntactic spec.
 
-Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings. Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
+Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings. Large scale ledger services in support of supply chain authenticity and transparency require a simple and well-supported signing envelope that is easy to use and interoperates with the semantics of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
 
 ##  COSE profile for claims
 
@@ -377,11 +394,11 @@ The protected header must contain the following registered parameters:
 
 The unprotected header may contain the following parameters:
 
-- receipts (label: `TBD`, to be registered): Array of receipts, defined in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
+- receipts (label: `TBD`, to be registered): Array of receipts, defined in {{-RECEIPTS}}
 
 In CDDL {{-CDDL}} notation, the envelope is defined as follows:
 
-~~~~CDDL
+~~~~ cddl
 SCITT_Envelope = COSE_Sign1_Tagged
 
 COSE_Sign1_Tagged = #6.18(COSE_Sign1)
@@ -439,7 +456,7 @@ Claim formats include:
 - CoSWID
 - CycloneDX
 
-## Registering Signed Claims.
+## Registering Signed Claims
 
 The same claim may be independently registered in multiple TS.
 
@@ -451,7 +468,7 @@ To register a claim, the service performs the following steps:
 
 2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)
 
-> Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN of the new claim increments the claim of these prior claims.
+   > Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN <!-- ??? --> of the new claim increments the claim of these prior claims.
 
 3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.
 
@@ -476,7 +493,7 @@ These may be included in the verifier's trusted configuration, or determined by 
 
 Verification steps:
 
-1. Verify receipt (see other draft)
+1. Verify receipt (see {{-RECEIPTS}}).
 2. Verify issuer signature.
 3. Freshness/revocation?
 4. Validate format of the envelope contents.
