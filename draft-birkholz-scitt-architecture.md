@@ -207,6 +207,32 @@ Reputable issuers are thus incentivized to carefully review their statements bef
 
 # Architecture Overview
 
+~~~~
+             Artifact
+                |
+                v                      +------------------+
+ Issuer    -> Statement    Envelope    | DID Key Manifest |
+                \           /          |  (decentraized)  |
+                 \         /           +------------------+
+                  \ ______/               |     |
+                      |                   |     |
+                      v        signature  |     |
+                    Claim  <--------------/     |
+                      |                         |
+                      |   Receipt   +--------+  |
+Transparency ->       +-------------| Ledger |  /
+Service               |             +--------+ X
+                      v                       / \
+                 Transparent                 /   \
+                    Claim                   /    |
+                      |\                   /     |
+                      | \                 /      |
+                      |  \               /       |
+Verifier    ->        |    Verify Claim          |
+                      |                          |
+Auditor    ->       Collect Receipts     Replay Ledger
+~~~~
+
 The SCITT architecture consists of a very loose federation of transparency services, and a set of common formats and protocols for issuing, registering and auditing claims.
 In order to accomodate as many TS implementations as possible, this document only specifies the format of claims (which must be used by all issuers) and a very thin wrapper format for receipts, which specifies the TS identity and the ledger algorithm. Most of the details of the receipt's contents are specific to the ledger algorithm. The {{-RECEIPTS}} document defines two initial ledger algorithms (for historical and sparse Merkle Trees), but other ledger formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
 
@@ -322,7 +348,7 @@ Governance procedures, their auditing, and their transparency are implementation
 
 - Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
 
-## Verifying Transparent Claims {#verification}
+## Verifying Transparent Claims {#validation}
 
 For a given Artifact, Verifiers take as trusted inputs:
 
