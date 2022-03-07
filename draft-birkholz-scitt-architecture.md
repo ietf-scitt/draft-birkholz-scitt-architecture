@@ -140,9 +140,6 @@ Measurements from Electronic Control Units (ECUs) that are components of fleets 
 
 The terms defined in this section have special meaning in the context of Supply Chain Integrity, Transparency, and Trust throughout this document. When used in text, the corresponding terms are capitalized. To ensure readability, only a core set of terms is included in this section.[^1]
 
-[^1]: This list is a bucket today and subject to churn.
-{: source="Henk"}
-
 Artifact:
 
 : the physical or non-physical item that is moving along the supply chain.
@@ -210,6 +207,32 @@ Reputable issuers are thus incentivized to carefully review their statements bef
 
 # Architecture Overview
 
+~~~~
+             Artifact
+                |
+                v                      +------------------+
+ Issuer    -> Statement    Envelope    | DID Key Manifest |
+                \           /          |  (decentraized)  |
+                 \         /           +------------------+
+                  \ ______/               |     |
+                      |                   |     |
+                      v        signature  |     |
+                    Claim  <--------------/     |
+                      |                         |
+                      |   Receipt   +--------+  |
+Transparency ->       +-------------| Ledger |  /
+Service               |             +--------+ X
+                      v                       / \
+                 Transparent                 /   \
+                    Claim                   /    |
+                      |\                   /     |
+                      | \                 /      |
+                      |  \               /       |
+Verifier    ->        |    Verify Claim          |
+                      |                          |
+Auditor    ->       Collect Receipts     Replay Ledger
+~~~~
+
 The SCITT architecture consists of a very loose federation of transparency services, and a set of common formats and protocols for issuing, registering and auditing claims.
 In order to accomodate as many TS implementations as possible, this document only specifies the format of claims (which must be used by all issuers) and a very thin wrapper format for receipts, which specifies the TS identity and the ledger algorithm. Most of the details of the receipt's contents are specific to the ledger algorithm. The {{-RECEIPTS}} document defines two initial ledger algorithms (for historical and sparse Merkle Trees), but other ledger formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
 
@@ -274,7 +297,7 @@ There are two kinds of registration policies: (1) named policies have standardiz
 
 Transparency services MUST advertise the registration policies enforced by their service, including the list of `reg_info` attributes they require, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification. Implementations of receipt verifiers SHOULD persist the list of registration policies associated with a service identity, and return the list of registration policies as an output of receipt validation. Auditors MUST re-apply the registration policy of every entry in the ledger to ensure that the ledger applied them correctly.
 
-Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Similarly, policies may be used
+Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Verifying the signature of the issuer is also a form of registration policy, but it is globally enforced in order to separate authentication and authorization, with policy only considering authentic inputs.
 
 {{tbl-initial-named-policies}} defines an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
 
@@ -325,7 +348,7 @@ Governance procedures, their auditing, and their transparency are implementation
 
 - Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
 
-## Verifying Transparent Claims
+## Verifying Transparent Claims {#validation}
 
 For a given Artifact, Verifiers take as trusted inputs:
 
@@ -342,22 +365,22 @@ Some verifiers may decide to skip the DID-based signature verification, relying 
 
 # Claim Issuance, Registration, and Verification
 
-This section details the interoperability requirements for implementers of claim issuance and validation libraries, and transparency services.
+This section details the interoperability requirements for implementers of claim issuance and validation libraries, and of transparency services.
 
 ##  Envelope and Claim Format
 
 The formats of claims and receipts are based on CBOR Object Signing and Encryption (COSE). The choice of CBOR is a trade-off between safety (in particular, non-malleability: each claim has a unique serialization), ease of processing and availability of implementations.
 
-At a high-level that is the context of this architecture, a Claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of unrpotected headers in claims during registration and validation.
+At a high-level that is the context of this architecture, a Claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of additional unprotected headers in claims during registration and validation.
 
 All claims MUST include the following protected headers:
 
-- algorithm (label: `1`): Asymmetric signature algorithm as integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml)
-- issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer as string, for example `did:web:example.com`
-- feed (label: `TBD`): the issuer's name for the artifact
-- payload type (label: `3`): Media type of payload as string, for example `application/spdx+json`
-- registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies
-- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key
+- algorithm (label: `1`): Asymmetric signature algorithm used by the claim issuer, as an integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml);
+- issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer, as a string, for example `did:web:example.com`;
+- feed (label: `TBD`): the issuer's name for the artifact, as a string;
+- payload type (label: `3`): Media type of payload as a string, for example `application/spdx+json`
+- registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies;
+- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key, as a bytestring.
 
 Additionally, claims MAY carry the following unprotected headers:
 
@@ -419,11 +442,9 @@ Once all the envelope headers are set, the issuer MAY use a standard COSE implem
 
 The same claim may be independently registered in multiple TS. To register a claim, the service performs the following steps:
 
-1. Client authentication.
+1. Client authentication. This is implementation-specific, and MAY be unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
 
-So far, implementation-specific, and unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
-
-2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)
+2. Issuer identification. The TS MUST store evidence of the DID resolution for the `issuer` protected header of the envelope and the resolved key manifest at the time of registration for auditing. This MAY require that the service resolve the issuer DID and record the resulting document, or rely on a cache of recent resolutions.
 
 3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.
 
@@ -439,29 +460,21 @@ The last two steps MAY be shared between a batch of claims recorded in the ledge
 
 The service MUST ensure that the claim is committed before releasing its receipt, so that it can always back up the receipt by releasing the corresponding entry in the ledger. Conversely, the service MAY re-issue receipts for the ledger content, for instance after a transient fault during claim registration.
 
-## Verifying Transparent Signed Claims
+## Validation of transparent claims
 
-Trusted input for receipt verification: the identity
-and the public signature-verification key of the transparency service.
+This section provides additional implementation considerations, the high-level validation algorithm is described in {{validation}}, with the ledger-specific details of checking receipts are covered in {{-RECEIPTS}}.
 
-These may be included in the verifier's trusted configuration, or determined by a trusted policy.
+Before checking a claim, the verifier must be configured with one or more identities of trusted transparency services. If more than one service is configured, the verifier MUST return which service the claim is registered on.
 
-Verification steps:
+In some scenarios, the verifier already expects a specific issuer and feed for the claim, while in other cases they are not known in advance and can be an output of validation. Verifiers SHOULD offer a configuration to decide if the issuer's signature should be locally verified (which may require a DID resolution, and may fail if the manifest is not available or if the key is revoked), or if it should trust the validation done by the TS during registration.
 
-1. Verify receipt (see {{-RECEIPTS}}).
-2. Verify issuer signature.
-3. Freshness/revocation?
-4. Validate format of the envelope contents.
+Some verifiers MAY decide to locally re-apply some or all of the registration policies if they have limited trust in the TS. In addition, verifiers MAY apply arbitrary validation policies after the signature and receipt have been checked. Such policies may use as input all information in the envelope, the receipt, and the payload, as well as any local state.
 
-> Steps 2 and 3 are still TBD; the client should verify the issuer signature against the issuers' DID document at the time of registration.
-
-Once verified, the claims together with their authenticated issuer and transparent ledger identities can be used as input to an authorization policy.
+Verifiers SHOULD offer options to store or share receipts in case they are needed to audit the TS in case of a dispute.
 
 # Federation
 
 We explain how multiple, independent transparency services can be composed to distribute supply chains without a single transparency authority trusted by all parties.
-
-> Mostly out of scope for the first drafts? We should make sure our architecture supports it.
 
 Multiple SCITT instances, governed and operated by different organizations.
 
@@ -476,10 +489,9 @@ How?
 
 We'd like to attach multiple receipts to the same signed claims, each receipt endorsing the issuer signature and a subset of prior receipts. This involves down-stream ledgers verifying and recording these receipts before issuing their own receipts.
 
+# Transparency Service API
 
-# SCITT REST API
-
-> We may summarize in the architecture, and put the rest in an appendix.
+Editor's Note: this may be moved to appendix.
 
 ## Messages
 
@@ -553,11 +565,19 @@ The retrieved receipt may be embedded in the corresponding COSE_Sign1 document i
 
 # Privacy Considerations
 
-Privacy Considerations
+Unless advertised by the TS, every issuer should treat its claims as public. In particular, their envelope and statement should not carry any private information in plaintext. 
 
 # Security Considerations
 
-Security Considerations
+On its own, verifying a transparent claim does not guarantee that its envelope or contents are trustworthy---just that they have been signed by the apparent issuer and counter-signed by the 
+TS. If the verifier trusts the issuer, it can infer that the claim was issued with this envelope and contents, which may be interpreted as the issuer saying the artifact is fit for its intended purpose. If the verifier trusts the TS, it can independently infer that the claim passed the TS registration policy and that has been persisted in the ledger. Unless advertised in the TS registration policu, the verifier should not assume that the ordering of transparent claims in the ledger matches the ordering of their issuance. 
+
+Similarly, the fact that an issuer can be held accountable for its transparent claims does not on its own provide any mitigation or remediation mechanism in case one of these claims turned out to be misleading or malicious---just that signed evidence will be available to support them. 
+
+Issuers SHOULD ensure that the statements in their claims are correct and unambiguous, for example by avoiding ill-defined or ambiguous formats that may cause verifiers to interpret the claim as valid for some other purpose.   
+
+Issuers and Transparency Services SHOULD carefully protect their private signing keys
+and avoid these keys for any purpose not described in this architecture. In case key re-use is unavoidable, they MUST NOT sign any other message that may be verified as an envelope. 
 
 # IANA Considerations
 
