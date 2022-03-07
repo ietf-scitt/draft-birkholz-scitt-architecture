@@ -66,7 +66,7 @@ Traceability of physical and digital artifacts in supply chains is a long-standi
 This memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any transparency service, with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of transparency services with various auditing and compliance requirements.
 
 --- middle
----
+
 # Introduction
 
 This document describes a scalable and flexible decentralized architecture to enhance auditability and accountability in various existing and emerging supply chains.
@@ -85,7 +85,7 @@ A TS vouches for specific and well-defined metadata about these DSCAs. Some meta
 
 Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs. Hence, issuers may register new claims about their artifacts, but they cannot delete or alter earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
+Trust in the TS itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and remote attestation of systems) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
 
 The TS specified in this architecture caters to two types of audiences:
 
@@ -245,7 +245,7 @@ The combination of ledger, identity, registration policy evaluation, and registr
 
 Beyond the trusted components, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer and feed. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as practical, the ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
-### Service identity, attestation, and keying
+### Service Identity, Remote Attestation, and Keying
 
 Every TS MUST have a public service identity,
 associated with public/private key pairs for signing on behalf of the service. In particular, this identity must be known by verifiers when validating a receipt
@@ -344,11 +344,11 @@ Some verifiers may decide to skip the DID-based signature verification, relying 
 
 This section details the interoperability requirements for implementers of claim issuance and validation libraries, and of transparency services.
 
-##  Envelope and claim format
+##  Envelope and Claim Format
 
 The formats of claims and receipts are based on CBOR Object Signing and Encryption (COSE). The choice of CBOR is a trade-off between safety (in particular, non-malleability: each claim has a unique serialization), ease of processing and availability of implementations.
 
-At a high-level, a claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of additional unprotected headers in claims during registration and validation.
+At a high-level that is the context of this architecture, a Claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of additional unprotected headers in claims during registration and validation.
 
 All claims MUST include the following protected headers:
 
@@ -400,9 +400,9 @@ Unprotected_Header = {
 }
 ~~~~
 
-## Claim issuance
+## Claim Issuance
 
-There are many types of statements (such as SBOMs, malware scans, audit reports, policy definitions) that issuers may want to turn into claims. The issuer must first decide on a suitable format to serialize the statement, such as:
+There are many types of statements (such as SBOMs, malware scans, audit reports, policy definitions) that Issuers may want to turn into Claims. The Issuer must first decide on a suitable format to serialize the statement, such as:
 - JSON-SPDX
 - CBOR-SPDX
 - SWID
