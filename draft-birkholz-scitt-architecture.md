@@ -1,5 +1,5 @@
 ---
-title: An Architecture for Trustworthy Digital Supply Chain Transparency Services
+title: An Architecture for Trustworthy and Transparent Digital Supply Chains
 abbrev: SCITT Architecture
 docname: draft-birkholz-scitt-architecture-latest
 stand_alone: true
@@ -232,7 +232,7 @@ The combination of ledger, identity, registration policy evaluation, and registr
 
 Beyond the trusted components, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer and feed. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as practical, the ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
-### Service identity and keying
+### Service identity, attestaion, and keying
 
 We assume that all TS have a public service identity, which must be known by verifiers when validating a receipt, and may have a corresponding private service key. This identity should be stable for the lifetime of the ledger, so that all receipts remain valid. TS operators MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
