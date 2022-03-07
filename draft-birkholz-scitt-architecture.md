@@ -54,6 +54,21 @@ informative:
     -: RECEIPTS
     title: Countersigning COSE Envelopes in Transparency Services
     target: https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html
+  PBFT:
+    title: Practical byzantine fault tolerance and proactive recovery
+    target: https://doi:10.1145/571637.571640
+    author:
+    -
+      ins: M. Castro
+      name: Miguel Castro
+      org: Microsoft Research
+    -
+      ins: B. Liskov
+      name: Barbara Liskov
+      org: MIT Laboratory for Computer Science
+    date: 2002-11
+    seriesinfo:
+      ACM Transactions on Computer Systems, Volume 20, Issue 4
 
 venue:
   type: non-WG
@@ -98,7 +113,7 @@ If trust can be put into the operations that record DSCAs in a secure, append-on
 
 The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 
-The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs later). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle tree that functions as the append-only ledger for DSCAs.
+The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle tree that functions as the append-only ledger for DSCAs.
 The format and verification process for ledger-based transparency receipts are described in {{-RECEIPTS}}.
 
 ## Requirements Notation
@@ -150,7 +165,7 @@ Claim:
 
 Issuer:
 
-: the originator of named Statements, which are signed into Claims submitted to a Transparency Service for registration. The Issuer may be the owner or author of the Artifact, or a completely independent third party.
+: creator of Claims submitted to a Transparency Service for Registration. The Issuer may be the owner or author of the Artifact, or a completely independent third party.
 
 Envelope:
 
@@ -159,7 +174,7 @@ Envelope:
 Feed:
 
 : An identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Ledger on a Transparency Service contains a sequence of Claims about the same Artifact.
- In COSE, Feed is one of the protected headers of the Envelope.
+ In COSE, Feed is one header attributes in the protected header of the Envelope.
 
 Ledger:
 
@@ -167,7 +182,7 @@ Ledger:
 
 Transparency Service:
 
-: the entity that maintains and extends the Ledger, and endorses its state. A Transparency Service can be a complicated distributed system, and SCITT requires the TS to provide many security guarantees about its Ledger. The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
+: the entity that maintains and extends the Ledger, and endorses its state. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Ledger. The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
 
 Receipt:
 
@@ -260,7 +275,7 @@ Such metadata, meant to be interpreted by the TS during Registration policy eval
 
 The role of TS can be decomposed into several major functions. The most important is maintaining a Ledger, the verifiable data structure that records Claims, and enforcing a Registration policy. It also maintains a service key, which is used to endorse the state of the Ledger in Receipts. All TS MUST expose standard endpoints for Registration of Claims and Receipt issuance, which is described in {{sec-messages}}. Each TS also defines its Registration policy, which MUST apply to all entries in the Ledger.
 
-The combination of Ledger, identity, Registration policy evaluation, and Registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, Ledger extension and endorsement may be protected by running in a TEE; the Ledger may be replicated and a consensus algorithm such as PBFT may be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
+The combination of Ledger, identity, Registration policy evaluation, and Registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, Ledger extension and endorsement may be protected by running in a TEE; the Ledger may be replicated and a consensus algorithm such as pBFT {{PBFT}} may be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
 
 Beyond the trusted components, Transparency Services may operate additional endpoints for auditing, for instance to query for the history of Claims made by a given Issuer and Feed. Implementations of TS SHOULD avoid using the service identity and extending the Ledger in auditing endpoints; as much as practical, the Ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the Ledger.
 
