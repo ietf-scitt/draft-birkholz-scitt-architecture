@@ -539,11 +539,19 @@ The retrieved receipt may be embedded in the corresponding COSE_Sign1 document i
 
 # Privacy Considerations
 
-Privacy Considerations
+Unless advertised by the TS, every issuer should treat its claims as public. In particular, their envelope and statement should not carry any private information in plaintext. 
 
 # Security Considerations
 
-Security Considerations
+On its own, verifying a transparent claim does not guarantee that its envelope or contents are trustworthy---just that they have been signed by the apparent issuer and counter-signed by the 
+TS. If the verifier trusts the issuer, it can infer that the claim was issued with this envelope and contents, which may be interpreted as the issuer saying the artifact is fit for its intended purpose. If the verifier trusts the TS, it can independently infer that the claim passed the TS registration policy and that has been persisted in the ledger. Unless advertised in the TS registration policu, the verifier should not assume that the ordering of transparent claims in the ledger matches the ordering of their issuance. 
+
+Similarly, the fact that an issuer can be held accountable for its transparent claims does not on its own provide any mitigation or remediation mechanism in case one of these claims turned out to be misleading or malicious---just that signed evidence will be available to support them. 
+
+Issuers SHOULD ensure that the statements in their claims are correct and unambiguous, for example by avoiding ill-defined or ambiguous formats that may cause verifiers to interpret the claim as valid for some other purpose.   
+
+Issuers and Transparency Services SHOULD carefully protect their private signing keys
+and avoid these keys for any purpose not described in this architecture. In case key re-use is unavoidable, they MUST NOT sign any other message that may be verified as an envelope. 
 
 # IANA Considerations
 
