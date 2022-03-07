@@ -50,10 +50,7 @@ normative:
   RFC9162: CT
   RFC6838:
 informative:
-  I-D.birkholz-scitt-receipts:
-    -: RECEIPTS
-    title: Countersigning COSE Envelopes in Transparency Services
-    target: https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html
+  I-D.birkholz-scitt-receipts: RECEIPTS
   PBFT:
     title: Practical byzantine fault tolerance and proactive recovery
     target: https://doi:10.1145/571637.571640
