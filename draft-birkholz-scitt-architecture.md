@@ -344,7 +344,7 @@ Some verifiers may decide to skip the DID-based signature verification, relying 
 
 This section details the interoperability requirements for implementers of claim issuance and validation libraries, and transparency services.
 
-##  Envelope and claim format
+##  Envelope and Claim Format
 
 The formats of claims and receipts are based on CBOR Object Signing and Encryption (COSE). The choice of CBOR is a trade-off between safety (in particular, non-malleability: each claim has a unique serialization), ease of processing and availability of implementations.
 
