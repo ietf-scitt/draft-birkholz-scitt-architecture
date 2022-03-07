@@ -66,7 +66,7 @@ Traceability of physical and digital artifacts in supply chains is a long-standi
 This memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any transparency service, with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of transparency services with various auditing and compliance requirements.
 
 --- middle
-
+---
 # Introduction
 
 This document describes a scalable and flexible decentralized architecture to enhance auditability and accountability in various existing and emerging supply chains.
@@ -342,22 +342,22 @@ Some verifiers may decide to skip the DID-based signature verification, relying 
 
 # Claim Issuance, Registration, and Verification
 
-This section details the interoperability requirements for implementers of claim issuance and validation libraries, and transparency services.
+This section details the interoperability requirements for implementers of claim issuance and validation libraries, and of transparency services.
 
 ##  Envelope and claim format
 
 The formats of claims and receipts are based on CBOR Object Signing and Encryption (COSE). The choice of CBOR is a trade-off between safety (in particular, non-malleability: each claim has a unique serialization), ease of processing and availability of implementations.
 
-At a high-level, a claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of unrpotected headers in claims during registration and validation.
+At a high-level, a claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of additional unprotected headers in claims during registration and validation.
 
 All claims MUST include the following protected headers:
 
-- algorithm (label: `1`): Asymmetric signature algorithm as integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml)
-- issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer as string, for example `did:web:example.com`
-- feed (label: `TBD`): the issuer's name for the artifact
-- payload type (label: `3`): Media type of payload as string, for example `application/spdx+json`
-- registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies
-- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key
+- algorithm (label: `1`): Asymmetric signature algorithm used by the claim issuer, as an integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml);
+- issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer, as a string, for example `did:web:example.com`;
+- feed (label: `TBD`): the issuer's name for the artifact, as a string;
+- payload type (label: `3`): Media type of payload as a string, for example `application/spdx+json`
+- registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies;
+- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key, as a bytestring.
 
 Additionally, claims MAY carry the following unprotected headers:
 
@@ -419,9 +419,7 @@ Once all the envelope headers are set, the issuer MAY use a standard COSE implem
 
 The same claim may be independently registered in multiple TS. To register a claim, the service performs the following steps:
 
-1. Client authentication.
-
-So far, implementation-specific, and unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
+1. Client authentication. This is implementation-specific, and MAY be unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
 
 2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)
 
@@ -441,10 +439,7 @@ The service MUST ensure that the claim is committed before releasing its receipt
 
 ## Verifying Transparent Signed Claims
 
-Trusted input for receipt verification: the identity
-and the public signature-verification key of the transparency service.
-
-These may be included in the verifier's trusted configuration, or determined by a trusted policy.
+Receipt verification takes as trusted input the identity, the tree algorithm parameters, and the public signature-verification key of the transparency service. These may be included in the verifier's trusted configuration, or determined by a trusted policy.
 
 Verification steps:
 
