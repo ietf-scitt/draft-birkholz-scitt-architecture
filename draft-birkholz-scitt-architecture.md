@@ -251,7 +251,6 @@ We assume that all TS have a public service identity, which must be known by ver
 
 #### Attestability of service identity
 
-START EDITING HERE
 
 Enabling remote authentication of the hardware platforms and software TCB that run the transparency service.
 
