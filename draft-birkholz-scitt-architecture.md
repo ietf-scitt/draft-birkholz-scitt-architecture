@@ -271,7 +271,7 @@ There are two kinds of registration policies: (1) named policies have standardiz
 
 Transparency services MUST advertise the registration policies enforced by their service, including the list of `reg_info` attributes they require, both to minimize the risk of rejecting claims presented by issuers, and to advertise the properties implied by receipt verification. Implementations of receipt verifiers SHOULD persist the list of registration policies associated with a service identity, and return the list of registration policies as an output of receipt validation. Auditors MUST re-apply the registration policy of every entry in the ledger to ensure that the ledger applied them correctly.
 
-Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Similarly, policies may be used
+Custom policies may use additional information present in the ledger outside of claims. For instance, issuers may have to register on the TS before claims can be accepted; a custom policy may be used to enforce access control to the transparency service. Verifying the signature of the issuer is also a form of registration policy, but it is globally enforced in order to separate authentication and authorization, with policy only considering authentic inputs.
 
 {{tbl-initial-named-policies}} defines an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
 
@@ -322,7 +322,7 @@ Governance procedures, their auditing, and their transparency are implementation
 
 - Issuers, verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
 
-## Verifying Transparent Claims
+## Verifying Transparent Claims {#verification}
 
 For a given Artifact, Verifiers take as trusted inputs:
 
@@ -434,26 +434,21 @@ The last two steps MAY be shared between a batch of claims recorded in the ledge
 
 The service MUST ensure that the claim is committed before releasing its receipt, so that it can always back up the receipt by releasing the corresponding entry in the ledger. Conversely, the service MAY re-issue receipts for the ledger content, for instance after a transient fault during claim registration.
 
-## Verifying Transparent Signed Claims
+## Validation of transparent claims
 
-Receipt verification takes as trusted input the identity, the tree algorithm parameters, and the public signature-verification key of the transparency service. These may be included in the verifier's trusted configuration, or determined by a trusted policy.
+This section provides additional implementation considerations, the high-level validation algorithm is described in {{validation}}, with the ledger-specific details of checking receipts are covered in {{-RECEIPTS}}.
 
-Verification steps:
+Before checking a claim, the verifier must be configured with one or more identities of trusted transparency services. If more than one service is configured, the verifier MUST return which service the claim is registered on.
 
-1. Verify receipt (see {{-RECEIPTS}}).
-2. Verify issuer signature.
-3. Freshness/revocation?
-4. Validate format of the envelope contents.
+In some scenarios, the verifier already expects a specific issuer and feed for the claim, while in other cases they are not known in advance and can be an output of validation. Verifiers SHOULD offer a configuration to decide if the issuer's signature should be locally verified (which may require a DID resolution, and may fail if the manifest is not available or if the key is revoked), or if it should trust the validation done by the TS during registration.
 
-> Steps 2 and 3 are still TBD; the client should verify the issuer signature against the issuers' DID document at the time of registration.
+Some verifiers MAY decide to locally re-apply some or all of the registration policies if they have limited trust in the TS. In addition, verifiers MAY apply arbitrary validation policies after the signature and receipt have been checked. Such policies may use as input all information in the envelope, the receipt, and the payload, as well as any local state.
 
-Once verified, the claims together with their authenticated issuer and transparent ledger identities can be used as input to an authorization policy.
+Verifiers SHOULD offer options to store or share receipts in case they are needed to audit the TS in case of a dispute.
 
 # Federation
 
 We explain how multiple, independent transparency services can be composed to distribute supply chains without a single transparency authority trusted by all parties.
-
-> Mostly out of scope for the first drafts? We should make sure our architecture supports it.
 
 Multiple SCITT instances, governed and operated by different organizations.
 
@@ -468,10 +463,9 @@ How?
 
 We'd like to attach multiple receipts to the same signed claims, each receipt endorsing the issuer signature and a subset of prior receipts. This involves down-stream ledgers verifying and recording these receipts before issuing their own receipts.
 
+# Transparency Service API
 
-# SCITT REST API
-
-> We may summarize in the architecture, and put the rest in an appendix.
+Editor's Note: this may be moved to appendix.
 
 ## Messages
 
