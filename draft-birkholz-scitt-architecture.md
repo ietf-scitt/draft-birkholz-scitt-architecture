@@ -400,7 +400,7 @@ Unprotected_Header = {
 }
 ~~~~
 
-## Claim issuance
+## Claim Issuance
 
 There are many types of statements (such as SBOMs, malware scans, audit reports, policy definitions) that issuers may want to turn into claims. The issuer must first decide on a suitable format to serialize the statement, such as:
 - JSON-SPDX
