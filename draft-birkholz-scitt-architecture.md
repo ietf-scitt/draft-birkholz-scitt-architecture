@@ -245,7 +245,7 @@ The combination of ledger, identity, registration policy evaluation, and registr
 
 Beyond the trusted components, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer and feed. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as practical, the ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
-### Service identity, attestation, and keying
+### Service Identity, Remote Attestation, and Keying
 
 Every TS MUST have a public service identity,
 associated with public/private key pairs for signing on behalf of the service. In particular, this identity must be known by verifiers when validating a receipt
