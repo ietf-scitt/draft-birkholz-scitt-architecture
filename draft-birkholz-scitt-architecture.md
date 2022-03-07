@@ -328,55 +328,24 @@ Some verifiers may decide to skip the DID-based signature verification, relying 
 
 # Claim Issuance, Registration, and Verification
 
-> Now merging detailed syntax and protocols.
+This section details the interoperability requirements for implementers of claim issuance and validation libraries, and transparency services.
 
-**Format of signed claims / envelope**
+##  Envelope and claim format
 
-> Some headers that may be missing:
-  - feed (enabling separation of ids for issuers and artifacts)#
-  - svn (enabling versioning and rollback protection)
-  - cty (contents type/format descriptor)
-  - timestamp or serial number
+The formats of claims and receipts are based on CBOR Object Signing and Encryption (COSE). The choice of CBOR is a trade-off between safety (in particular, non-malleability: each claim has a unique serialization), ease of processing and availability of implementations.
 
->  Envelopes MAY include additional protected and unprotected headers.
+At a high-level, a claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of unrpotected headers in claims during registration and validation.
 
-## Issuer Identity
+All claims MUST include the following protected headers:
 
-> To be split between architecture subsections
-
-SCITT issuers are identified using DID, which provides a flexible, decentralized identity framework.
-
-The service MAY support the `did:web` method for bootstrapping identities from domain ownership via https certificates.
-
-The service MUST resolve the issuer DID before registering their claims.
-
-The service SHOULD record a transcript of the DID resolution at the time of registration.
-
-The service can cache and re-use DID resolution.
-- Evidence capture?
-- What does it mean in terms of transcript?
-
-> Details TBD. We could e.g. include a digest of the DID document at the time of registration in the leaf, or introduce another kind of record in the ledger.
-
-> The rest of this section is based on an earlier syntactic spec.
-
-Digital supply chain artifacts are heterogeneous and originated from sources using various formats and encodings. Large scale ledger services in support of supply chain authenticity and transparency require a simply and well-supported signing envelope that is easy to use and interoperates with the semantic of the ledger services. In this document, a COSE profile is defined that limits the potential use of a COSE envelope to the requirements of such a supply chain ledger, leveraging solutions and principles from the Concise Signing and Encryption (COSE) space.
-
-##  COSE profile for claims
-
-A claim is a tagged COSE_Sign1 message.
-
-The protected header must contain the following registered parameters:
-
-- alg (label: `1`): Asymmetric signature algorithm as integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml)
-- payload type (label: `3`): Media type of payload as string, for example `application/spdx+json`
+- algorithm (label: `1`): Asymmetric signature algorithm as integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml)
 - issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer as string, for example `did:web:example.com`
 - feed (label: `TBD`): the issuer's name for the artifact
+- payload type (label: `3`): Media type of payload as string, for example `application/spdx+json`
 - registration policy info (label: `TBD`): a map of additional attributes to help enforce registration policies
 - DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key
 
-
-The unprotected header may contain the following parameters:
+Additionally, claims MAY carry the following unprotected headers:
 
 - receipts (label: `TBD`, to be registered): Array of receipts, defined in [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html)
 
@@ -417,52 +386,40 @@ Unprotected_Header = {
 }
 ~~~~
 
-# Protocols
+## Claim issuance
 
-## Issuing Signed Claims about an Artifact.
-
-Issuance itself is just signing with a key currently associated with the issuer DID.
-
-### SCITT is agnostic to claim types and formats (?)
-
-> Are we going to specify formats for envelope payloads, aka "sets of claims" ? How are the types and formats below authenticated? We considered a "cty" protected header for that purpose.
-
-Claim types include:
-- SBOMs
-- Malware scans
-- Human audits
-- Policies (= parameterized claims, with subject as input parameter)
-
-Claim formats include:
+There are many types of statements (such as SBOMs, malware scans, audit reports, policy definitions) that issuers may want to turn into claims. The issuer must first decide on a suitable format to serialize the statement, such as:
 - JSON-SPDX
 - CBOR-SPDX
 - SWID
 - CoSWID
 - CycloneDX
+- in-toto
+- SLSA
+
+Once the statement is serialized with the correct content type, the issuer should fill in the attributes for the registration policy information header. From the issuer's perspective, using attributes from named policies ensures that the claim may only be registered on transparency services that implement the associated policy. For instance, if a claim is frequently updated, and it is important for verifiers to always consider the latest version, issuers SHOULD use the `sequence_no` or `issuer_ts` attributes.
+
+Once all the envelope headers are set, the issuer MAY use a standard COSE implementation to produce the serialized claim (the SCITT tag of `COSE_Sign1_Tagged` is outside the scope of COSE, and used to indicate that a signed object is a claim).
 
 ## Registering Signed Claims.
 
-The same claim may be independently registered in multiple TS.
-
-To register a claim, the service performs the following steps:
+The same claim may be independently registered in multiple TS. To register a claim, the service performs the following steps:
 
 1. Client authentication.
 
-   So far, implementation-specific, and unrelated to the issuer identity.
+So far, implementation-specific, and unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
 
 2. Issuer identification. The service must check that the ledger records a recent DID document for the `issuer` protected header of the envelope. This MAY require that the service resolve the issuer DID and record the resulting document. (See issuer identity above.)
-
-> Still missing any validation step involving prior claims, e.g., if the ledger already records any other claims from the same issuer with the same feed, check that the SVN of the new claim increments the claim of these prior claims.
 
 3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.
 
 4. Envelope validation. The service MUST check that the envelope has a payload and the protected headers listed above. The service MAY additionally verify the payload format and content.
 
-5. The service MAY apply an additional service-specific registration policy. The service SHOULD document this step, and MAY record additional evidence to enable its replayability.
+5. Apply registration policy: for named policies, the TS should check that the required registration info attributes are present in the envelope and apply the check described in Table 1. A TS MUST reject claims that contain an attribute used for a named policy that is not enforced by the service. Custom claims are evaluated given the current ledger state and the entire envelope, and MAY use information contained in the attributes of named policies.
 
-6. Commit to the ledger.
+6. Commit the new claim to the ledger
 
-7. Sign and return receipt.
+7. Sign and return the receipt.
 
 The last two steps MAY be shared between a batch of claims recorded in the ledger.
 
@@ -511,7 +468,6 @@ We'd like to attach multiple receipts to the same signed claims, each receipt en
 > We may summarize in the architecture, and put the rest in an appendix.
 
 ## Messages
-
 
 ### Register Signed Claims
 
