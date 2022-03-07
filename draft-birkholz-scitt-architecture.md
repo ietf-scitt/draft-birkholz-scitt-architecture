@@ -418,7 +418,7 @@ The same claim may be independently registered in multiple TS. To register a cla
 
 1. Client authentication. This is implementation-specific, and MAY be unrelated to the issuer identity. Claims may be registered by a different party than their issuer.
 
-2. Issuer identification. The TS MUST store evidence of the DID resolution for the `issuer` protected header of the envelope and the resolved key manifest at the time of registration for auditing. This MAY require that the service resolve the issuer DID and record the resulting document, or rely on a cache of recent resolutions. 
+2. Issuer identification. The TS MUST store evidence of the DID resolution for the `issuer` protected header of the envelope and the resolved key manifest at the time of registration for auditing. This MAY require that the service resolve the issuer DID and record the resulting document, or rely on a cache of recent resolutions.
 
 3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the issuer DID document.
 
