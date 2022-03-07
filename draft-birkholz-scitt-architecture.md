@@ -247,14 +247,14 @@ Beyond the trusted components, transparency services may operate additional endp
 
 ### Service identity, attestation, and keying
 
-Every TS MUST have a public service identity, 
+Every TS MUST have a public service identity,
 associated with public/private key pairs for signing on behalf of the service. In particular, this identity must be known by verifiers when validating a receipt
 
 This identity should be stable for the lifetime of the service, so that all receipts remain valid and consistent. The TS operator MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
 The TS SHOULD provide evidence that it is securely implemented and operated, enabling remote authentication of the hardware platforms and/or software TCB that run the transparency service. This additional evidence SHOULD be recorded in the ledger and presented on demand to verifiers and auditors.
 
-For example, consider a TS implemented using a set of replicas, each running within its own hardware-protected trusted execution environments (TEEs). Each replica SHOULD provide a recent attestation report for its TEE, binding their hardware platform to the software that runs the transparency service, the long-term public key of the service, and the key used by the replica for signing receipts. This attestation evidence SHOULD be supplemented with transparency receipts for the software and configuration of the service, as measured in its attestation report. 
+For example, consider a TS implemented using a set of replicas, each running within its own hardware-protected trusted execution environments (TEEs). Each replica SHOULD provide a recent attestation report for its TEE, binding their hardware platform to the software that runs the transparency service, the long-term public key of the service, and the key used by the replica for signing receipts. This attestation evidence SHOULD be supplemented with transparency receipts for the software and configuration of the service, as measured in its attestation report.
 
 
 ### Registration policies
@@ -268,7 +268,7 @@ For example, consider a TS implemented using a set of replicas, each running wit
 Each transparency service is initially configured with a set of registration policies, which will be applied for the lifetime of the ledger.
 A registration policy represents a predicate that takes as input the current ledger and the envelope of a new claim to register (including the `reg_info` header which contains customizable additional attributes), and returns a Boolean decision on whether the claim should be included on the ledger or not. A TS MUST ensure that all its registration policies return a positive decision before adding a claim to the ledger.
 
-While registration policies are a burden for issuers (some may require them to maintain state to remember what they have signed before) they support stronger transparency guarantees, and they greatly help verifiers and auditors in making sense of the information on the ledger. (This is particularly relevant for parties that verify receipts on their own, without accessing the ledger.) For instance, if a TS doesn't apply any policy, claims may be registered in a different order than they have been issued, and old claims may be replayed, which makes it difficult to understand the logical history of an artifact, or to prevent rollback attacks. 
+While registration policies are a burden for issuers (some may require them to maintain state to remember what they have signed before) they support stronger transparency guarantees, and they greatly help verifiers and auditors in making sense of the information on the ledger. (This is particularly relevant for parties that verify receipts on their own, without accessing the ledger.) For instance, if a TS doesn't apply any policy, claims may be registered in a different order than they have been issued, and old claims may be replayed, which makes it difficult to understand the logical history of an artifact, or to prevent rollback attacks.
 
 There are two kinds of registration policies: (1) named policies have standardized semantics that are uniform across all implementations of SCITT transparency services, while (2) custom policies are opaque and may contain pointers to (or even inlined) policy descriptions (declarative or programmable).
 
