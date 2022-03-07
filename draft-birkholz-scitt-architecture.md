@@ -63,16 +63,16 @@ It achieves this goal by enforcing the following complementary security guarante
 2. such statements must be registered on a secure append-only ledger so that their provenance and history can be independently and consistently audited;
 3. issuers can efficiently prove to any other party the registration of their claims; verifying this proof ensures that the issuer is consistent and non-equivocal when making claims.
 
-The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement on an, immutable, append-only, transparent ledger. The last guarantee is achieved by implementing the ledger using a verifiable data structure (such as a Merkle Tree), and by the requiring a transparency service (TS) that operates the ledger to endorse its state at the time of registration.
+The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement on an immutable, append-only, transparent ledger. The last guarantee is achieved by implementing the ledger using a verifiable data structure (such as a Merkle Tree), and by requiring that the transparency service (TS) that operates the ledger endorse its state at the time of registration.
 
-The guarantees and techniques used in this document generalize those of Certificate Transparency ({{-CT}}), which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each TS implements and operates its ledger. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full ledger, or keep some information on the ledger encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+The guarantees and techniques used in this document generalize those of Certificate Transparency ({{-CT}}), which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in the way each TS implements and operates its ledger. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full ledger, or keep some information on the ledger encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
 A TS provides visibility into claims issued by supply chain entities and their sub-systems. These claims are called Digital Supply Chain Artifacts (DSCA).
 A TS vouches for specific and well-defined metadata about these DSCAs. Some metadata is selected (and signed) by the issuer, indicating, e.g., "who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version"; whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., "when was the DSCA registered in the ledger". The DSCA contents can be opaque to the TS, if so desired: it is the metadata that must always be transparent in order to  warrant trust.
 
 Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs. Hence, issuers may register new claims about their artifacts, but they cannot delete or alter earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using replication and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization that operates it accountable. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
+Trust in the TS itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and system attestation) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization that operates it accountable. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require that each TS guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.
 
 The TS specified in this architecture caters to two types of audiences:
 
@@ -98,13 +98,13 @@ This section presents representative and solution-agnostic use cases to illustra
 
 ## Software Bill of Materials (SBOM)
 
-As the ever increasing complexity of large software projects requires more modularity and abstractions to manage, keeping track of their full Trusted Computing Base (TCB) is becoming increasingly difficult. Each component may have its own set of dependencies and libraries. Some of these dependencies are binaries, which means their TCB depends not only on their source, but also on the build environment (compilers and tool-chains). Many source and binary packages are distributed through various channels and repositories that may not be trustworthy.
+As the ever increasing complexity of large software projects requires more modularity and abstractions to manage them, keeping track of their full Trusted Computing Base (TCB) is becoming increasingly difficult. Each component may have its own set of dependencies and libraries. Some of these dependencies are binaries, which means their TCB depends not only on their source, but also on their build environment (compilers and tool-chains). Besides, many source and binary packages are distributed through various channels and repositories that may not be trustworthy.
 
 Software Bills of Materials (SBOM) help the authors, packagers, distributors, auditors and users of software understand its provenance and who may have the ability to introduce a vulnerability that can affect the supply chain downstream. However, the usefulness of SBOM in protecting end users is limited if supply chain actors cannot be held accountable for their contents. For instance, consider a package repository for an open source operating system distribution. The operator of this repository may decide to provide a malicious version of a package only to users who live in a specific country. They can write two equivocal SBOMs for the honest and backdoored versions of the package, so that nobody outside the affected country can discover the malicious version, but victims are not aware they are being targetted.
 
 ## Confidential Computing
 
-Confidential Computing can leverage hardware-protected trusted execution environments (TEEs) to operate cloud services that protect the confidentiality of data that they process. It relies on remote attestation, which allows the service to prove to remote users what is hash of its code, as measured and signed by the hardware.
+Confidential Computing can leverage hardware-protected trusted execution environments (TEEs) to operate cloud services that protect the confidentiality of data that they process. It relies on remote attestation, which allows the service to prove to remote users what is the hash of its software, as measured and signed by the hardware.
 
 For instance, consider a speech recognition service that implements machine learning inference using a deep neural network model. The operator of the service wants to prove to its users that the service preserves the user's privacy, that is, the submitted recordings can only be used to detect voice commands but no other purpose (such as storing the recordings or detecting mentions of brand names for advertisement purposes).
 When the user connects to the TEE implementing the service, the TEE presents attestation evidence that includes a hardware certificate and a software measurement for their task; the user verifies this evidence before sending its recording.
@@ -197,7 +197,7 @@ Reputable issuers are thus incentivized to carefully review their statements bef
 
 # Architecture Overview
 
-The SCITT architecture consists of a very loose federation of transparency services, and a set of common formats and protocols for issuing, registering and auditing claims.
+The SCITT architecture consists of a loose federation of transparency services, and a set of common formats and protocols for issuing, registering and auditing claims.
 In order to accomodate as many TS implementations as possible, this document only specifies the format of claims (which must be used by all issuers) and a very thin wrapper format for receipts, which specifies the TS identity and the ledger algorithm. Most of the details of the receipt's contents are specific to the ledger algorithm. The [Counter-Signing Receipts](https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html) document defines two initial ledger algorithms (for historical and sparse Merkle Trees), but other ledger formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
 
 In this section, we describe at a high level the three main roles in SCITT: issuers and the claim issuance process, transparency ledgers and the claim registration process, and verifiers and the receipt validation process.
@@ -207,11 +207,11 @@ In this section, we describe at a high level the three main roles in SCITT: issu
 ### Issuer Identity
 
 Before an issuer is able to produce claims, it must first create its [decentralized identifier](https://www.w3.org/TR/did-core) (also known as a DID).
-A DID can be *resolved* into a *key manifest* (a list of public keys indexed by a *key identifier*) using many different methods.
+A DID can be *resolved* into a *key manifest* (a list of public keys indexed by a *key identifier*) using many different DID methods.
 
-Issuers MAY chose the DID method they prefer, but with no guarantee that all TS will be able to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
+Issuers MAY chose the DID method they prefer, but with no guarantee that all TS will be able to resolve them to register their claim. To facilitate interoperability, all transparency service implementations SHOULD suport the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the issuer is `did:web:sample.issuer:user:alice`.
 
-Issuers SHOULD use a consistent decentralized identifiers for all their artifacts, to simplify authorization by verifiers and auditing. They MAY update their DID manifest, for instance to refresh their signing keys or algorithms, but they should not remove or change any prior keys unless they intend to revoke all claims issued with those keys. This DID appears in the `issuer` header of the claim's envelope, while the version of the key from the manifest used to sign the claim is written in the `kid` header.
+Issuers SHOULD use consistent decentralized identifiers for all their artifacts, to simplify authorization by verifiers and auditing. They MAY update their DID manifest, for instance to refresh their signing keys or algorithms, but they should not remove or change any prior keys unless they intend to revoke all claims issued with those keys. This DID appears in the `issuer` header of the claim's envelope, while the version of the key from the manifest used to sign the claim is written in the `kid` header.
 
 ### Naming artifacts
 
@@ -228,21 +228,22 @@ Such metadata, meant to be interpreted by the TS during registration policy eval
 
 The role of transparency service can be decomposed into several major functions. The most important is maintaining a ledger, the verifiable data structure that records claims, and enforcing a registration policy. It also maintains a service key, which is used to endorse the state of the ledger in receipts. All TS MUST expose standard endpoints for registration of claims and receipt issuance, which is described in [Section 9.1]. Each TS also defines its registration policy, which MUST apply to all entries in the ledger.
 
-The combination of ledger, identity, registration policy evaluation, and registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, ledger extension and endorsement may be protected by running in a TEE; the ledger may be replicated and a consensus algorithm such as PBFT be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
+The combination of ledger, identity, registration policy evaluation, and registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, ledger extension and endorsement may be protected by running in a TEE; the ledger may be replicated and a consensus algorithm such as PBFT may be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
 
 Beyond the trusted components, transparency services may operate additional endpoints for auditing, for instance to query for the history of claims made by a given issuer and feed. Implementations of TS SHOULD avoid using the service identity and extending the ledger in auditing endpoints; as much as practical, the ledger SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the ledger.
 
-### Service identity, attestaion, and keying
+### Service identity, attestation, and keying
 
-We assume that all TS have a public service identity, which must be known by verifiers when validating a receipt, and may have a corresponding private service key. This identity should be stable for the lifetime of the ledger, so that all receipts remain valid. TS operators MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
+Every TS MUST have a public service identity, 
+associated with public/private key pairs for signing on behalf of the service. In particular, this identity must be known by verifiers when validating a receipt
 
-#### Attestability of service identity
+This identity should be stable for the lifetime of the service, so that all receipts remain valid and consistent. The TS operator MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the ledger algorithm they use for their receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
-Enabling remote authentication of the hardware platforms and software TCB that run the transparency service.
+The TS SHOULD provide evidence that it is securely implemented and operated. 
+This additional evidence SHOULD be recorded in the ledger and presented on demand to verifiers and auditors.
 
-  Hardware attestation report, binding a public key for receipt verification to the long-term transparency service identity.
+For example, consider a TS implemented using a set of replicas, each running within its own hardware-protected trusted execution environments (TEEs). Each replica SHOULD provide a recent attestation report for its TEE, binding their hardware platform to the software that runs the transparency service, the long-term public key of the service, and the key used by the replica for signing receipts. This attestation evidence SHOULD be supplemented with transparency receipts for the software and configuration of the service, as measured in its attestation report. 
 
-  RATS? proof-of-work?
 
 ### Registration policies
 
