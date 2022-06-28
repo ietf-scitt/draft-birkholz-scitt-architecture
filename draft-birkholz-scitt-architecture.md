@@ -215,30 +215,30 @@ Reputable Issuers are thus incentivized to carefully review their Statements bef
 
 # Architecture Overview
 
-~~~~
-             Artifact
-                |
-                v                      +------------------+
- Issuer    -> Statement    Envelope    | DID Key Manifest |
-                \           /          |  (decentraized)  |
-                 \         /           +------------------+
-                  \ ______/               |     |
-                      |                   |     |
-                      v        signature  |     |
-                    Claim  <--------------/     |
-                      |                         |
-                      |   Receipt   +--------+  |
-Transparency ->       +-------------| Ledger |  /
-Service               |             +--------+ X
-                      v                       / \
-                 Transparent                 /   \
-                    Claim                   /    |
-                      |\                   /     |
-                      | \                 /      |
-                      |  \               /       |
-Verifier    ->        |    Verify Claim          |
-                      |                          |
-Auditor    ->       Collect Receipts     Replay Ledger
+~~~~ aasvg
+               Artifact
+                  |
+                  v                       .------------------.
+Issuer       --> Statement    Envelope    | DID Key Manifest |
+                   \           /          | (decentralized)  |
+                    \         /           '--+---------+-----'
+                     \_______/               |         |
+                         |                   |         |
+                         v        signature  |         |
+                       Claim  <-------------'          |
+                         |                             |
+                         |   Receipt   .--------.      |
+Transparency -->         +-------------+ Ledger +-.    |
+Service                  |             '--------'  |   |
+                         v                         |   |
+                    Transparent                    |   |
+                       Claim --.          .-----------'
+                         |      |        |         |  
+                         |      |        |         |   
+                         |      |        |         |  
+Verifier    -->          |     Verify Claim        |  
+                         |                         | 
+Auditor     -->        Collect Receipts     Replay Ledger
 ~~~~
 
 The SCITT architecture consists of a very loose federation of Transparency Services, and a set of common formats and protocols for issuing, registering and auditing Claims.
