@@ -233,11 +233,11 @@ Service                  |             '--------'  |   |
                          v                         |   |
                     Transparent                    |   |
                        Claim --.          .-----------'
-                         |      |        |         |  
-                         |      |        |         |   
-                         |      |        |         |  
-Verifier    -->          |     Verify Claim        |  
-                         |                         | 
+                         |      |        |         |
+                         |      |        |         |
+                         |      |        |         |
+Verifier    -->          |     Verify Claim        |
+                         |                         |
 Auditor     -->        Collect Receipts     Replay Ledger
 ~~~~
 
