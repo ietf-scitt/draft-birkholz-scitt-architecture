@@ -207,7 +207,7 @@ A Claim is an identifiable and non-repudiable Statement made by an Issuer. The I
 
 Transparency does not prevent dishonest or compromised Issuers, but it holds them accountable: any Artifact that may be used to target a particular user that checks for Receipts must have been recorded in the tamper-proof Ledger, and will be subject to scrutiny and auditing by other parties.
 
-Transparency is implemented by a Ledger that provides a consistent, append-only, publicly available record of entries. Implementations of TS may protect their Ledger using a combination of trusted hardware, replication and consensus protocols, and cryptographic evidence. A Receipt is an offline, universally-verifiable proof that an entry is recorded in the edger. Receipts do not expire, but it is possible to append new entries that subsume older entries.
+Transparency is implemented by a Ledger that provides a consistent, append-only, publicly available record of entries. Implementations of TS may protect their Ledger using a combination of trusted hardware, replication and consensus protocols, and cryptographic evidence. A Receipt is an offline, universally-verifiable proof that an entry is recorded in the ledger. Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
 Anyone with access to the Ledger can independently verify its consistency and review the complete list of Claims registered by each Issuer. However, the Ledgers of separate Transparency Services are generally disjoint, though it is possible to take a Claim from one Ledger and register it again on another (if its policy allows it), so the authorization of the Issuer and of the Ledger by the Verifier of the Receipt are generally independent.
 
@@ -335,7 +335,7 @@ TS implementations SHOULD provide a mechanism to verify that the state of the Le
 
 Everyone with access to the Ledger can check the correctness of its contents. In particular,
 
-- the TS defines and enforces deterministic Registration policies that can be re-evaluated based solely on the contents of the Ledger at the time of registraton, and must then yield the same result.
+- the TS defines and enforces deterministic Registration policies that can be re-evaluated based solely on the contents of the Ledger at the time of registration, and must then yield the same result.
 
 - The ordering of entries, their cryptographic contents, and the Ledger governance may be non-deterministic, but they must be verifiable.
 
@@ -486,12 +486,13 @@ We explain how multiple, independent Transparency Services can be composed to di
 Multiple SCITT instances, governed and operated by different organizations.
 
 For example,
+
 - a small, simple SCITT instance may keep track specifically of the software used for operating SCITT services.
 - an air-gapped data center may operate its own SCITT Ledger to retain full control and auditing of its software supplies.
 
 How?
-- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Ledgers are trusted for verifying signed Transparent Claims for these Artifacts.
 
+- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Ledgers are trusted for verifying signed Transparent Claims for these Artifacts.
 - Other federation mechanisms?
 
 We'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Ledgers verifying and recording these Receipts before issuing their own Receipts.
@@ -577,7 +578,7 @@ Unless advertised by the TS, every Issuer should treat its Claims as public. In 
 # Security Considerations
 
 On its own, verifying a Transparent Claim does not guarantee that its Envelope or contents are trustworthy---just that they have been signed by the apparent Issuer and counter-signed by the
-TS. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the TS, it can independently infer that the Claim passed the TS Registration policy and that has been persisted in the Ledger. Unless advertised in the TS Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Ledger matches the ordering of their issuance.
+TS. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the TS, it can independently infer that the Claim passed the TS Registration policy and that it has been persisted in the Ledger. Unless advertised in the TS Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Ledger matches the ordering of their issuance.
 
 Similarly, the fact that an Issuer can be held accountable for its Transparent Claims does not on its own provide any mitigation or remediation mechanism in case one of these Claims turned out to be misleading or malicious---just that signed evidence will be available to support them.
 
