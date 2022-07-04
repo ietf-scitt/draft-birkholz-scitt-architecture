@@ -486,12 +486,13 @@ We explain how multiple, independent Transparency Services can be composed to di
 Multiple SCITT instances, governed and operated by different organizations.
 
 For example,
+
 - a small, simple SCITT instance may keep track specifically of the software used for operating SCITT services.
 - an air-gapped data center may operate its own SCITT Ledger to retain full control and auditing of its software supplies.
 
 How?
-- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Ledgers are trusted for verifying signed Transparent Claims for these Artifacts.
 
+- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Ledgers are trusted for verifying signed Transparent Claims for these Artifacts.
 - Other federation mechanisms?
 
 We'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Ledgers verifying and recording these Receipts before issuing their own Receipts.
