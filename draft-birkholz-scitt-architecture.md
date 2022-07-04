@@ -578,7 +578,7 @@ Unless advertised by the TS, every Issuer should treat its Claims as public. In 
 # Security Considerations
 
 On its own, verifying a Transparent Claim does not guarantee that its Envelope or contents are trustworthy---just that they have been signed by the apparent Issuer and counter-signed by the
-TS. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the TS, it can independently infer that the Claim passed the TS Registration policy and that has been persisted in the Ledger. Unless advertised in the TS Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Ledger matches the ordering of their issuance.
+TS. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the TS, it can independently infer that the Claim passed the TS Registration policy and that it has been persisted in the Ledger. Unless advertised in the TS Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Ledger matches the ordering of their issuance.
 
 Similarly, the fact that an Issuer can be held accountable for its Transparent Claims does not on its own provide any mitigation or remediation mechanism in case one of these Claims turned out to be misleading or malicious---just that signed evidence will be available to support them.
 
