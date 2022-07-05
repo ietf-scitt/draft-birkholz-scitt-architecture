@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-07-03T00:40:17.536202+00:00",
+  "timestamp": "2022-07-05T00:40:00.883030+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -995,7 +995,7 @@
       "labels": [],
       "body": "As discussed someone indirectly on the list, it might make sense to accommodate different types of transparency services, in particular those that don't require running and operating a publicly-verifiable ledger. To that end, this change moves away from _transparency_ as a requirement for SCITT and focuses on _verifiability_, allowing for SCITT instances to implement verifiability _with_ transparency (as in CT) if desired, but also allowing for simpler deployments (like those based on a timestamping service) where applicable.",
       "createdAt": "2022-06-28T19:40:55Z",
-      "updatedAt": "2022-07-01T16:17:25Z",
+      "updatedAt": "2022-07-04T11:17:22Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
@@ -1067,8 +1067,72 @@
               "updatedAt": "2022-07-01T16:17:25Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs49PM0A",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-07-04T11:06:11Z",
+          "updatedAt": "2022-07-04T11:17:22Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "Making the ledger optional is a significant weakening of the technical guarantee of SCITT, which is principally defined based on the ledger. We think that most of the costs associated with the implementation and operation of SCITT servers are related to the **persistence and distribution/querying of the ledger** rather than its actual computation. For instance, it is possible to implement a minimal append-only ledger using a single hash (like PCRs in TPMs), which technically meets the requirements of append-only and consistent/fork-free. The implementation overhead for such a ledger is only the computation of an extra hash per claim and the persistence of a single hash value in addition to the receipt signing key, while the benefit is a much stronger a clearly defined security goal for SCITT verifiers. I would like to check there is consensus for this change before it is approved.",
+              "createdAt": "2022-07-04T11:06:11Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 108,
+              "body": "(since the ledger is optional, appending the claim to the ledger is also optional)",
+              "createdAt": "2022-07-04T11:08:45Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 98,
+              "body": "The security property is very underspecified. As written, the baseline guarantee is that the registration policy was satisfied when the claim was registered. Additional guarantees stemming from the addition of the claim to the ledger depend on the use of a ledger, the type of ledger/receipt, and how the server maintains and distributes the ledger.",
+              "createdAt": "2022-07-04T11:11:49Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 133,
+              "body": "The definition of ledger is no longer valid when the ledger is optional. A receipt is now a witness that a claim has been registered on SCITT service, with optional universally verifiable proof that the claim has been appended to the ledger. ",
+              "createdAt": "2022-07-04T11:15:56Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOG2uWFs46z0lN",
+      "title": "Minor nits",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/16",
+      "state": "OPEN",
+      "author": "joshuagl",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Very minor fixes spotted on a first read-through of the draft.\r\n\r\n* Fixes two typos\r\n  * edger -> ledger\r\n  * registraton -> registration \r\n* fixes Markdown formatting for lists in the Federation section\r\n* Clarifies a sentence in Security Considerations",
+      "createdAt": "2022-07-04T16:52:24Z",
+      "updatedAt": "2022-07-04T16:52:24Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "joshuagl/draft-birkholz-scitt-architecture",
+      "headRefName": "joshuagl/minor-nits",
+      "headRefOid": "e5cd1c2cf29c42a251bb104e8e83f9c6d6cb8556",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
