@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-07-07T00:43:42.502424+00:00",
+  "timestamp": "2022-07-10T00:44:45.944404+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -995,13 +995,13 @@
       "labels": [],
       "body": "As discussed someone indirectly on the list, it might make sense to accommodate different types of transparency services, in particular those that don't require running and operating a publicly-verifiable ledger. To that end, this change moves away from _transparency_ as a requirement for SCITT and focuses on _verifiability_, allowing for SCITT instances to implement verifiability _with_ transparency (as in CT) if desired, but also allowing for simpler deployments (like those based on a timestamping service) where applicable.",
       "createdAt": "2022-06-28T19:40:55Z",
-      "updatedAt": "2022-07-04T11:17:22Z",
+      "updatedAt": "2022-07-07T13:47:17Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
       "headRepository": "chris-wood/draft-birkholz-scitt-architecture",
       "headRefName": "caw/transparency-to-verifiability",
-      "headRefOid": "494a7f849794c33703bc8ee54110531458313964",
+      "headRefOid": "6d3d1bd0c0f2a926d67e60829f6579e9bc2cd87b",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
