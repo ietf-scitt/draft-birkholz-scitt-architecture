@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-07-19T00:47:38.115656+00:00",
+  "timestamp": "2022-07-21T00:42:40.577511+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -969,7 +969,7 @@
       "labels": [],
       "body": "Needs [aasvg](https://github.com/martinthomson/aasvg#usage)",
       "createdAt": "2022-06-28T14:44:51Z",
-      "updatedAt": "2022-06-28T20:59:56Z",
+      "updatedAt": "2022-07-19T15:22:21Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
@@ -981,7 +981,41 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs4-NKCR",
+          "commit": {
+            "abbreviatedOid": "91b5a93"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:22:00Z",
+          "updatedAt": "2022-07-19T15:22:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NKLC",
+          "commit": {
+            "abbreviatedOid": "91b5a93"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-19T15:22:21Z",
+          "updatedAt": "2022-07-19T15:22:21Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "\"registry\" ?",
+              "createdAt": "2022-07-19T15:22:21Z",
+              "updatedAt": "2022-07-19T15:22:21Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 15,
@@ -995,7 +1029,7 @@
       "labels": [],
       "body": "As discussed someone indirectly on the list, it might make sense to accommodate different types of transparency services, in particular those that don't require running and operating a publicly-verifiable ledger. To that end, this change moves away from _transparency_ as a requirement for SCITT and focuses on _verifiability_, allowing for SCITT instances to implement verifiability _with_ transparency (as in CT) if desired, but also allowing for simpler deployments (like those based on a timestamping service) where applicable.",
       "createdAt": "2022-06-28T19:40:55Z",
-      "updatedAt": "2022-07-07T13:47:17Z",
+      "updatedAt": "2022-07-19T15:21:42Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
@@ -1006,7 +1040,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "I wonder if we can get a clearer change request, what actions need to be performed to obtain approval.\r\n\r\nperhaps we can open issues and merge as is?",
+          "createdAt": "2022-07-19T15:21:42Z",
+          "updatedAt": "2022-07-19T15:21:42Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOG2uWFs49B2I6",
@@ -1105,6 +1147,19 @@
               "updatedAt": "2022-07-04T11:17:22Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NIN2",
+          "commit": {
+            "abbreviatedOid": "6d3d1bd"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:17:16Z",
+          "updatedAt": "2022-07-19T15:17:16Z",
+          "comments": []
         }
       ]
     },
@@ -1120,7 +1175,7 @@
       "labels": [],
       "body": "Very minor fixes spotted on a first read-through of the draft.\r\n\r\n* Fixes two typos\r\n  * edger -> ledger\r\n  * registraton -> registration \r\n* fixes Markdown formatting for lists in the Federation section\r\n* Clarifies a sentence in Security Considerations",
       "createdAt": "2022-07-04T16:52:24Z",
-      "updatedAt": "2022-07-04T16:52:24Z",
+      "updatedAt": "2022-07-19T15:16:39Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
@@ -1132,7 +1187,41 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs4-NH6U",
+          "commit": {
+            "abbreviatedOid": "e5cd1c2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-19T15:16:30Z",
+          "updatedAt": "2022-07-19T15:16:31Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "do we want to call \"ledger\" registry?",
+              "createdAt": "2022-07-19T15:16:31Z",
+              "updatedAt": "2022-07-19T15:16:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NH93",
+          "commit": {
+            "abbreviatedOid": "e5cd1c2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:16:39Z",
+          "updatedAt": "2022-07-19T15:16:39Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
