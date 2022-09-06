@@ -195,7 +195,7 @@ Receipt:
 
 Registration:
 
-: the process of submitting a Claim to a Transparency Service, applying its registration policy, storing it in the Registryand producing the Receipt returned to the submitter.
+: the process of submitting a Claim to a Transparency Service, applying its registration policy, storing it in the Registry and producing the Receipt returned to the submitter.
 
 Transparent Claim:
 
@@ -237,7 +237,7 @@ Reputable Issuers are thus incentivized to carefully review their Statements bef
                       |                         |
                       |  Claim      +---------+ |
                       |------------>| Trans.  | |
-Transparency ->       +<------------| Regisrty| /
+Transparency ->       +<------------| Registry| /
 Service               |  Receipt    +--------+ X
                       v                       / \
                  Transparent                 /   \
@@ -499,11 +499,11 @@ For example,
 - an air-gapped data center may operate its own SCITT Registry to retain full control and auditing of its software supplies.
 
 How?
-- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Registeries are trusted for verifying signed Transparent Claims for these Artifacts.
+- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Registries are trusted for verifying signed Transparent Claims for these Artifacts.
 
 - Other federation mechanisms?
 
-We'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Registeries verifying and recording these Receipts before issuing their own Receipts.
+We'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Registries verifying and recording these Receipts before issuing their own Receipts.
 
 # Transparency Service API
 
