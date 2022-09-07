@@ -150,11 +150,12 @@ The terms defined in this section have special meaning in the context of Supply 
 
 Artifact:
 
-: the physical or non-physical item that is moving along the supply chain.
+: a physical or non-physical item that is moving along the supply chain.
 
 Statement:
 
 : any serializable information about an Artifact. To help interpretation of Statements, they must be tagged with a media type (as specified in {{RFC6838}}).
+For example, a statement may represent a Software Bill Of Materials (SBOM) that lists the ingredients of a software Artifact, or some endorsement or attestation about an Artifact. 
 
 Claim:
 
@@ -162,22 +163,23 @@ Claim:
 
 Issuer:
 
-: creator of Claims submitted to a Transparency Service for Registration. The Issuer may be the owner or author of the Artifact, or a completely independent third party.
+: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer. 
 
 Envelope:
 
-: the metadata added to the Statement by the Issuer to make it a Claim. It contains the identity of the Issuer and other information to help Verifiers identify the Artifact referred in the Statement. A Claim binds the Envelope to the Statement. In COSE, the Envelope consists of protected headers.
+: the metadata added to the Statement by the Issuer to make it a Claim. 
+It contains the identity of the Issuer and other information to help Verifiers identify the Artifact referred in the Statement. A Claim binds the Envelope to the Statement. In COSE, the Envelope consists of protected headers.
 
 Feed:
 
-: An identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Ledger on a Transparency Service contains a sequence of Claims about the same Artifact.
+: the identifier chosen by an Issuer for an Artifact. For every Issuer and Feed, the Ledger on a Transparency Service contains a sequence of Claims about the same Artifact.
  In COSE, Feed is one header attributes in the protected header of the Envelope.
 
 Ledger:
 
-: the verifiable data structure that stores Claims in a transparency service. SCITT supports multiple Ledger formats to accommodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
+: the verifiable append-only data structure that stores Claims in a transparency service. SCITT supports multiple Ledger formats to accommodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
-Transparency Service:
+Transparency Service (or Notary):
 
 : the entity that maintains and extends the Ledger, and endorses its state. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Ledger. The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
 
@@ -189,13 +191,23 @@ Registration:
 
 : the process of submitting a Claim to a Transparency Service, applying its registration policy, storing it in the Ledger and producing the Receipt returned to the submitter.
 
+Registration Policy: 
+
+: the pre-condition enforced by the TS before registering a Claim,
+based on its Envelope (notably the identity of its Issuer)
+and on prior claims already in the Registry. 
+
 Transparent Claim:
 
 : a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different TS.
 
-Verifier:
+Verifier (or Consumer):  
 
-: the entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their supply chain.
+: an entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
+
+Auditor: 
+
+: an entity that checks the correctness and consistency of all Claim registered by a TS. 
 
 {: #mybody}
 
