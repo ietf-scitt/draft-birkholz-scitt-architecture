@@ -171,7 +171,7 @@ Claim:
 
 Issuer:
 
-: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer or endorser.
+: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer or an endorser.
 
 Envelope:
 
@@ -185,7 +185,7 @@ In COSE, Feed is a dedicated header attribute in the protected header of the Env
 
 Registry:
 
-: a verifiable append-only data structure that stores Claims in a Transparency Service. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees. Registry is a synonym to append-only log or ledger.
+: the verifiable append-only data structure that stores Claims in a Transparency Service often referred to by the synonym log or ledger. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
 Transparency Service:
 
@@ -209,13 +209,13 @@ Transparent Claim:
 
 : a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different TS.
 
-Verifier (or Consumer):
+Verifier:
 
-: an entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
+: an entity that consumes Transparent Claims (a specialization of Claim Consumer), verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
 
 Auditor:
 
-: an entity that checks the correctness and consistency of all Claim registered by a TS.
+: an entity that checks the correctness and consistency of all Claim registered by a TS (a specialization of Claim Consumer).
 
 {: #mybody}
 
@@ -240,7 +240,7 @@ Reputable Issuers are thus incentivized to carefully review their Statements bef
                 |
                 v                      +------------------+
  Issuer    -> Statement    Envelope    | DID Key Manifest |
-                \           /          |  (decentralized) |
+                \           /          | (decentralized)  |
                  \         /           +------------------+
                   \ ______/               |     |
                       |                   |     |
@@ -613,6 +613,90 @@ Issuers SHOULD ensure that the Statements in their Claims are correct and unambi
 
 Issuers and Transparency Services SHOULD carefully protect their private signing keys
 and avoid these keys for any purpose not described in this architecture. In case key re-use is unavoidable, they MUST NOT sign any other message that may be verified as an Envelope.
+
+## Threat Model
+
+We provide a generic threat model for SCITT, describing its residual security properties when some of its actors (identity providers, Issuers, TS, and Auditors) are corrupt or compromised.
+
+This model may need to be refined to account for specific supply chains and use cases.
+
+### Claim authentication and transparency.
+
+SCITT primarily supports evidence of Claim integrity, both from the Issuer (authentication) and from the TS (transparency). These guarantees are meant to hold for the long term, possibly decades.
+
+We conservatively suppose that some issuers and some TS will be corrupt.
+
+SCITT entities explicitly trust one another on the basis of their long-term identity, which maps to shorter-lived cryptographic credentials. Hence, a Verifier would usually validate a transparent signed Claim from a given Issuer, registered at a given TS (both identified in the Verifier's local authorization policy) and would not depend on any other Issuer or TS.
+
+We cannot stop authorized supply chain actors from making false claims (either by mistake or by corruption) but we can make them accountable by ensuring their Claims are systematically registered at a trustworthy TS.
+
+Similarly, we aim to provide strong residual guarantees against a faulty/corrupt TS. We cannot stop a TS from registering Claims that do not meet its stated Registration Policy, or to issue Receipts that are not consistent with their append-only Registry, but we can hold it accountable and guarantee that it will be blamed by any Auditor that replays their Registry against any contested Receipt. Note that SCITT does not require trust in a single centralized TS: different actors may rely on different TS, each registering a subset of claims subject to their own policy.
+
+In both cases, SCITT provides generic, universally-verifiable cryptographic evidence to individually blame the Issuer or the TS. This enables valid actors to detect and disambiguate malicious actors who make contradictory Claims to different entities (Verifiers, Auditors, Issuers). On the other hand, their liability and the resulting damage to their reputation are application specific, and out of scope for SCITT.
+
+Verifiers and Auditors need not be trusted by other actors. In particular, they cannot "frame" an Issuer or a TS for claims they did not issue or register.
+
+**Append-only log**
+
+If a TS is honest, then a transparent signed Claim with a correct Receipt of registration at a given position ensures that the signed claim passed its Registration Policy and was recorded at that position in its Registry.
+
+Conversely, a corrupt TS may
+1. refuse or delay the registration of Claims;
+2. register Claims that do not pass its Registration Policy (e.g. Claims with Issuer identities and signatures that do not verify.)
+3. issue verifiable Receipts for Claims that do not match its Registry;
+4. refuse access to its Registry (e.g. to Auditors, possibly after storage loss)
+
+An Auditor granted (partial) access to the Registry and to a collection of disputed Receipts will be able to replay it, detect any invalid Registration (2) or incorrect  receipt in this collection (3), and blame the TS for them. This ensures any Verifier that trust at least one such Auditor that (2,3) will be blamed to the TS.
+
+Due to the operational challenge of maintaining a globally consistent append-only Registry,
+some TS may provide limited support for historical queries on the Claims they have registered,
+and accept the risk of being blamed for inconsistent Registration or Issuer equivocation.
+
+Verifier and Auditors may also witness (1,4) but may not be able to collect verifiable evidence for it.
+
+**Availability of Transparent Signed Claims**
+
+Networking and Storage are trusted only for availability.
+
+Auditing may involve access to data beyond what is persisted in the TS log. For example, the registered TS may include only the hash of a detailed SBOM, which may limit the scope of auditing.
+
+Resistance to denial-of-service is implementation specific.
+
+Actors should independently keep their own record of the Claims they issue, endorse, verify, or audit.
+
+### Confidentiality and privacy.
+
+The network is untrusted. All contents exchanged between actors is protected using secure authenticated channels (TLS) but, as usual, this may not exclude network traffic analysis.
+
+**Claims and their registration**
+
+The TS is trusted with the confidentiality of the claims presented for registration. Some TS may publish every claim in their logs, to facilitate their dissemination and auditing. Others may just return receipts to the client that present claims for registration, and disclose the ledger only to auditors trusted with the confidentiality of its contents.
+
+A collection of transparent Claims leaks no information about the contents of other Claims registered at the TS.
+
+Nonetheless, Issuers should carefully review the inclusion of private/confidential materials in their Claims; they may for instance remove any PII, or include instead opaque cryptographic commitments, such as hashes.
+
+**Queries to the Registry**
+
+The confidentiality of queries is implementation-specific, and generally not guaranteed. For example, while offline Claim verification is private, a TS may monitor which of its Claims are being verified from lookups to ensure their freshness.
+
+### Cryptographic Assumptions
+
+We rely on standard cryptographic security for signing schemes (EUF-CMA: for a given key, given the public key and any number of signed messages, the attacker cannot forge a valid signature for any other message) and for receipts schemes (log collision-resistance: for a given commitment such as a Merkle-tree root, there is a unique log such that any valid path authenticates a claim in this log.)
+
+SCITT supports cryptographic agility: the actors depend only on the subset of signing and receipt schemes they trust. This enables the gradual transition to stronger algorithms, including e.g. post-quantum signature algorithms.
+
+### TS Clients
+
+Trust in clients that submit Claims for registration is implementation-specific. Hence, an attacker may attempt to register any Claim it has obtained, at any TS that accepts them, possibly multiple times and out of order. This may be mitigated by a TS that enforces restrictive access control and registration policies.
+
+### Identity
+
+The identity resolution mechanism is trusted to associate long-term identifiers with their public signature-verification keys. (The TS and other parties may record identity-resolution evidence to facilitate its auditing.)
+
+If one of the credentials of an Issuer gets compromised, SCITT still guarantee the authenticity of all claims signed with this credential that have been registered on a TS before the compromise. It is up to the Issuer to notify TS of credential revocation to stop Verifiers from accepting Claims signed with compromised credentials. [See the thread of revocation for additional details.]
+
+The confidentiality of any identity lookup during Claim Registration or Claim Verification is out of scope.
 
 # IANA Considerations
 
