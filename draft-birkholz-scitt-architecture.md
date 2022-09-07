@@ -443,6 +443,7 @@ Unprotected_Header = {
 ## Claim Issuance
 
 There are many types of Statements (such as SBOMs, malware scans, audit reports, policy definitions) that Issuers may want to turn into Claims. The Issuer must first decide on a suitable format to serialize the Statement, such as:
+
 - JSON-SPDX
 - CBOR-SPDX
 - SWID
@@ -509,24 +510,24 @@ Verifiers SHOULD offer options to store or share Receipts in case they are neede
 
 # Federation
 
-We explain how multiple, independent Transparency Services can be composed to distribute supply chains without a single transparency authority trusted by all parties.
+> **Editor's note**
+>
+> This section needs work.  
 
-Multiple SCITT instances, governed and operated by different organizations.
+Multiple, independently-operated transparency services can help secure distributed supply chains, without the need for a single, centralized service trusted by all parties. For example, multiple SCITT instances may be governed and operated by different organizations that do not trust one another.
 
-For example,
-- a small, simple SCITT instance may keep track specifically of the software used for operating SCITT services.
-- an air-gapped data center may operate its own SCITT Registry to retain full control and auditing of its software supplies.
+This may involve registering the same Claims at different transparency services, each with their own purpose and registration policy. 
+This may also involve attaching multiple Receipts to the same Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts, and each TS verifying prior Receipts as part of their registration policy. 
 
-How?
-- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Registries are trusted for verifying signed Transparent Claims for these Artifacts.
-
-- Other federation mechanisms?
-
-We'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Registries verifying and recording these Receipts before issuing their own Receipts.
+For example, 
+a supplier TS may provide a complete, authoritative Registry for some kind of Claims, whereas a consumer TS may collect different kinds of Claims 
+to ensure complete auditing for a specific use case, and possibly require additional reviews before registering some of these claims. 
 
 # Transparency Service API
 
-Editor's Note: this may be moved to appendix.
+> **Editor's Note**
+>
+> This may be moved to appendix.
 
 ## Messages
 
