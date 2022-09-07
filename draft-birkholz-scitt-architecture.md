@@ -181,7 +181,7 @@ It contains the identity of the Issuer and other information to help Verifiers i
 Feed:
 
 : an identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Registry on a Transparency Service contains a sequence of Claims about the same Artifact.
-In COSE, Feed is one header attributes in the protected header of the Envelope.
+In COSE, Feed is a dedicated header attribute in the protected header of the Envelope.
 
 Registry (or Log, or Ledger):
 
