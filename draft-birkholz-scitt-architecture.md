@@ -163,7 +163,7 @@ Artifact:
 Statement:
 
 : any serializable information about an Artifact. To help interpretation of Statements, they must be tagged with a media type (as specified in {{RFC6838}}).
-For example, a statement may represent a Software Bill Of Materials (SBOM) that lists the ingredients of a software Artifact, or some endorsement or attestation about an Artifact. 
+For example, a statement may represent a Software Bill Of Materials (SBOM) that lists the ingredients of a software Artifact, or some endorsement or attestation about an Artifact.
 
 Claim:
 
@@ -171,11 +171,11 @@ Claim:
 
 Issuer:
 
-: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer. 
+: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer.
 
 Envelope:
 
-: the metadata added to the Statement by the Issuer to make it a Claim. 
+: the metadata added to the Statement by the Issuer to make it a Claim.
 It contains the identity of the Issuer and other information to help Verifiers identify the Artifact referred in the Statement. A Claim binds the Envelope to the Statement. In COSE, the Envelope consists of protected headers.
 
 Feed:
@@ -199,23 +199,23 @@ Registration:
 
 : the process of submitting a Claim to a Transparency Service, applying its registration policy, storing it in the Registry, producing a Receipt, and returning it to the submitter.
 
-Registration Policy: 
+Registration Policy:
 
 : the pre-condition enforced by the TS before registering a Claim,
 based on its Envelope (notably the identity of its Issuer)
-and on prior claims already in the Registry. 
+and on prior claims already in the Registry.
 
 Transparent Claim:
 
 : a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different TS.
 
-Verifier (or Consumer):  
+Verifier (or Consumer):
 
 : an entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
 
-Auditor: 
+Auditor:
 
-: an entity that checks the correctness and consistency of all Claim registered by a TS. 
+: an entity that checks the correctness and consistency of all Claim registered by a TS.
 
 {: #mybody}
 
