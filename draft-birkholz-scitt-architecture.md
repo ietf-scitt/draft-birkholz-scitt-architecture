@@ -209,7 +209,7 @@ Transparent Claim:
 
 : a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different TS.
 
-Verifier (or Consumer):
+Verifier:
 
 : an entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
 
