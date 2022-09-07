@@ -187,7 +187,7 @@ Registry:
 
 : the verifiable append-only data structure that stores Claims in a Transparency Service often referred to by the synonym log or ledger. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
-Transparency Service (or Notary):
+Transparency Service:
 
 : the entity that maintains and extends the Registry, and endorses its state. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Registry . The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
 
