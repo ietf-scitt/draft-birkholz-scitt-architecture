@@ -255,7 +255,7 @@ In order to accomodate as many TS implementations as possible, this document onl
 
 In this section, we describe at a high level the three main roles and associated processes in SCITT: Issuers and the Claim issuance process, transparency Registry and the Claim Registration process, and Verifiers and the Receipt validation process.
 
-## Claim Issuance
+## Claim Issuance and Registration
 
 ### Issuer Identity
 
@@ -298,32 +298,21 @@ For example, consider a TS implemented using a set of replicas, each running wit
 
 ### Registration Policies
 
+A TS that accepts to register any valid claim offered by an issuer would end up providing only limited value to verifiers. In consequence, a baseline transparency guarantee policing the registration of claims is required to ensure completeness of audit, which can help detect equivocation.
+Most advanced SCITT scenarios rely on the TS performing additional domain-specific checks before a claim is accepted: TS may only allow trusted authenticated users to register claims, TS may try to check that a new claim is consistent with previous claims from the same issuers or that claims are registered in the correct order and cannot be re-played; some TS may even interpret and validate the payload of claims.
+
+In general, registration policies are applied at the discretion of the TS, and verifiers use receipts as witnesses that confirm that the registration policy of the TS was satisfied at the time claim registration. TS implementations SHOULD make their full registration policy public and auditable, e.g. by recording stateful policy inputs at evaluation time in the registry to ensure that policy can be independently validated later. 
+From an interoperability point of view, the policy that was applied by the TS is opaque to the verifier, who is forced to trust the associated registration policy. If the policy of the TS evolves over time, or is different across issuers, the guarantee derived from receipt validation may not be uniform across all claims over time.
+
+To help verifiers interpret the semantics of claim registration, SCITT defines a standard mechanism for signalling in the claim itself which policies have been applied by the TS from a defined set
+of registration policies with standardized semantics. Each policy that is expected to be enforced by the TS is represented by an entry in the registration policy info map (`reg_info`) in the envelope. The key of the map corresponds to the name of the policy, while its value (including its type) is policy-specific. For instance, the `register_by` policy defines the maximum timestamp by which a claim can be registered, hence the associated value contains an unsigned integer.
+
+While this design ensures that all verifiers get the same guarantee regardless of where a claim is registered, its main downside is that it requires the issuer to include the necessary policies in the envelope when the claim is signed. Furthermore, it makes it impossible to register the same claim on two different TS if their required registration policies are incompatible.
+
 > **Editor's note**
 >
-> The initial version of this document assumes Registration policies are set for the lifetime of the Registry, and that they apply to all Issuers and Feeds uniformly.
-> There is an ongoing discussion on how to make the design more flexible to allow per-Issuer and per-Feed Registration policies, and whether such policies should be updatable or if a policy change requires a Feed change.
-> Please contribute your comments to the SCITT mailing list.
-
-Each TS is initially configured with a set of Registration policies, which will be applied for the lifetime of the Registry.
-A Registration policy represents a predicate that takes as input the current Registry and the Envelope of a new Claim to register (including the `reg_info` header which contains customizable additional attributes), and returns a Boolean decision on whether the Claim should be included in the Registry or not. A TS MUST ensure that all its Registration policies return a positive decision before adding a Claim to the Registry.
-
-While Registration policies are a burden for Issuers (some may require them to maintain state to remember what they have signed before) they support stronger transparency guarantees, and they greatly help Verifiers and auditors in making sense of the information on the Registry. (This is particularly relevant for parties that verify Receipts on their own, without accessing the Registry). For instance, if a TS doesn't apply any policy, Claims may be registered in a different order than they have been issued, and old Claims may be replayed, which makes it difficult to understand the logical history of an Artifact, or to prevent rollback attacks.
-
-There are two kinds of Registration policies: (1) named policies have standardized semantics that are uniform across all implementations of SCITT Transparency Services, while (2) custom policies are opaque and may contain pointers to (or even inlined) policy descriptions (declarative or programmable).
-
-Transparency services MUST advertise the Registration policies enforced by their service, including the list of `reg_info` attributes they require, both to minimize the risk of rejecting Claims presented by Issuers, and to advertise the properties implied by Receipt verification. Implementations of Receipt Verifiers SHOULD persist the list of Registration policies associated with a service identity, and return the list of Registration policies as an output of Receipt validation. Auditors MUST re-apply the Registration policy of every entry in the Registry to ensure that the Registry applied them correctly.
-
-Custom policies may use additional information present in the Registry outside of Claims. For instance, Issuers may have to register on the TS before Claims can be accepted; a custom policy may be used to enforce access control to the Transparency Service. Verifying the signature of the Issuer is also a form of Registration policy, but it is globally enforced in order to separate authentication and authorization, with policy only considering authentic inputs.
-
-{{tbl-initial-named-policies}} defines an initial set of named policies that TS may decide to enforce. This may be evolved in future drafts.
-
-Policy Name | Required `reg_info` attributes | Implementation
----|---|---
-TimeLimited | `register_by: uint` | Returns true if now () < register_by. The Registry MUST store the Registry time at Registration along with the Claim, and SHOULD indicate it in Receipts
-Sequential | `sequence_no: uint` | First, lookup in the Registry for Claims with the same Issuer and Feed. If at least one is found, returns true if and only if the `sequence_no` of the new Claim is the highest `sequence_no` in the existing Claims incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
-Temporal | `issuance_ts: uint` | Returns true if and only if there is no Claim in the Registry with the same Issuer and Feed with a greater `issuance_ts`
-NoReplay | None | Returns true if and only if the Claim doesn't already appear in the Registry
-{: #tbl-initial-named-policies title="An Initial Set of Named Policies"}
+> The technical design for signalling and verifying registration policies is a work in progress.
+> An alternative design would be to include the registration policies in the receipt/countersignature rather than in the envelope. This improves the portability of claims but requires the verifier to be more aware of the particular policies at the TS where the claim is registered.
 
 ### Registry Security Requirements
 
@@ -453,6 +442,24 @@ There are many types of Statements (such as SBOMs, malware scans, audit reports,
 Once the Statement is serialized with the correct content type, the Issuer should fill in the attributes for the Registration policy information header. From the Issuer's perspective, using attributes from named policies ensures that the Claim may only be registered on Transparency Services that implement the associated policy. For instance, if a Claim is frequently updated, and it is important for Verifiers to always consider the latest version, Issuers SHOULD use the `sequence_no` or `issuer_ts` attributes.
 
 Once all the Envelope headers are set, the Issuer MAY use a standard COSE implementation to produce the serialized Claim (the SCITT tag of `COSE_Sign1_Tagged` is outside the scope of COSE, and used to indicate that a signed object is a Claim).
+
+## Standard registration policies
+
+> **Editor's note**
+>
+> The technical design for signalling and verifying registration policies is a work in progress.
+> We expect that once the formats and semantics of the registration policy headers are finalized, standardized policies may be moved to a separate draft.
+> For now, we inline some significant policies to illustrate the most common use cases.
+
+TS implementations MUST indicate their support for registration policies and MUST check that all the policies indicated as defined in the `reg_info` map are supported and are satisfied before a claim can be registered. Any unsupported claims MUST be indicated separately and corresponding unknown policy entries in the map of a claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.
+
+Policy Name | Required `reg_info` attributes | Implementation
+---|---|---
+TimeLimited | `register_by: uint` | Returns true if now () < register_by at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts
+Sequential | `sequence_no: uint` | First, lookup in the ledger for claims with the same issuer and feed. If at least one is found, returns true if and only if the `sequence_no` of the new claim is the highest `sequence_no` in the existing claims incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
+Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`
+NoReplay | None | Returns true if and only if the claim doesn't already appear in the ledger
+{: #tbl-initial-named-policies title="An Initial Set of Named Policies"}
 
 ## Registering Signed Claims
 
