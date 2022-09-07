@@ -240,7 +240,7 @@ Reputable Issuers are thus incentivized to carefully review their Statements bef
                 |
                 v                      +------------------+
  Issuer    -> Statement    Envelope    | DID Key Manifest |
-                \           /          |  (decentralized)  |
+                \           /          | (decentralized)  |
                  \         /           +------------------+
                   \ ______/               |     |
                       |                   |     |
