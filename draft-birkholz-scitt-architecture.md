@@ -171,7 +171,7 @@ Claim:
 
 Issuer:
 
-: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer.
+: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer or an endorser.
 
 Envelope:
 
