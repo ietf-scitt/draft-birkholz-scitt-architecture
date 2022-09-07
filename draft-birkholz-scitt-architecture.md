@@ -450,7 +450,7 @@ Once all the Envelope headers are set, the Issuer MAY use a standard COSE implem
 > We expect that once the formats and semantics of the registration policy headers are finalized, standardized policies may be moved to a separate draft.
 > For now, we inline some significant policies to illustrate the most common use cases.
 
-All TS implementations MUST support the following registration policies, and MUST check that all the policies defined in the `reg_info` map are satisfied before a claim can be registered. If the `reg_info` map of a claim contains an unknown policy entry, the claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.
+All TS implementations MAY only support a subset of the standard policies defined below, but it MUST enforce that all supported policies that appear in the `reg_info` map are satisfied before a claim can be registered and it MUST reject the claim if it contains any unknown or unsupported policy. This ensures that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.
 
 Policy Name | Required `reg_info` attributes | Implementation
 ---|---|---
