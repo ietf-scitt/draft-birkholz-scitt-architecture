@@ -215,7 +215,7 @@ Verifier:
 
 Auditor:
 
-: an entity that checks the correctness and consistency of all Claim registered by a TS.
+: an entity that checks the correctness and consistency of all Claim registered by a TS (a specialization of Claim Consumer).
 
 {: #mybody}
 
