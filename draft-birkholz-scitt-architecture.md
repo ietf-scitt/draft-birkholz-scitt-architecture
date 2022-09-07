@@ -211,7 +211,7 @@ Transparent Claim:
 
 Verifier:
 
-: an entity that consumes Transparent Claims, verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
+: an entity that consumes Transparent Claims (a specialization of Claim Consumer), verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.
 
 Auditor:
 
