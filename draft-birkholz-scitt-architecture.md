@@ -185,7 +185,7 @@ In COSE, Feed is one header attributes in the protected header of the Envelope.
 
 Registry:
 
-: the verifiable append-only data structure that stores Claims in a transparency service. SCITT supports multiple Registry and Receipt formats to accommodate different transparency service implementations, such as historical Merkle Trees and sparse Merkle Trees.
+: the verifiable append-only data structure that stores Claims in a Transparency Service often referred to by the synonym log or ledger. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees.
 
 Transparency Service (or Notary):
 
