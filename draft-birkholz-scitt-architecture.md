@@ -83,7 +83,7 @@ venue:
 
 Traceability of physical and digital artifacts in supply chains is a long-standing, but increasingly serious security concern. The rise in popularity of verifiable data structures as a mechanism to make actors more accountable for breaching their compliance promises has found some successful applications to specific use cases (such as the supply chain for digital certificates), but lacks a generic and scalable architecture that can address a wider range of use cases.
 
-This memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any Transparency Service (TS), with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of Transparency Services with various auditing and compliance requirements.
+This memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any Transparency Service (SCITT instance), with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of Transparency Services with various auditing and compliance requirements.
 
 --- middle
 
@@ -96,29 +96,29 @@ It achieves this goal by enforcing the following complementary security guarante
 2. such statements must be registered on a secure append-only Registry so that their provenance and history can be independently and consistently audited;
 3. issuers can efficiently prove to any other party the registration of their claims; verifying this proof ensures that the issuer is consistent and non-equivocal when making claims.
 
-The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement in an immutable, append-only, transparent Registry. The last guarantee is achieved by implementing the Registry using a verifiable data structure (such as a Merkle Tree), and by requiring a TS that operates the Registry to endorse its state at the time of registration.
+The first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement in an immutable, append-only, transparent Registry. The last guarantee is achieved by implementing the Registry using a verifiable data structure (such as a Merkle Tree), and by requiring a SCITT instance that operates the Registry to endorse its state at the time of registration.
 
-The guarantees and techniques used in this document generalize those of Certificate Transparency {{-CT}}, which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each TS implements and operates its Registry. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full Registry, or keep some information on the Registry encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
+The guarantees and techniques used in this document generalize those of Certificate Transparency {{-CT}}, which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each SCITT instance implements and operates its Registry. Each service may enforce its own policy for authorizing entities to register their claims on the SCITT instance. Some SCITT instances may also enforce access control policies to limit who can audit the full Registry, or keep some information on the Registry encrypted. Nevertheless, it is critical to provide global interoperability for all SCITT instance instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.
 
-A TS provides visibility into claims issued by supply chain entities and their sub-systems. These claims are called Digital Supply Chain Artifacts (DSCA).
-A TS vouches for specific and well-defined metadata about these DSCAs. Some metadata is selected (and signed) by the issuer, indicating, e.g., "who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version"; whereas additional metadata is selected (and countersigned) by the TS, indicating, e.g., "when was the DSCA registered in the Registry". The DSCA contents can be opaque to the TS, if so desired: it is the metadata that must always be transparent in order to warrant trust.
+A SCITT instance provides visibility into claims issued by supply chain entities and their sub-systems. These claims are called Digital Supply Chain Artifacts (DSCA).
+A SCITT instance vouches for specific and well-defined metadata about these DSCAs. Some metadata is selected (and signed) by the issuer, indicating, e.g., "who issued the DSCA" or "what type of DSCA is described" or "what is the DSCA version"; whereas additional metadata is selected (and countersigned) by the SCITT instance, indicating, e.g., "when was the DSCA registered in the Registry". The DSCA contents can be opaque to the SCITT instance, if so desired: it is the metadata that must always be transparent in order to warrant trust.
 
 Transparent claims provide a common basis for holding issuers accountable for the DSCA they release and (more generally) principals accountable for auxiliary claims they make about DSCAs. Hence, issuers may register new claims about their artifacts, but they cannot delete or alter earlier claims, or hide their claims from third parties such as auditors.
 
-Trust in the TS itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and remote attestation of systems) and by enabling independent audits of the correctness and consistency of its Registry, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global Registry, we require each TS to guarantee the consistency of its own Registry (for instance, through the use of a consensus algorithm between replicas of the Registry), but assume no consistency between different transparency services.
+Trust in the SCITT instance itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and remote attestation of systems) and by enabling independent audits of the correctness and consistency of its Registry, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global Registry, we require each SCITT instance to guarantee the consistency of its own Registry (for instance, through the use of a consensus algorithm between replicas of the Registry), but assume no consistency between different transparency services.
 
-The TS specified in this architecture caters to two types of audiences:
+The SCITT instance specified in this architecture caters to two types of audiences:
 
 1. DSCA Issuers: entities, stakeholders, and users involved in supply chain interactions that need to release DSCAs to a definable set of peers; and
 2. DSCA Consumers: entities, stakeholders, and users involved in supply chain interactions that need to access, validate, and trust DSCAs.
 
-DSCA Issuers rely on being discoverable and represented as the responsible parties for released DSCAs by the TS in a believable manner.
+DSCA Issuers rely on being discoverable and represented as the responsible parties for released DSCAs by the SCITT instance in a believable manner.
 Analogously, DSCA Consumers rely on verifiable trustworthiness assertions associated with DSCAs and their processing in a believable manner.
-If trust can be put into the operations that record DSCAs in a secure, append-only Registry via an online operation, the same trust can be put into a corresponding receipt that is the result of these online operations issued by the TS and that can be validated in offline operations.
+If trust can be put into the operations that record DSCAs in a secure, append-only Registry via an online operation, the same trust can be put into a corresponding receipt that is the result of these online operations issued by the SCITT instance and that can be validated in offline operations.
 
-The TS specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
+The SCITT instance specified in this architecture can be implemented by various different types of services in various types of languages provided via various variants of API layouts.
 
-The global interoperability enabled and guaranteed by the TS is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle tree that functions as the append-only Registry for DSCAs.
+The global interoperability enabled and guaranteed by the SCITT instance is enabled via core components (architectural constituents) that come with prescriptive requirements (that are typically hidden away from the user audience via APIs). The core components are based on the Concise Signing and Encryption standard specified in {{-COSE}}, which is used to sign released DSCAs and to build and maintain a Merkle tree that functions as the append-only Registry for DSCAs.
 The format and verification process for Registry-based transparency receipts are described in {{-RECEIPTS}}.
 
 ## Requirements Notation
@@ -189,7 +189,7 @@ Registry:
 
 Transparency Service:
 
-: an entity that maintains and extends the Registry, and endorses its state. A Transparency Service is often referred to by its synonym Notary. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Registry . The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.
+: an entity that maintains and extends the Registry, and endorses its state. A Transparency Service is often referred to by its synonym Notary. A Transparency Service can be a complex distributed system, and SCITT requires the SCITT instance to provide many security guarantees about its Registry . The identity of a SCITT instance is captured by a public key that must be known by Verifiers in order to validate Receipts.
 
 Receipt:
 
@@ -201,13 +201,13 @@ Registration:
 
 Registration Policy:
 
-: the pre-condition enforced by the TS before registering a Claim,
+: the pre-condition enforced by the SCITT instance before registering a Claim,
 based on its Envelope (notably the identity of its Issuer)
 and on prior claims already in the Registry.
 
 Transparent Claim:
 
-: a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different TS.
+: a Claim that is augmented with a Receipt of its registration. A Transparent Claim remains a valid Claim (as the Receipt is carried in the countersignature), and may be registered again in a different SCITT instance.
 
 Verifier:
 
@@ -215,7 +215,7 @@ Verifier:
 
 Auditor:
 
-: an entity that checks the correctness and consistency of all Claim registered by a TS (a specialization of Claim Consumer).
+: an entity that checks the correctness and consistency of all Claim registered by a SCITT instance (a specialization of Claim Consumer).
 
 {: #mybody}
 
@@ -223,15 +223,15 @@ Auditor:
 
 In this document, we use a definition of transparency built over abstract notions of Registry and Receipts. Existing transparency systems such as Certificate Transparency are instances of this definition.
 
-A Claim is an identifiable and non-repudiable Statement made by an Issuer. The Issuer selects additional metadata and attaches a proof of endorsement (in most cases, a signature) using the identity key of the Issuer that binds the Statement and its metadata. Claims can be made transparent by attaching a proof of Registration by a TS, in the form of a Receipt that countersigns the Claim and witnesses its inclusion in the Registry of a TS. By extension, we may say an Artifact (e.g. a firmware binary) is transparent if it comes with one or more Transparent Claims from its author or owner, though the context should make it clear what type of Claim is expected for a given Artifact.
+A Claim is an identifiable and non-repudiable Statement made by an Issuer. The Issuer selects additional metadata and attaches a proof of endorsement (in most cases, a signature) using the identity key of the Issuer that binds the Statement and its metadata. Claims can be made transparent by attaching a proof of Registration by a SCITT instance, in the form of a Receipt that countersigns the Claim and witnesses its inclusion in the Registry of a SCITT instance. By extension, we may say an Artifact (e.g. a firmware binary) is transparent if it comes with one or more Transparent Claims from its author or owner, though the context should make it clear what type of Claim is expected for a given Artifact.
 
 Transparency does not prevent dishonest or compromised Issuers, but it holds them accountable: any Artifact that may be used to target a particular user that checks for Receipts must have been recorded in the tamper-proof Registry, and will be subject to scrutiny and auditing by other parties.
 
-Transparency is implemented by a Registry that provides a consistent, append-only, cryptographically verifiable, publicly available record of entries. Implementations of TS may protect their Registry using a combination of trusted hardware, replication and consensus protocols, and cryptographic evidence. A Receipt is an offline, universally-verifiable proof that an entry is recorded in the Registry. Receipts do not expire, but it is possible to append new entries that subsume older entries.
+Transparency is implemented by a Registry that provides a consistent, append-only, cryptographically verifiable, publicly available record of entries. Implementations of SCITT instance may protect their Registry using a combination of trusted hardware, replication and consensus protocols, and cryptographic evidence. A Receipt is an offline, universally-verifiable proof that an entry is recorded in the Registry. Receipts do not expire, but it is possible to append new entries that subsume older entries.
 
 Anyone with access to the Registry can independently verify its consistency and review the complete list of Claims registered by each Issuer. However, the Registry of separate Transparency Services are generally disjoint, though it is possible to take a Claim from one Registry and register it again on another (if its policy allows it), so the authorization of the Issuer and of the Registry by the Verifier of the Receipt are generally independent.
 
-Reputable Issuers are thus incentivized to carefully review their Statements before signing them into Claims. Similarly, reputable TS are incentivized to secure their Registry, as any inconsistency can easily be pinpointed by any auditor with read access to the Registry. Some Registry formats may also support consistency auditing through Receipts, that is, given two valid Receipts the TS may be asked to produce a cryptographic proof that they are consistent. Failure to produce this proof can indicate that the TS operator misbehaved.
+Reputable Issuers are thus incentivized to carefully review their Statements before signing them into Claims. Similarly, reputable SCITT instances are incentivized to secure their Registry, as any inconsistency can easily be pinpointed by any auditor with read access to the Registry. Some Registry formats may also support consistency auditing through Receipts, that is, given two valid Receipts the SCITT instance may be asked to produce a cryptographic proof that they are consistent. Failure to produce this proof can indicate that the SCITT instance operator misbehaved.
 
 # Architecture Overview
 
@@ -263,7 +263,7 @@ Auditor    ->       Collect Receipts     Replay Registry
 ~~~~
 
 The SCITT architecture consists of a very loose federation of Transparency Services, and a set of common formats and protocols for issuing, registering and auditing Claims.
-In order to accommodate as many TS implementations as possible, this document only specifies the format of Claims (which must be used by all Issuers) and a very thin wrapper format for Receipts, which specifies the TS identity and the Registry algorithm. Most of the details of the Receipt's contents are specific to the Registry algorithm. The {{-RECEIPTS}} document defines two initial Registry algorithms (for historical and sparse Merkle Trees), but other Registry formats (such as blockchains, or hybrid historical and indexed Merkle Trees) may be proposed later.
+In order to accommodate as many SCITT implementations as possible, this document only specifies the format of Claims (which must be used by all Issuers) and a very thin wrapper format for Receipts, which specifies the SCITT instance identity and the Registry algorithm. Most of the details of the Receipt's contents are specific to the Registry algorithm. The {{-RECEIPTS}} document defines two initial Registry algorithms (for historical and sparse Merkle Trees), but other Registry formats (such as hybrid historical and indexed Merkle Trees) may be proposed later.
 
 In this section, we describe at a high level the three main roles and associated processes in SCITT: Issuers and the Claim issuance process, transparency Registry and the Claim Registration process, and Verifiers and the Receipt validation process.
 
@@ -274,7 +274,7 @@ In this section, we describe at a high level the three main roles and associated
 Before an Issuer is able to produce Claims, it must first create its [decentralized identifier](https://www.w3.org/TR/did-core) (also known as a DID).
 A DID can be *resolved* into a *key manifest* (a list of public keys indexed by a *key identifier*) using many different DID methods.
 
-Issuers MAY choose the DID method they prefer, but with no guarantee that all TS will be able to register their Claim. To facilitate interoperability, all Transparency Service implementations SHOULD support the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the Issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the Issuer is `did:web:sample.issuer:user:alice`.
+Issuers MAY choose the DID method they prefer, but with no guarantee that all SCITT instance will be able to register their Claim. To facilitate interoperability, all Transparency Service implementations SHOULD support the `did:web` method from [https://w3c-ccg.github.io/did-method-web/]. For instance, if the Issuer publishes its manifest at `https://sample.issuer/user/alice/did.json`, the DID of the Issuer is `did:web:sample.issuer:user:alice`.
 
 Issuers SHOULD use consistent decentralized identifiers for all their Artifacts, to simplify authorization by Verifiers and auditing. They MAY update their DID manifest, for instance to refresh their signing keys or algorithms, but they SHOULD NOT remove or change any prior keys unless they intend to revoke all Claims issued with those keys. This DID appears in the Issuer header of the Claim's Envelope, while the version of the key from the manifest used to sign the Claim is written in the `kid` header.
 
@@ -285,52 +285,52 @@ Many Issuers issue Claims about different Artifacts under the same DID, so it is
 ### Claim Metadata
 
 Besides Issuer, Feed and kid, the only other mandatory metadata in the Claim is the type of the Payload, indicated in the `cty` Envelope header.
-However, this set of mandatory metadata is not sufficient to express many important Registration policies. For example, a Registry may only allow a Claim to be registered if it was signed recently. While the Issuer is free to add any information in the payload of the Claim, the TS (and most of its auditor) can only be expected to interpret information in the Envelope.
+However, this set of mandatory metadata is not sufficient to express many important Registration policies. For example, a Registry may only allow a Claim to be registered if it was signed recently. While the Issuer is free to add any information in the payload of the Claim, the SCITT instance (and most of its auditor) can only be expected to interpret information in the Envelope.
 
-Such metadata, meant to be interpreted by the TS during Registration policy evaluation, should be added to the `reg_info` header. While the header MUST be present in all Claims, its contents consist of a map of named attributes. Some attributes (such as the Issuer's timestamp) are standardized with a defined type, to help uniformize their semantics across TS. Others are completely customizable and may have arbitrary types. In any case, all attributes are optional so the map MAY be empty.
+Such metadata, meant to be interpreted by the SCITT instance during Registration policy evaluation, should be added to the `reg_info` header. While the header MUST be present in all Claims, its contents consist of a map of named attributes. Some attributes (such as the Issuer's timestamp) are standardized with a defined type, to help uniformize their semantics across SCITT instance. Others are completely customizable and may have arbitrary types. In any case, all attributes are optional so the map MAY be empty.
 
-## Transparency Service (TS)
+## Transparency Service (SCITT Instance)
 
-The role of TS can be decomposed into several major functions. The most important is maintaining a Registry, the verifiable data structure that records Claims, and enforcing a Registration policy. It also maintains a service key, which is used to endorse the state of the Registry in Receipts. All TS MUST expose standard endpoints for Registration of Claims and Receipt issuance, which is described in {{sec-messages}}. Each TS also defines its Registration policy, which MUST apply to all entries in the Registry.
+The role of SCITT instance can be decomposed into several major functions. The most important is maintaining a Registry, the verifiable data structure that records Claims, and enforcing a Registration policy. It also maintains a service key, which is used to endorse the state of the Registry in Receipts. All SCITT instances MUST expose standard endpoints for Registration of Claims and Receipt issuance, which is described in {{sec-messages}}. Each SCITT instance also defines its Registration policy, which MUST apply to all entries in the Registry.
 
-The combination of Registry, identity, Registration policy evaluation, and Registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, Registry extension and endorsement may be protected by running in a TEE; the Registry may be replicated and a consensus algorithm such as Practical Byzantine Fault Tolerance (pBFT {{PBFT}}) may be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
+The combination of Registry, identity, Registration policy evaluation, and Registration endpoint constitute the trusted part of the SCITT instance. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the SCITT instance. For instance, the code for policy evaluation, Registry extension and endorsement may be protected by running in a TEE; the Registry may be replicated and a consensus algorithm such as Practical Byzantine Fault Tolerance ({{PBFT}}) may be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.
 
-Beyond the trusted components, Transparency Services may operate additional endpoints for auditing, for instance to query for the history of Claims made by a given Issuer and Feed. Implementations of TS SHOULD avoid using the service identity and extending the Registry in auditing endpoints; as much as practical, the Registry SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the Registry.
+Beyond the trusted components, Transparency Services may operate additional endpoints for auditing, for instance to query for the history of Claims made by a given Issuer and Feed. Implementations of SCITT instance SHOULD avoid using the service identity and extending the Registry in auditing endpoints; as much as practical, the Registry SHOULD contain enough evidence to re-construct verifiable proofs that the results returned by the auditing endpoint are consistent with a given state of the Registry.
 
 ### Service Identity, Remote Attestation, and Keying
 
-Every TS MUST have a public service identity,
+Every SCITT instance MUST have a public service identity,
 associated with public/private key pairs for signing on behalf of the service. In particular, this identity must be known by Verifiers when validating a Receipt
 
-This identity should be stable for the lifetime of the service, so that all Receipts remain valid and consistent. The TS operator MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the Registry algorithm they use for their Receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
+This identity should be stable for the lifetime of the service, so that all Receipts remain valid and consistent. The SCITT instance operator MAY use a distributed identifier as their public service identity if they wish to rotate their keys, if the Registry algorithm they use for their Receipt supports it. Other types of cryptographic identities, such as parameters for non-interactive zero-knowledge proof systems, may also be used in the future.
 
-The TS SHOULD provide evidence that it is securely implemented and operated, enabling remote authentication of the hardware platforms and/or software TCB that run the TS. This additional evidence SHOULD be recorded in the Registry and presented on demand to Verifiers and auditors.
+The SCITT instance SHOULD provide evidence that it is securely implemented and operated, enabling remote authentication of the hardware platforms and/or software TCB that run the SCITT instance. This additional evidence SHOULD be recorded in the Registry and presented on demand to Verifiers and auditors.
 
-For example, consider a TS implemented using a set of replicas, each running within its own hardware-protected trusted execution environments (TEEs). Each replica SHOULD provide a recent attestation report for its TEE, binding their hardware platform to the software that runs the Transparency Service, the long-term public key of the service, and the key used by the replica for signing Receipts. This attestation evidence SHOULD be supplemented with transparency Receipts for the software and configuration of the service, as measured in its attestation report.
+For example, consider a SCITT instance implemented using a set of replicas, each running within its own hardware-protected trusted execution environments (TEEs). Each replica SHOULD provide a recent attestation report for its TEE, binding their hardware platform to the software that runs the Transparency Service, the long-term public key of the service, and the key used by the replica for signing Receipts. This attestation evidence SHOULD be supplemented with transparency Receipts for the software and configuration of the service, as measured in its attestation report.
 
 ### Registration Policies
 
-A TS that accepts to register any valid claim offered by an issuer would end up providing only limited value to verifiers. In consequence, a baseline transparency guarantee policing the registration of claims is required to ensure completeness of audit, which can help detect equivocation.
-Most advanced SCITT scenarios rely on the TS performing additional domain-specific checks before a claim is accepted: TS may only allow trusted authenticated users to register claims, TS may try to check that a new claim is consistent with previous claims from the same issuers or that claims are registered in the correct order and cannot be re-played; some TS may even interpret and validate the payload of claims.
+A SCITT instance that accepts to register any valid claim offered by an issuer would end up providing only limited value to verifiers. In consequence, a baseline transparency guarantee policing the registration of claims is required to ensure completeness of audit, which can help detect equivocation.
+Most advanced SCITT scenarios rely on the SCITT instance performing additional domain-specific checks before a claim is accepted: SCITT instances may only allow trusted authenticated users to register claims, SCITT instance may try to check that a new claim is consistent with previous claims from the same issuers or that claims are registered in the correct order and cannot be re-played; some SCITT instance may even interpret and validate the payload of claims.
 
-In general, registration policies are applied at the discretion of the TS, and verifiers use receipts as witnesses that confirm that the registration policy of the TS was satisfied at the time claim registration. TS implementations SHOULD make their full registration policy public and auditable, e.g. by recording stateful policy inputs at evaluation time in the registry to ensure that policy can be independently validated later.
-From an interoperability point of view, the policy that was applied by the TS is opaque to the verifier, who is forced to trust the associated registration policy. If the policy of the TS evolves over time, or is different across issuers, the guarantee derived from receipt validation may not be uniform across all claims over time.
+In general, registration policies are applied at the discretion of the SCITT instance, and verifiers use receipts as witnesses that confirm that the registration policy of the SCITT instance was satisfied at the time claim registration. SCITT implementations SHOULD make their full registration policy public and auditable, e.g. by recording stateful policy inputs at evaluation time in the registry to ensure that policy can be independently validated later.
+From an interoperability point of view, the policy that was applied by the SCITT instance is opaque to the verifier, who is forced to trust the associated registration policy. If the policy of the SCITT instance evolves over time, or is different across issuers, the guarantee derived from receipt validation may not be uniform across all claims over time.
 
-To help verifiers interpret the semantics of claim registration, SCITT defines a standard mechanism for signalling in the claim itself which policies have been applied by the TS from a defined set
-of registration policies with standardized semantics. Each policy that is expected to be enforced by the TS is represented by an entry in the registration policy info map (`reg_info`) in the envelope. The key of the map corresponds to the name of the policy, while its value (including its type) is policy-specific. For instance, the `register_by` policy defines the maximum timestamp by which a claim can be registered, hence the associated value contains an unsigned integer.
+To help verifiers interpret the semantics of claim registration, SCITT defines a standard mechanism for signalling in the claim itself which policies have been applied by the SCITT instance from a defined set
+of registration policies with standardized semantics. Each policy that is expected to be enforced by the SCITT instance is represented by an entry in the registration policy info map (`reg_info`) in the envelope. The key of the map corresponds to the name of the policy, while its value (including its type) is policy-specific. For instance, the `register_by` policy defines the maximum timestamp by which a claim can be registered, hence the associated value contains an unsigned integer.
 
-While this design ensures that all verifiers get the same guarantee regardless of where a claim is registered, its main downside is that it requires the issuer to include the necessary policies in the envelope when the claim is signed. Furthermore, it makes it impossible to register the same claim on two different TS if their required registration policies are incompatible.
+While this design ensures that all verifiers get the same guarantee regardless of where a claim is registered, its main downside is that it requires the issuer to include the necessary policies in the envelope when the claim is signed. Furthermore, it makes it impossible to register the same claim on two different SCITT instance if their required registration policies are incompatible.
 
 > **Editor's note**
 >
 > The technical design for signalling and verifying registration policies is a work in progress.
-> An alternative design would be to include the registration policies in the receipt/countersignature rather than in the envelope. This improves the portability of claims but requires the verifier to be more aware of the particular policies at the TS where the claim is registered.
+> An alternative design would be to include the registration policies in the receipt/countersignature rather than in the envelope. This improves the portability of claims but requires the verifier to be more aware of the particular policies at the SCITT instance where the claim is registered.
 
 ### Registry Security Requirements
 
-There are many different candidate verifiable data structures that may be used to implement the Registry, such as chronological Merkle Trees, sparse/indexed Merkle Trees, full blockchains, and many other variants. We only require the Registry to support concise Receipts (i.e. whose size grows at most logarithmically in the number of entries in the Registry). This does not necessarily rule out blockchains as a Registry, but may necessitate advanced Receipt schemes that use arguments of knowledge and other verifiable computing techniques.
+There are many different candidate verifiable data structures that may be used to implement the Registry, such as chronological Merkle Trees, sparse/indexed Merkle Trees, and many other variants. We only require the Registry to support concise Receipts (i.e. whose size grows at most logarithmically in the number of entries in the Registry). This does not necessarily rule out blockchains as a Registry, but may necessitate advanced Receipt schemes that use arguments of knowledge and other verifiable computing techniques.
 
-Since the details of how to verify a Receipt are specific to the data structure, we do not specify any particular Registry format in this document. Instead, we propose two initial formats for Registry in {{-RECEIPTS}} using historical and sparse Merkle Trees. Beyond the format of Receipts, we require generic properties that should be satisfied by the components in the TS that have the ability to write to the Registry.
+Since the details of how to verify a Receipt are specific to the data structure, we do not specify any particular Registry format in this document. Instead, we propose two initial formats for Registry in {{-RECEIPTS}} using historical and sparse Merkle Trees. Beyond the format of Receipts, we require generic properties that should be satisfied by the components in the SCITT instance that have the ability to write to the Registry.
 
 #### Finality
 
@@ -339,31 +339,31 @@ The Registry is append-only: once a Claim is registered, it cannot be modified, 
 #### Consistency
 
 There is no fork in the Registry: everyone with access to its contents sees the same sequence of entries, and can check its consistency with any Receipts they have collected.
-TS implementations SHOULD provide a mechanism to verify that the state of the Registry encoded in an old Receipt is consistent with the current Registry state.
+SCITT implementations SHOULD provide a mechanism to verify that the state of the Registry encoded in an old Receipt is consistent with the current Registry state.
 
 #### Replayability and Auditing
 
 Everyone with access to the Registry can check the correctness of its contents. In particular,
 
-- the TS defines and enforces deterministic Registration policies that can be re-evaluated based solely on the contents of the Registry at the time of registraton, and must then yield the same result.
+- the SCITT instance defines and enforces deterministic Registration policies that can be re-evaluated based solely on the contents of the Registry at the time of registraton, and must then yield the same result.
 
 - The ordering of entries, their cryptographic contents, and the Registry governance may be non-deterministic, but they must be verifiable.
 
-- The TS SHOULD store evidence about the resolution of distributed identifiers into manifests.
+- The SCITT instance SHOULD store evidence about the resolution of distributed identifiers into manifests.
 
-- The TS MAY additionally support verifiability of client authentication and access control.
+- The SCITT instance MAY additionally support verifiability of client authentication and access control.
 
 #### Governance and Bootstrapping
 
-The TS needs to support governance, with well-defined procedures for allocating resources to operate the Registry (e.g., for provisioning trusted hardware and registering their attestation materials in the Registry) and for updating its code (e.g., relying on Transparent Claims about code updates, secured on the Registry itself, or on some auxiliary TS).
+The SCITT instance needs to support governance, with well-defined procedures for allocating resources to operate the Registry (e.g., for provisioning trusted hardware and registering their attestation materials in the Registry) and for updating its code (e.g., relying on Transparent Claims about code updates, secured on the Registry itself, or on some auxiliary SCITT instance).
 
-Governance procedures, their auditing, and their transparency are implementation specific. The TS SHOULD document them.
+Governance procedures, their auditing, and their transparency are implementation specific. The SCITT instance SHOULD document them.
 
-- Governance may be based on a consortium of members that are jointly responsible for the TS, or automated based on the contents of an auxiliary governance TS.
+- Governance may be based on a consortium of members that are jointly responsible for the SCITT instance, or automated based on the contents of an auxiliary governance SCITT instance.
 
 - Governance typically involves additional records in the Registry to enable its auditing. Hence, the Registry may contain both Transparent Claims and governance entries.
 
-- Issuers, Verifiers, and third-party auditors may review the TS governance before trusting the service, or on a regular basis.
+- Issuers, Verifiers, and third-party auditors may review the SCITT instance governance before trusting the service, or on a regular basis.
 
 ## Verifying Transparent Claims {#validation}
 
@@ -371,14 +371,14 @@ For a given Artifact, Verifiers take as trusted inputs:
 
 1. the distributed identifier of the Issuer (or its resolved key manifest),
 2. the expected name of the Artifact (i.e. the Feed),
-3. the list of service identities of trusted TS.
+3. the list of service identities of trusted SCITT instance.
 
 When presented with a Transparent Claim for the Artifact, they verify its Issuer identity, signature, and Receipt.
 They may additionally apply a validation policy based on the protected headers present both in the Envelope or in the countersignature and the Statement itself, which may include security-critical Artifact-specific details.
 
 Some Verifiers may systematically resolve the Issuer DID to fetch their latest DID document. This strictly enforces the revocation of compromised keys: once the Issuer has updated its document to remove a key identifier, all Claims signed with this `kid` will be rejected. However, others may delegate DID resolution to a trusted third party and/or cache its results.
 
-Some Verifiers may decide to skip the DID-based signature verification, relying on the TS's Registration policy and the scrutiny of other Verifiers. Although this weakens their guarantees against key revocation, or against a corrupt TS, they can still keep the Receipt and blame the Issuer or the TS at a later point.
+Some Verifiers may decide to skip the DID-based signature verification, relying on the SCITT instance's Registration policy and the scrutiny of other Verifiers. Although this weakens their guarantees against key revocation, or against a corrupt SCITT instance, they can still keep the Receipt and blame the Issuer or the SCITT instance at a later point.
 
 # Claim Issuance, Registration, and Verification
 
@@ -455,7 +455,7 @@ Once the Statement is serialized with the correct content type, the Issuer shoul
 
 Once all the Envelope headers are set, the Issuer MAY use a standard COSE implementation to produce the serialized Claim (the SCITT tag of `COSE_Sign1_Tagged` is outside the scope of COSE, and used to indicate that a signed object is a Claim).
 
-## Standard registration policies
+## Standard Registration Policies
 
 > **Editor's note**
 >
@@ -463,7 +463,7 @@ Once all the Envelope headers are set, the Issuer MAY use a standard COSE implem
 > We expect that once the formats and semantics of the registration policy headers are finalized, standardized policies may be moved to a separate draft.
 > For now, we inline some significant policies to illustrate the most common use cases.
 
-TS implementations MUST indicate their support for registration policies and MUST check that all the policies indicated as defined in the `reg_info` map are supported and are satisfied before a claim can be registered. Any unsupported claims MUST be indicated separately and corresponding unknown policy entries in the map of a claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.
+SCITT implementations MUST indicate their support for registration policies and MUST check that all the policies indicated as defined in the `reg_info` map are supported and are satisfied before a claim can be registered. Any unsupported claims MUST be indicated separately and corresponding unknown policy entries in the map of a claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.
 
 Policy Name | Required `reg_info` attributes | Implementation
 ---|---|---
@@ -475,17 +475,17 @@ NoReplay | None | Returns true if and only if the claim doesn't already appear i
 
 ## Registering Signed Claims
 
-The same Claim may be independently registered in multiple TS. To register a Claim, the service performs the following steps:
+The same Claim may be independently registered in multiple SCITT instances. To register a Claim, the service performs the following steps:
 
 1. Client authentication. This is implementation-specific, and MAY be unrelated to the Issuer identity. Claims may be registered by a different party than their Issuer.
 
-2. Issuer identification. The TS MUST store evidence of the DID resolution for the Issuer protected header of the Envelope and the resolved key manifest at the time of Registration for auditing. This MAY require that the service resolve the Issuer DID and record the resulting document, or rely on a cache of recent resolutions.
+2. Issuer identification. The SCITT instance MUST store evidence of the DID resolution for the Issuer protected header of the Envelope and the resolved key manifest at the time of Registration for auditing. This MAY require that the service resolve the Issuer DID and record the resulting document, or rely on a cache of recent resolutions.
 
 3. Envelope signature verification, as described in COSE signature, using the signature algorithm and verification key of the Issuer DID document.
 
 4. Envelope validation. The service MUST check that the Envelope has a payload and the protected headers listed above. The service MAY additionally verify the payload format and content.
 
-5. Apply Registration policy: for named policies, the TS should check that the required Registration info attributes are present in the Envelope and apply the check described in Table 1. A TS MUST reject Claims that contain an attribute used for a named policy that is not enforced by the service. Custom Claims are evaluated given the current Registry state and the entire Envelope, and MAY use information contained in the attributes of named policies.
+5. Apply Registration policy: for named policies, the SCITT instance should check that the required Registration info attributes are present in the Envelope and apply the check described in Table 1. A SCITT instance MUST reject Claims that contain an attribute used for a named policy that is not enforced by the service. Custom Claims are evaluated given the current Registry state and the entire Envelope, and MAY use information contained in the attributes of named policies.
 
 6. Commit the new Claim to the Registry
 
@@ -499,13 +499,13 @@ The service MUST ensure that the Claim is committed before releasing its Receipt
 
 This section provides additional implementation considerations, the high-level validation algorithm is described in {{validation}}, with the Registry-specific details of checking Receipts are covered in {{-RECEIPTS}}.
 
-Before checking a Claim, the Verifier must be configured with one or more identities of trusted Transparency Services. If more than one service is configured, the Verifier MUST return which service the Claim is registered on.
+Before checking a Claim, the Verifier must be configured with one or more identities of trusted SCITT instances. If more than one service is configured, the Verifier MUST return which service the Claim is registered on.
 
-In some scenarios, the Verifier already expects a specific Issuer and Feed for the Claim, while in other cases they are not known in advance and can be an output of validation. Verifiers SHOULD offer a configuration to decide if the Issuer's signature should be locally verified (which may require a DID resolution, and may fail if the manifest is not available or if the key is revoked), or if it should trust the validation done by the TS during Registration.
+In some scenarios, the Verifier already expects a specific Issuer and Feed for the Claim, while in other cases they are not known in advance and can be an output of validation. Verifiers SHOULD offer a configuration to decide if the Issuer's signature should be locally verified (which may require a DID resolution, and may fail if the manifest is not available or if the key is revoked), or if it should trust the validation done by the SCITT instance during Registration.
 
-Some Verifiers MAY decide to locally re-apply some or all of the Registration policies if they have limited trust in the TS. In addition, Verifiers MAY apply arbitrary validation policies after the signature and Receipt have been checked. Such policies may use as input all information in the Envelope, the Receipt, and the payload, as well as any local state.
+Some Verifiers MAY decide to locally re-apply some or all of the Registration policies if they have limited trust in the SCITT instance. In addition, Verifiers MAY apply arbitrary validation policies after the signature and Receipt have been checked. Such policies may use as input all information in the Envelope, the Receipt, and the payload, as well as any local state.
 
-Verifiers SHOULD offer options to store or share Receipts in case they are needed to audit the TS in case of a dispute.
+Verifiers SHOULD offer options to store or share Receipts in case they are needed to audit the SCITT instance in case of a dispute.
 
 # Federation
 
@@ -515,7 +515,7 @@ Multiple SCITT instances, governed and operated by different organizations.
 
 For example,
 - a small, simple SCITT instance may keep track specifically of the software used for operating SCITT services.
-- an air-gapped data center may operate its own SCITT Registry to retain full control and auditing of its software supplies.
+- an air-gapped data center may operate its own SCITT instance to retain full control and auditing of its software supplies.
 
 How?
 - Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Registries are trusted for verifying signed Transparent Claims for these Artifacts.
@@ -600,14 +600,13 @@ The retrieved Receipt may be embedded in the corresponding COSE_Sign1 document i
 
 # Privacy Considerations
 
-Unless advertised by the TS, every Issuer should treat its Claims as public. In particular, their Envelope and Statement should not carry any private information in plaintext.
+Unless advertised by the SCITT instance, every Issuer should treat its Claims as public. In particular, their Envelope and Statement should not carry any private information in plaintext.
 
 # Security Considerations
 
-On its own, verifying a Transparent Claim does not guarantee that its Envelope or contents are trustworthy---just that they have been signed by the apparent Issuer and counter-signed by the
-TS. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the TS, it can independently infer that the Claim passed the TS Registration policy and that has been persisted in the Registry. Unless advertised in the TS Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Registry matches the ordering of their issuance.
+On its own, verifying a Transparent Claim does not guarantee that its Envelope or contents are trustworthy, just that they have been signed by the apparent Issuer and counter-signed by the SCITT instance. If the Verifier trusts the Issuer, it can infer that the Claim was issued with this Envelope and contents, which may be interpreted as the Issuer saying the Artifact is fit for its intended purpose. If the Verifier trusts the SCITT instance, it can independently infer that the Claim passed the SCITT Registration policy and that has been persisted in the Registry. Unless advertised in the SCITT instance Registration policy, the Verifier should not assume that the ordering of Transparent Claims in the Registry matches the ordering of their issuance.
 
-Similarly, the fact that an Issuer can be held accountable for its Transparent Claims does not on its own provide any mitigation or remediation mechanism in case one of these Claims turned out to be misleading or malicious---just that signed evidence will be available to support them.
+Similarly, the fact that an Issuer can be held accountable for its Transparent Claims does not on its own provide any mitigation or remediation mechanism in case one of these Claims turned out to be misleading or malicious, just that signed evidence will be available to support them.
 
 Issuers SHOULD ensure that the Statements in their Claims are correct and unambiguous, for example by avoiding ill-defined or ambiguous formats that may cause Verifiers to interpret the Claim as valid for some other purpose.
 
@@ -616,40 +615,40 @@ and avoid these keys for any purpose not described in this architecture. In case
 
 ## Threat Model
 
-We provide a generic threat model for SCITT, describing its residual security properties when some of its actors (identity providers, Issuers, TS, and Auditors) are corrupt or compromised.
+We provide a generic threat model for SCITT, describing its residual security properties when some of its actors (identity providers, Issuers, SCITT instance, and Auditors) are corrupt or compromised.
 
 This model may need to be refined to account for specific supply chains and use cases.
 
-### Claim authentication and transparency.
+### Claim Authentication and Transparency
 
-SCITT primarily supports evidence of Claim integrity, both from the Issuer (authentication) and from the TS (transparency). These guarantees are meant to hold for the long term, possibly decades.
+SCITT primarily supports evidence of Claim integrity, both from the Issuer (authentication) and from the SCITT instance (transparency). These guarantees are meant to hold for the long term, possibly decades.
 
-We conservatively suppose that some issuers and some TS will be corrupt.
+We conservatively suppose that some issuers and some SCITT instances will be corrupt.
 
-SCITT entities explicitly trust one another on the basis of their long-term identity, which maps to shorter-lived cryptographic credentials. Hence, a Verifier would usually validate a transparent signed Claim from a given Issuer, registered at a given TS (both identified in the Verifier's local authorization policy) and would not depend on any other Issuer or TS.
+SCITT entities explicitly trust one another on the basis of their long-term identity, which maps to shorter-lived cryptographic credentials. Hence, a Verifier would usually validate a transparent signed Claim from a given Issuer, registered at a given SCITT instance (both identified in the Verifier's local authorization policy) and would not depend on any other Issuer or SCITT instance.
 
-We cannot stop authorized supply chain actors from making false claims (either by mistake or by corruption) but we can make them accountable by ensuring their Claims are systematically registered at a trustworthy TS.
+We cannot stop authorized supply chain actors from making false claims (either by mistake, by corruption, or true at the time, but new information proves them false). But we can make them accountable by ensuring their Claims are systematically registered at a trustworthy SCITT instance.
 
-Similarly, we aim to provide strong residual guarantees against a faulty/corrupt TS. We cannot stop a TS from registering Claims that do not meet its stated Registration Policy, or to issue Receipts that are not consistent with their append-only Registry, but we can hold it accountable and guarantee that it will be blamed by any Auditor that replays their Registry against any contested Receipt. Note that SCITT does not require trust in a single centralized TS: different actors may rely on different TS, each registering a subset of claims subject to their own policy.
+Similarly, we aim to provide strong residual guarantees against a faulty/corrupt SCITT instance. We cannot stop a SCITT instance from registering Claims that do not meet its stated Registration Policy, or to issue Receipts that are not consistent with their append-only Registry, but we can hold it accountable and guarantee that it will be blamed by any Auditor that replays their Registry against any contested Receipt. Note that SCITT does not require trust in a single centralized SCITT instance: different actors may rely on different SCITT instance, each registering a subset of claims subject to their own policy.
 
-In both cases, SCITT provides generic, universally-verifiable cryptographic evidence to individually blame the Issuer or the TS. This enables valid actors to detect and disambiguate malicious actors who make contradictory Claims to different entities (Verifiers, Auditors, Issuers). On the other hand, their liability and the resulting damage to their reputation are application specific, and out of scope for SCITT.
+In both cases, SCITT provides generic, universally-verifiable cryptographic evidence to individually blame the Issuer or the SCITT instance. This enables valid actors to detect and disambiguate malicious actors who make contradictory Claims to different entities (Verifiers, Auditors, Issuers). On the other hand, their liability and the resulting damage to their reputation are application specific, and out of scope for SCITT.
 
-Verifiers and Auditors need not be trusted by other actors. In particular, they cannot "frame" an Issuer or a TS for claims they did not issue or register.
+Verifiers and Auditors need not be trusted by other actors. In particular, they cannot "frame" an Issuer or a SCITT instance for claims they did not issue or register.
 
-**Append-only log**
+**Append-only Log**
 
-If a TS is honest, then a transparent signed Claim with a correct Receipt of registration at a given position ensures that the signed claim passed its Registration Policy and was recorded at that position in its Registry.
+If a SCITT instance is honest, then a transparent signed Claim with a correct Receipt of registration at a given position ensures that the signed claim passed its Registration Policy and was recorded at that position in its Registry.
 
-Conversely, a corrupt TS may
-1. refuse or delay the registration of Claims;
-2. register Claims that do not pass its Registration Policy (e.g. Claims with Issuer identities and signatures that do not verify.)
-3. issue verifiable Receipts for Claims that do not match its Registry;
+Conversely, a corrupt SCITT instance may
+1. refuse or delay the registration of Claims
+2. register Claims that do not pass its Registration Policy (e.g. Claims with Issuer identities and signatures that do not verify)
+3. issue verifiable Receipts for Claims that do not match its Registry
 4. refuse access to its Registry (e.g. to Auditors, possibly after storage loss)
 
-An Auditor granted (partial) access to the Registry and to a collection of disputed Receipts will be able to replay it, detect any invalid Registration (2) or incorrect  receipt in this collection (3), and blame the TS for them. This ensures any Verifier that trust at least one such Auditor that (2,3) will be blamed to the TS.
+An Auditor granted (partial) access to the Registry and to a collection of disputed Receipts will be able to replay it, detect any invalid Registration (2) or incorrect  receipt in this collection (3), and blame the SCITT instance for them. This ensures any Verifier that trust at least one such Auditor that (2,3) will be blamed to the SCITT instance.
 
 Due to the operational challenge of maintaining a globally consistent append-only Registry,
-some TS may provide limited support for historical queries on the Claims they have registered,
+some SCITT instances may provide limited support for historical queries on the Claims they have registered,
 and accept the risk of being blamed for inconsistent Registration or Issuer equivocation.
 
 Verifier and Auditors may also witness (1,4) but may not be able to collect verifiable evidence for it.
@@ -658,43 +657,43 @@ Verifier and Auditors may also witness (1,4) but may not be able to collect veri
 
 Networking and Storage are trusted only for availability.
 
-Auditing may involve access to data beyond what is persisted in the TS log. For example, the registered TS may include only the hash of a detailed SBOM, which may limit the scope of auditing.
+Auditing may involve access to data beyond what is persisted in the SCITT log. For example, the registered SCITT instance may include only the hash of a detailed SBOM, which may limit the scope of auditing.
 
 Resistance to denial-of-service is implementation specific.
 
 Actors should independently keep their own record of the Claims they issue, endorse, verify, or audit.
 
-### Confidentiality and privacy.
+### Confidentiality and Privacy
 
 The network is untrusted. All contents exchanged between actors is protected using secure authenticated channels (TLS) but, as usual, this may not exclude network traffic analysis.
 
-**Claims and their registration**
+**Claims and Their Registration**
 
-The TS is trusted with the confidentiality of the claims presented for registration. Some TS may publish every claim in their logs, to facilitate their dissemination and auditing. Others may just return receipts to the client that present claims for registration, and disclose the ledger only to auditors trusted with the confidentiality of its contents.
+The SCITT instance is trusted with the confidentiality of the claims presented for registration. Some SCITT instances may publish every claim in their logs, to facilitate their dissemination and auditing. Others may just return receipts to the client that present claims for registration, and disclose the ledger only to auditors trusted with the confidentiality of its contents.
 
-A collection of transparent Claims leaks no information about the contents of other Claims registered at the TS.
+A collection of transparent Claims leaks no information about the contents of other Claims registered at the SCITT instance.
 
 Nonetheless, Issuers should carefully review the inclusion of private/confidential materials in their Claims; they may for instance remove any PII, or include instead opaque cryptographic commitments, such as hashes.
 
 **Queries to the Registry**
 
-The confidentiality of queries is implementation-specific, and generally not guaranteed. For example, while offline Claim verification is private, a TS may monitor which of its Claims are being verified from lookups to ensure their freshness.
+The confidentiality of queries is implementation-specific, and generally not guaranteed. For example, while offline Claim verification is private, a SCITT instance may monitor which of its Claims are being verified from lookups to ensure their freshness.
 
 ### Cryptographic Assumptions
 
-We rely on standard cryptographic security for signing schemes (EUF-CMA: for a given key, given the public key and any number of signed messages, the attacker cannot forge a valid signature for any other message) and for receipts schemes (log collision-resistance: for a given commitment such as a Merkle-tree root, there is a unique log such that any valid path authenticates a claim in this log.)
+SCITT relies on standard cryptographic security for signing schemes (EUF-CMA: for a given key, given the public key and any number of signed messages, the attacker cannot forge a valid signature for any other message) and for receipts schemes (log collision-resistance: for a given commitment such as a Merkle-tree root, there is a unique log such that any valid path authenticates a claim in this log.)
 
 SCITT supports cryptographic agility: the actors depend only on the subset of signing and receipt schemes they trust. This enables the gradual transition to stronger algorithms, including e.g. post-quantum signature algorithms.
 
-### TS Clients
+### SCITT Clients
 
-Trust in clients that submit Claims for registration is implementation-specific. Hence, an attacker may attempt to register any Claim it has obtained, at any TS that accepts them, possibly multiple times and out of order. This may be mitigated by a TS that enforces restrictive access control and registration policies.
+Trust in clients that submit Claims for registration is implementation-specific. Hence, an attacker may attempt to register any Claim it has obtained, at any SCITT instance that accepts them, possibly multiple times and out of order. This may be mitigated by a SCITT instance that enforces restrictive access control and registration policies.
 
 ### Identity
 
-The identity resolution mechanism is trusted to associate long-term identifiers with their public signature-verification keys. (The TS and other parties may record identity-resolution evidence to facilitate its auditing.)
+The identity resolution mechanism is trusted to associate long-term identifiers with their public signature-verification keys. (The SCITT instance and other parties may record identity-resolution evidence to facilitate its auditing.)
 
-If one of the credentials of an Issuer gets compromised, SCITT still guarantee the authenticity of all claims signed with this credential that have been registered on a TS before the compromise. It is up to the Issuer to notify TS of credential revocation to stop Verifiers from accepting Claims signed with compromised credentials. [See the thread of revocation for additional details.]
+If one of the credentials of an Issuer gets compromised, SCITT still guarantee the authenticity of all claims signed with this credential that have been registered on a SCITT instance before the compromise. It is up to the Issuer to notify SCITT instance of credential revocation to stop Verifiers from accepting Claims signed with compromised credentials. [See the thread of revocation for additional details.]
 
 The confidentiality of any identity lookup during Claim Registration or Claim Verification is out of scope.
 
