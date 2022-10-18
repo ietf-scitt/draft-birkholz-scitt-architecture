@@ -393,15 +393,15 @@ At a high-level that is the context of this architecture, a Claim is a COSE sing
 All Claims MUST include the following protected headers:
 
 - algorithm (label: `1`): Asymmetric signature algorithm used by the Claim Issuer, as an integer, for example `-35` for ECDSA with SHA-384, see [COSE Algorithms registry](https://www.iana.org/assignments/cose/cose.xhtml);
-- Issuer (label: `TBD`, to be registered): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer, as a string, for example `did:web:example.com`;
-- Feed (label: `TBD`): the Issuer's name for the Artifact, as a string;
+- Issuer (label: `TBD`, temporary: `391`): DID (Decentralized Identifier, see [W3C Candidate Recommendation](https://www.w3.org/TR/did-core/)) of the signer, as a string, for example `did:web:example.com`;
+- Feed (label: `TBD`, temporary: `392`): the Issuer's name for the Artifact, as a string;
 - payload type (label: `3`): Media type of payload as a string, for example `application/spdx+json`
-- Registration policy info (label: `TBD`): a map of additional attributes to help enforce Registration policies;
-- DID key selection hint (label: `TBD`): a DID method-specific selector for the signing key, as a bytestring.
+- Registration policy info (label: `TBD`, temporary: `393`): a map of additional attributes to help enforce Registration policies;
+- Key ID (label: `4`): Key ID, as a bytestring.
 
 Additionally, Claims MAY carry the following unprotected headers:
 
-- Receipts (label: `TBD`, to be registered): Array of Receipts, defined in {{-RECEIPTS}}
+- Receipts (label: `TBD`, temporary: `394`): Array of Receipts, defined in {{-RECEIPTS}}
 
 In CDDL {{-CDDL}} notation, the Envelope is defined as follows:
 
@@ -429,14 +429,16 @@ Reg_Info = {
 Protected_Header = {
   1 => int               ; algorithm identifier
   3 => tstr              ; payload type
-  258 => tstr            ; DID of Issuer
-  259 => tstr            ; Feed
-  260 => Reg_Info        ; Registration policy info
-  261 => bstr            ; key selector
+  4 => bstr              ; Key ID
+  ; TBD, Labels are temporary
+  391 => tstr            ; DID of Issuer
+  392 => tstr            ; Feed
+  393 => Reg_Info        ; Registration policy info
 }
 
 Unprotected_Header = {
-   ? 257 => SCITT_Receipt / [+ SCITT_Receipt]
+  ; TBD, Labels are temporary
+  ? 394 => [+ SCITT_Receipt]
 }
 ~~~~
 
