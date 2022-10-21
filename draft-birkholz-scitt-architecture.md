@@ -510,9 +510,7 @@ Verifiers SHOULD offer options to store or share Receipts in case they are neede
 
 # Federation
 
-> **Editor's note**
->
-> This section needs work.  
+Editor's note: This section needs work.  
 
 Multiple, independently-operated transparency services can help secure distributed supply chains, without the need for a single, centralized service trusted by all parties. For example, multiple SCITT instances may be governed and operated by different organizations that do not trust one another.
 
@@ -525,9 +523,7 @@ to ensure complete auditing for a specific use case, and possibly require additi
 
 # Transparency Service API
 
-> **Editor's Note**
->
-> This may be moved to appendix.
+Editor's Note: This may be moved to appendix.
 
 ## Messages
 
