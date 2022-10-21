@@ -235,31 +235,44 @@ Reputable Issuers are thus incentivized to carefully review their Statements bef
 
 # Architecture Overview
 
-~~~~
-             Artifact
-                |
-                v                      +------------------+
- Issuer    -> Statement    Envelope    | DID Key Manifest |
-                \           /          | (decentralized)  |
-                 \         /           +------------------+
-                  \ ______/               |     |
-                      |                   |     |
-                      v        signature  |     |
-                    Claim  <--------------/     |
-                      |                         |
-                      |  Claim      +---------+ |
-                      |------------>| Trans.  | |
-Transparency ->       +<------------| Registry| /
-Service               |  Receipt    +--------+ X
-                      v                       / \
-                 Transparent                 /   \
-                    Claim                   /    |
-                      |\                   /     |
-                      | \                 /      |
-                      |  \               /       |
-Verifier    ->        |    Verify Claim          |
-                      |                          |
-Auditor    ->       Collect Receipts     Replay Registry
+~~~~ aasvg
+                    .----------.
+                   |  Artifact  |
+                    '----+-----'
+                         v
+                    .----+----.  .----------.
+Issuer       -->   | Statement ||  Envelope  |
+                    '----+----'  '-----+----'
+                         |             |       +------------------+
+                          '----. .----'        | DID Key Manifest |
+                                |              | (decentralized)  |
+                                v              +---+----------+---+
+                             .--+--.   Sign Claim  |          |
+                            | Claim +<------------'           |
+                             '--+--'                          |
+                                |            +--------------+ |
+                             .-' '---------->+ Transparency | |
+                            |   .-------.    |              | |
+Transparency -->            |  | Receipt |<--+   Registry   | |
+     Service                |   '---+---'    +-------+------+ |
+                             '-. .-'                 |        |
+                                |                    |        |
+                                v                    |        |
+                          .-+-------+-.              |        |
+                         | Transparent |             |        |
+                         |    Claim    |             |        |
+                          '-----+-----'              |        |
+                                |                    |        |
+                                |'------.     .------)-------'
+                                |        |   |       |
+                                |        v   v       |
+                                |   .----+---+-----. |
+Verifier      -->               |  / Verify Claim /  |
+                                | '--------------'   |
+                                v                    v
+                       .--------+---------.  .-------+---------.
+Auditor       -->     / Collect Receipts /  / Replay Registry /
+                     '------------------'  '-----------------'
 ~~~~
 
 The SCITT architecture consists of a very loose federation of Transparency Services, and a set of common formats and protocols for issuing, registering and auditing Claims.
