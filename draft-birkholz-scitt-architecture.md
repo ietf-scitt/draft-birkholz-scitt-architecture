@@ -1,25 +1,22 @@
 ---
+v: 3
+
 title: An Architecture for Trustworthy and Transparent Digital Supply Chains
 abbrev: SCITT Architecture
 docname: draft-birkholz-scitt-architecture-latest
-stand_alone: true
-ipr: trust200902
+
 area: Security
-wg: TBD
+wg: SCITT
 kw: Internet-Draft
 cat: std
 consensus: yes
 submissiontype: IETF
-pi:
-  toc: yes
-  sortrefs: yes
-  symrefs: yes
+
 kramdown_options:
   auto_id_prefix: sec-
 
 author:
-- ins: H. Birkholz
-  name: Henk Birkholz
+- name: Henk Birkholz
   org: Fraunhofer SIT
   abbrev: Fraunhofer SIT
   email: henk.birkholz@sit.fraunhofer.de
@@ -27,24 +24,21 @@ author:
   code: '64295'
   city: Darmstadt
   country: Germany
-- ins: A. Delignat-Lavaud
-  name: Antoine Delignat-Lavaud
+- name: Antoine Delignat-Lavaud
   organization: Microsoft Research
   street: 21 Station Road
   code: 'CB1 2FB'
   city: Cambridge
   email: antdl@microsoft.com
   country: UK
-- ins: C. Fournet
-  name: Cedric Fournet
+- name: Cedric Fournet
   organization: Microsoft Research
   street: 21 Station Road
   code: 'CB1 2FB'
   city: Cambridge
   email: fournet@microsoft.com
   country: UK
-- ins: Y. Deshpande
-  name: Yogesh Deshpande
+- name: Yogesh Deshpande
   organization: ARM
   street: 110 Fulbourn Road
   code: 'CB1 9NJ'
@@ -54,30 +48,29 @@ author:
 
 normative:
   RFC8610: CDDL
-  RFC8152: COSE
+  RFC9052: COSE
+#  RFC9053: COSE-ALGS
+#  RFC9054: COSE-HASH
   RFC9162: CT
   RFC6838:
+  IANA.cose:
+  DID-CORE:
+    target: https://www.w3.org/TR/did-core/
+    title: Decentralized Identifiers (DIDs) v1.0
+    author:
+      org: W3C
+    date: 2022-07-22
+  DID-WEB:
+    target: https://w3c-ccg.github.io/did-method-web/
+    title: did:web Decentralized Identifiers Method Spec
 informative:
   I-D.birkholz-scitt-receipts: RECEIPTS
-  PBFT:
-    title: Practical byzantine fault tolerance and proactive recovery
-    target: https://doi:10.1145/571637.571640
-    author:
-    -
-      ins: M. Castro
-      name: Miguel Castro
-      org: Microsoft Research
-    -
-      ins: B. Liskov
-      name: Barbara Liskov
-      org: MIT Laboratory for Computer Science
-    date: 2002-11
-    seriesinfo:
-      ACM Transactions on Computer Systems, Volume 20, Issue 4
+  PBFT: DOI.10.1145/571637.571640
+  MERKLE: DOI.10.1007/3-540-48184-2_32
 
 venue:
-  type: non-WG
   mail: scitt@ietf.org
+  github: ietf-scitt/draft-birkholz-scitt-architecture
 
 --- abstract
 
