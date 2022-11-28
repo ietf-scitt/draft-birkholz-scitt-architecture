@@ -483,9 +483,9 @@ TS implementations MUST indicate their support for registration policies and MUS
 
 Policy Name | Required `reg_info` attributes | Implementation
 ---|---|---
-TimeLimited | `register_by: uint` | Returns true if now () < register_by at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts. The value provided for `register_by` should be a Unix timestamp e.g. a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, minus leap seconds.
+TimeLimited | `register_by: uint` | Returns true if now () < register_by at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts. The value provided for `register_by` MUST be a Unix timestamp e.g. a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, minus leap seconds.
 Sequential | `sequence_no: uint` | First, lookup in the ledger for claims with the same issuer and feed. If at least one is found, returns true if and only if the `sequence_no` of the new claim is the highest `sequence_no` in the existing claims incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
-Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`. The value provided for `issuance_ts` should be a Unix timestamp e.g. a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, minus leap seconds.
+Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`. The value provided for `issuance_ts` MUST be a Unix timestamp e.g. a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, minus leap seconds.
 NoReplay | `no_replay: bool` | If `no_replay` is set to `true` then the policy returns true if and only if the claim doesn't already appear in the ledger.
 {: #tbl-initial-named-policies title="An Initial Set of Named Policies"}
 
