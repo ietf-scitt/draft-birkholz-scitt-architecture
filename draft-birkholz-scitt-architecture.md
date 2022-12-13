@@ -525,16 +525,16 @@ Verifiers SHOULD offer options to store or share Receipts in case they are neede
 
 # Federation
 
-Editor's note: This section needs work.  
+Editor's note: This section needs work.
 
 Multiple, independently-operated transparency services can help secure distributed supply chains, without the need for a single, centralized service trusted by all parties. For example, multiple SCITT instances may be governed and operated by different organizations that do not trust one another.
 
-This may involve registering the same Claims at different transparency services, each with their own purpose and registration policy. 
-This may also involve attaching multiple Receipts to the same Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts, and each TS verifying prior Receipts as part of their registration policy. 
+This may involve registering the same Claims at different transparency services, each with their own purpose and registration policy.
+This may also involve attaching multiple Receipts to the same Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts, and each TS verifying prior Receipts as part of their registration policy.
 
-For example, 
-a supplier TS may provide a complete, authoritative Registry for some kind of Claims, whereas a consumer TS may collect different kinds of Claims 
-to ensure complete auditing for a specific use case, and possibly require additional reviews before registering some of these claims. 
+For example,
+a supplier TS may provide a complete, authoritative Registry for some kind of Claims, whereas a consumer TS may collect different kinds of Claims
+to ensure complete auditing for a specific use case, and possibly require additional reviews before registering some of these claims.
 
 # Transparency Service API
 
