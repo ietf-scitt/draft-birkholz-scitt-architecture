@@ -431,9 +431,10 @@ COSE_Sign1 = [
 ]
 
 Reg_Info = {
-  ? "register_by": uint,
+  ? "register_by": uint .within (~time),
   ? "sequence_no": uint,
-  ? "issuance_ts": uint,
+  ? "issuance_ts": uint .within (~time),
+  ? "no_replay": null,
   * tstr => any
 }
 
@@ -483,10 +484,10 @@ TS implementations MUST indicate their support for registration policies and MUS
 
 Policy Name | Required `reg_info` attributes | Implementation
 ---|---|---
-TimeLimited | `register_by: uint` | Returns true if now () < `register_by` at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts. The value provided for `register_by` MUST be a Unix timestamp, i.e., a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, without leap seconds.
+TimeLimited | `register_by: uint .within (~time)` | Returns true if now () < `register_by` at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts. The value provided for `register_by` MUST be an unsigned integer, interpreted according to POSIX time, representing the number of seconds since 1970-01-01T00:00Z UTC.
 Sequential | `sequence_no: uint` | First, lookup in the ledger for claims with the same issuer and feed. If at least one is found, returns true if and only if the `sequence_no` of the new claim is the highest `sequence_no` in the existing claims incremented by one. Otherwise, returns true if and only if `sequence_no = 0`.
-Temporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts` and now () > `issuance_ts` at registration time. The value provided for `issuance_ts` MUST be a Unix timestamp, i.e., a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, without leap seconds.
-NoReplay | `no_replay: null` | If the `no_replay` attribute is present then the policy returns true if and only if the claim doesn't already appear in the ledger.
+Temporal | `issuance_ts: uint .within (~time)` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts` and now () > `issuance_ts` at registration time. The value provided for `issuance_ts` MUST be an unsigned integer, interpreted according to POSIX time, representing the number of seconds since 1970-01-01T00:00Z UTC.
+NoReplay | `no_replay: null` | If the `no_replay` attribute is present then the policy returns true if and only if the claim doesn't already appear in the ledger. This policy has no required attributes.
 {: #tbl-initial-named-policies title="An Initial Set of Named Policies"}
 
 ## Registering Signed Claims
@@ -525,16 +526,16 @@ Verifiers SHOULD offer options to store or share Receipts in case they are neede
 
 # Federation
 
-Editor's note: This section needs work.  
+Editor's note: This section needs work.
 
 Multiple, independently-operated transparency services can help secure distributed supply chains, without the need for a single, centralized service trusted by all parties. For example, multiple SCITT instances may be governed and operated by different organizations that do not trust one another.
 
-This may involve registering the same Claims at different transparency services, each with their own purpose and registration policy. 
-This may also involve attaching multiple Receipts to the same Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts, and each TS verifying prior Receipts as part of their registration policy. 
+This may involve registering the same Claims at different transparency services, each with their own purpose and registration policy.
+This may also involve attaching multiple Receipts to the same Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts, and each TS verifying prior Receipts as part of their registration policy.
 
-For example, 
-a supplier TS may provide a complete, authoritative Registry for some kind of Claims, whereas a consumer TS may collect different kinds of Claims 
-to ensure complete auditing for a specific use case, and possibly require additional reviews before registering some of these claims. 
+For example,
+a supplier TS may provide a complete, authoritative Registry for some kind of Claims, whereas a consumer TS may collect different kinds of Claims
+to ensure complete auditing for a specific use case, and possibly require additional reviews before registering some of these claims.
 
 # Transparency Service API
 
