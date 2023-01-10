@@ -1,0 +1,3152 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-01-10T00:38:10.515587+00:00",
+  "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    },
+    {
+      "name": "Terminology",
+      "description": "",
+      "color": "0E8A16"
+    }
+  ],
+  "issues": [
+    {
+      "number": 22,
+      "id": "I_kwDOG2uWFs5RlHAj",
+      "title": "Update architecture to make it compile with aasvg.",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/22",
+      "state": "CLOSED",
+      "author": "eckelmeckel",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At the moment the architecture diagram looks a bit unclear. Adapt to and make it compile (and look nice) with `aasvg` would be a good enhancement.",
+      "createdAt": "2022-09-10T17:23:21Z",
+      "updatedAt": "2022-10-21T16:11:38Z",
+      "closedAt": "2022-10-21T16:11:38Z",
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOG2uWFs5SoZcx",
+      "title": "Language mapping and terms.",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/24",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "On the call reviewing: [IETF RATs Overview](https://1drv.ms/p/s!Aqj-Bj9PNivcn5kVtfsMUnMGtLTtyg?e=9FDPFh)\r\n\r\n![Screen Shot 2022-09-26 at 10 51 47 AM](https://user-images.githubusercontent.com/8295856/192323088-b079a660-2b9f-4886-879c-b80a4bd2d9aa.png)\r\n\r\nOrie said:\r\n\r\n> In W3C VCs \u201cIssuers\" produce both \u201cattestations (claims in their words) and evidence (evidence in their words).\r\n\r\nOrie said:\r\n\r\n> I think a \u201cSCITT Notary\" is a \"RATs Verifier\u201d\r\n\r\nMonty said:\r\n\r\n> I would think SCITT defining the distribution of Reference Values (RV) in the RATS model. The Notary \"certifies\" that the RV is valid. Verifiers take as input (as shown on slide 6) the RVs from SCITT.\r\n\r\n\r\n\r\nHenk said:\r\n\r\n> In \"RATS round 1\", the registry (replicated nodes) take on the role of Attester, I think\r\n> In \"RATS round 2\", the issuers take on the role of Attester, I think",
+      "createdAt": "2022-09-26T15:53:10Z",
+      "updatedAt": "2022-10-12T21:34:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "Steve said, \"RATS, there's a lot of terminology to review and consolidate\" :)",
+          "createdAt": "2022-10-12T21:34:45Z",
+          "updatedAt": "2022-10-12T21:34:45Z"
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOG2uWFs5S6fd6",
+      "title": "Registry Access Scenarios",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/25",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "### Case 0 \r\n\r\n- Public Read\r\n- Private Write\r\n\r\n### Case 1\r\n\r\n- Private Read\r\n- Private Write\r\n\r\n\r\nWhen holding an endorsement, one might be be able to verify directly in a public read, or rely on an auditor in the case of a private read scenario.\r\n",
+      "createdAt": "2022-09-29T15:26:51Z",
+      "updatedAt": "2022-10-13T12:58:59Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "I'm struggling a bit with what it means to have anyone be able to write. While it sounds great, and makes a great demo, it leads to so many security, DOS issues, I question the value. \r\nStandard RBAC write/query/read makes sense. \r\n",
+          "createdAt": "2022-10-12T21:36:39Z",
+          "updatedAt": "2022-10-12T21:36:39Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "> I'm struggling a bit with what it means to have anyone be able to write.\r\n\r\nboth scenarios have \"private write\", this implies some form of AuthZ.",
+          "createdAt": "2022-10-13T12:58:59Z",
+          "updatedAt": "2022-10-13T12:58:59Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOG2uWFs5S6gY5",
+      "title": "Considering the impact of claim semantics on policy layer",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/26",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "When specific and detailed claims are provided an advanced policy might be applied.\r\n\r\nIf only shallow / simple claims are provided, there is not much of an opportunity to apply advanced policies.",
+      "createdAt": "2022-09-29T15:29:25Z",
+      "updatedAt": "2022-09-29T15:29:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOG2uWFs5S6h1o",
+      "title": "Add a sequence diagram",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/27",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "##  Compound User Story / Sequence Diagram\r\n\r\nAs a consumer, I want to understand if I should trust an artifact\r\nAs a producer, I want to be assured that the integrity of my artifacts has been reviewed by a trusted 3rd party.\r\n\r\n```mermaid\r\nsequenceDiagram\r\n    participant Issuer\r\n    participant Notary\r\n    Note left of Issuer: I take responsibility for the artifacts I produce\r\n    Issuer ->> Notary: These are the policies I am committed to meeting\r\n    Issuer ->> Notary: I stand by my claims about my artifact\r\n    loop Claims Check\r\n        Notary ->> Notary: Review relevant claims and policies\r\n    end\r\n    Notary ->> Issuer: Here is my endorsement and receipt\r\n    Consumer->>Notary: Is this artifact safe to use?\r\n    loop Endorsement Check\r\n        Notary->>Notary: Review relevant claims and endorsements\r\n    end\r\n     Notary ->> Consumer: You can trust this artifact, the endorsement is still valid\r\n     Note right of Consumer: I have confidence in the artifacts I consume\r\n```\r\n",
+      "createdAt": "2022-09-29T15:33:27Z",
+      "updatedAt": "2022-10-21T16:25:35Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "pdxjohnny",
+          "authorAssociation": "NONE",
+          "body": "- Mermaid docs for other unfamiliar contributors:\r\n  - https://mermaid-js.github.io/mermaid/#/sequenceDiagram\r\n  - https://mermaid-js.github.io/mermaid-live-editor/",
+          "createdAt": "2022-09-29T16:22:44Z",
+          "updatedAt": "2022-09-29T16:22:59Z"
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOG2uWFs5Tdlka",
+      "title": "Replace TS with SCITT?",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/28",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Reading the architecture doc, I see TS, meant to refer to a Transparency Service. I keep reading this as Time Stamp service. \r\nCould/should we replace TS with SCITT, as that is the term we're using.",
+      "createdAt": "2022-10-06T20:32:38Z",
+      "updatedAt": "2022-10-21T12:59:36Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "We may also want to reconcile TS, SCITT with Registry, as worded. All three represent a SCITT instance. Should we consolidate the references as one?\r\n- [ ] TS\r\n- [ ] SCITT Instance\r\n- [ ] Registry",
+          "createdAt": "2022-10-07T18:11:00Z",
+          "updatedAt": "2022-10-07T18:11:00Z"
+        },
+        {
+          "author": "fournet",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have a slight preference for TS, as we use SCITT for the whole architecture (not its transparency service) and Registry as the more general service that also deals with queries, storage, etc. ",
+          "createdAt": "2022-10-21T12:59:36Z",
+          "updatedAt": "2022-10-21T12:59:36Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOG2uWFs5Tdqh3",
+      "title": "Definitions & Terms: Change Statement to Evidence",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/29",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Under [Terminology](https://www.ietf.org/archive/id/draft-birkholz-scitt-architecture-01.html#name-terminology) we define:\r\n> Statement:- any serializable information about an Artifact. To help interpretation of Statements, they must be tagged with a media type (as specified in [[RFC6838](https://www.ietf.org/archive/id/draft-birkholz-scitt-architecture-01.html#RFC6838)]). For example, a statement may represent a Software Bill Of Materials (SBOM) that lists the ingredients of a software Artifact, or some endorsement or attestation about an Artifact.\r\n\r\nHaven't we been using Evidence as the term? Users submit claims, which have optional evidence to support the claim. ",
+      "createdAt": "2022-10-06T20:50:58Z",
+      "updatedAt": "2022-10-07T07:44:24Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Statement is the payload you sign. Evidence is extra material linked to from the statement (via hash etc.). Claim is a signed statement. That's my understanding.",
+          "createdAt": "2022-10-07T07:26:54Z",
+          "updatedAt": "2022-10-07T07:26:54Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "In RATS, Evidence is:\r\n\r\n> A set of Claims generated by an Attester to be appraised by a Verifier. Evidence may include configuration data, measurements, telemetry, or inferences.\r\n\r\nFor example, if an Issuer produces a Claim (in SCITT that overloaded term means a signed statement about a supply chain artifact), Evidence (or corresponding typically more concise Attestation Results) could be embedded in that Claim to increase trust in the trustworthiness of the Issuer.\r\n\r\nToday, the SCITT architecture does not require inclusion of Evidence or Attestation Results in Claims.\r\n\r\nFor Transparent Claims that could already be part of SCITT after a first rechartering. We have to see how the initial works evolves in the WG, though.",
+          "createdAt": "2022-10-07T07:41:34Z",
+          "updatedAt": "2022-10-07T07:44:24Z"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOG2uWFs5UjaTV",
+      "title": "Add claim and receipt side by side in future revision",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/32",
+      "state": "OPEN",
+      "author": "OR13",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "We discussed a future revision where claim and receipt are visualized next to each other.\r\n\r\nhttps://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/23/files#r1001967472",
+      "createdAt": "2022-10-21T16:13:02Z",
+      "updatedAt": "2022-10-21T16:13:02Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 33,
+      "id": "I_kwDOG2uWFs5VrEcS",
+      "title": "Clarify how a statement refers to other documents",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/33",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The current definition of a statement says:\r\n\r\n> Statement:\r\nany serializable information about an Artifact. To help interpretation of Statements, they must be tagged with a media type (as specified in [[RFC6838](https://ietf-scitt.github.io/draft-birkholz-scitt-architecture/draft-birkholz-scitt-architecture.html#RFC6838)]). For example, a statement may represent a Software Bill Of Materials (SBOM) that lists the ingredients of a software Artifact, or some endorsement or attestation about an Artifact.\r\n\r\nThe proposal is to assure the SBOM, as an example content that is being added to the registry, has a means to be stored outside the ledger, but verified by the ledger.\r\nOn submission to the ledger, the SBOM is referenced, but not directly embedded in the statement. This allows the registry to optionally index the content. A particular instance may put the content on the ledger, or store it alongside the ledger.",
+      "createdAt": "2022-11-06T10:12:05Z",
+      "updatedAt": "2022-11-06T10:12:05Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 34,
+      "id": "I_kwDOG2uWFs5Vrj1t",
+      "title": "Converge Claim and Statement",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/34",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "letmaik",
+        "mprorock",
+        "rjb4standards",
+        "ad-l",
+        "kaywilliams"
+      ],
+      "labels": [
+        "Terminology"
+      ],
+      "body": "At IETF-115, discussions involved:\r\n\r\n- Leverage existing IETF and/or W3C definitions and terms, or at least not conflict and cause confusion with existing terms.\r\n- Minimize the concept count\r\n\r\n### Existing Standards Terminology\r\n\r\n- [IETF: Remote Attestation Procedures Architecture (RATS)](https://www.ietf.org/archive/id/draft-ietf-rats-architecture-22.html#name-artifacts)\r\n- [IETF: SCITT Architecture](https://ietf-scitt.github.io/draft-birkholz-scitt-architecture/draft-birkholz-scitt-architecture.html#name-terminology)\r\n- [IETF: RFC7519](https://www.ietf.org/archive/id/draft-ietf-rats-architecture-22.html#RFC7519)\r\n\r\n### Proposal\r\n\r\nClaim conflicts with RATS and W3C\r\n\r\nComparison of terms across orgs as the object changes state:\r\n![](https://hackmd.io/_uploads/SklGkMSBs.png)\r\n\r\nInstead of transitioning from `statement` to `claim` to `transparent claim`, what if we used `statement` as the base concept:\r\n- Statement --> Signed Statment --> Transparent Statement",
+      "createdAt": "2022-11-06T17:39:44Z",
+      "updatedAt": "2022-11-19T18:11:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "kaywilliams",
+          "authorAssociation": "NONE",
+          "body": "Agree with this proposal. It is conceptually simpler to understand that an underlying item ('statement') transitions through states (unsigned, signed, transparent). When it comes to terminology lets aim for the KISS principle.",
+          "createdAt": "2022-11-07T09:32:13Z",
+          "updatedAt": "2022-11-07T09:32:13Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "What are the constraints surrounding statement and claim? How are they distinguished?",
+          "createdAt": "2022-11-07T12:37:05Z",
+          "updatedAt": "2022-11-07T12:37:05Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "@rjb4standards, \r\nusing the picture @OR13 provided above,\r\n- A producer creates a **statement** about an artifact\r\n- When a producer **signed the statement** (issuer of a cert, signed by an identity)\r\n- A **transparent statement** is the result of the signed statement being placed on the ledger, and notarized with a counter signature\r\n\r\nAll we're proposing here is converging terminology, as changing the terminology from statement to claim infers it's more than furthering the statement along the workflow",
+          "createdAt": "2022-11-14T16:39:29Z",
+          "updatedAt": "2022-11-14T16:39:29Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Thanks Steve. Assuming a consumer only has the \"artifact\" in their possession, i.e. a software package downloaded from GitHub, how could they verify the trustworthiness of the package, having nothing more than the package/artifact itself in their possession, and knowledge of a SCITT Trusted Registry Registry service.\r\n\r\nThis is the scenario we face every day in the SW supply chain, within the consumer role. \r\n\r\nThis is the scenario I'm hoping SCITT will provide a solution, or RATS - it doesn't really matter to me if it's RATS or SCITT - I care about the functionality.",
+          "createdAt": "2022-11-14T17:11:03Z",
+          "updatedAt": "2022-11-14T17:11:03Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "@rjb4standards, those are great questions. I'd just suggest we focus on the convergence of the terminology here. \r\n For the purposes of this issue, the issuer creates a statement about an artifact. It gets signed (signed statement), and placed on the ledger (transparent statement). \r\nIf the user simply wants to get a notarized statement that the `net-monitor:v1` software was issued by \"wabbit-networks\", the user can submit a statement to the registry that it was signed by wabbit-networks. There's no \"evidence\" or additional information provided, yet. It's simply a notarized statement that wabbit-networks submitted the artifact.",
+          "createdAt": "2022-11-14T17:16:19Z",
+          "updatedAt": "2022-11-14T17:16:19Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Steve, will SCITT provide a consumer the ability to query the web registry for a notarized statement for an artifact, having nothing more than the artifact in their possession?\r\n\r\nI download a program from GitHub, and want to \"ask SCITT\" is this program trustworthy? This is the scenario that is prevalent across the supply chain today.",
+          "createdAt": "2022-11-14T17:22:48Z",
+          "updatedAt": "2022-11-14T17:22:48Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "Another great question, which we've been saying \"yes\", but \"how\" is the open question.\r\nBut, I'd also ask we focus on the terminology issue here and open those discussions in the IETF alias.",
+          "createdAt": "2022-11-14T17:29:26Z",
+          "updatedAt": "2022-11-14T17:29:26Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "ok.",
+          "createdAt": "2022-11-14T17:31:45Z",
+          "updatedAt": "2022-11-14T17:31:45Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "Given the confusion with RATs I suggest we avoid reusing \"claim\" and we make SCITT apply to statements, with explanatory text under each definition, relating the concept to other standards.\r\n\r\nFor example:\r\n\r\nstatement\r\n\r\n- like a JOSE claim\r\n- like RATs claims\r\n- like W3C VC claims - https://www.w3.org/TR/vc-data-model/#claims\r\n\r\nsigned statement\r\n\r\n- like a JOSE JWT\r\n- like RATs evidence\r\n- like W3C VC credentials - https://www.w3.org/TR/vc-data-model/#credentials\r\n\r\ntransparent statement\r\n\r\n- like a JOSE JWT\r\n- like RATs endorsements ?\r\n- like W3C VC credentials - https://www.w3.org/TR/vc-data-model/#credentials\r\n\r\n",
+          "createdAt": "2022-11-15T14:49:26Z",
+          "updatedAt": "2022-11-15T14:50:13Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Orie, here is an example flow from the software supply chain today:\r\n1. An artifact is born, i.e. app in app store, SBOM, NIST VDR, etc.\r\n2. Consumer wants to know, is artifact trustworthy; check the trust registry for trust declarations for artifact\r\n3. Assuming a process will exist to populate the trust registry with trust declarations for the artifact\r\n4. Process will need a \"trusted party\" to determine that artifact is trustworthy, using a defined process and criteria that are intended to validate/confirm the trustworthiness of an artifact based on evidence collected/produced.\r\n5. Trusted party determines that a trust declaration is warranted, based on the defined process and criteria\r\n6. Trusted party requests registration of a trust declaration in the trusted registry for the now trusted artifact\r\n7. Registration is confirmed in the trust registry via a positive acknowledgement that the entry is stored in the registry\r\n8. Trusted party  that performed the process resulting in the registration of a trust declaration informs the artifact owner that the artifact has been registered as trustworthy in the SCITT trust registry \r\n9. Artifact owner informs interested parties on how to check a SCITT trust registry  for trustworthiness of an artifact\r\n10. Interested parties query the SCITT Trust Registry for trust declarations for an artifact, using information provided by the artifact owner\r\n11. Upon receiving confirmation from the Trust Registry Service that an artifact is listed as trustworthy the party with an interested in the artifact proceeds to implement/apply the artifact in its intended role\r\n\r\nIt would help me \"connect the dots\" if you could identify the items listed/used in the flow above using the proposed terminology. Thanks... Dick",
+          "createdAt": "2022-11-15T15:14:00Z",
+          "updatedAt": "2022-11-15T15:34:46Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "@rjb4standards all of those are statements, that an issuer might take responsibility for by making signed statements, and that an interested supply chain party might then make transparent by submitting to a transparency service and obtaining a receipt.\r\n\r\nWhile we are focused on software supply chain use case, there is no reason to look at anything other than the \"header\" for  IETF... we are payload agnostic.\r\n\r\nIf you have an artifact, or metadata about an artifact, you might ask a transparency service or a database in front of one, \"what signed statements or transparent statements do you have that are related to my artifact or metadata\".\r\n\r\nThat query would in turn be translated into a format that processed the IETF standard formats for \"signed statement\" or \"transparent statement\".\r\n\r\nIn the context of IETF work, we are interested in the following:\r\n\r\n- What is the shape of a \"claim\" or \"signed statement\".\r\n- What is the shape of a \"transparent statement\" or \"receipt\".\r\n- What is a query interface for a transparency service, noting that probably advanced queries are handled at another layer.\r\n\r\nIn the context of the broader community, we are interested in the following:\r\n\r\n- Where to people proudly display their receipts / transparent statements ?\r\n- Which schemas for payloads are best for the industry to adopt?\r\n- How do we know if the issuer is the original author or just an interested party?\r\n- Which notaries / registries should I trust for receipts related to AI models vs Firmware?\r\n\r\nI suspect most of your questions have more to do with how the specifications will be deployed and used, and less to do with the specific requirements embedded in the specification, but I do think you are offering \"requirements\" which are accounted for in the slides presented at IETF 115 under the architecture section... In particular the slide describing \"what is a claim\" and the one describing \"what is a receipt\".\r\n\r\nWe've not discussed query formats for specific payload shapes in depth yet.\r\n\r\n",
+          "createdAt": "2022-11-15T17:24:06Z",
+          "updatedAt": "2022-11-15T17:24:06Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "I believe you are correct Orie:  I do think you are offering \"requirements\"\r\nI think this list represents \"minimum requirements\" for a minimum viable SCITT standard for software supply chain verification of trust for an \r\n\r\n- artifact/owner,\r\n- claim/trusted party that creates claims for artifacts and registers \"transparent claims\" in the registry based on defined procedures and criteria defined in SCITT RFC\r\n- results of inquiry for \"transparent statements\" about artifact produced by owner/relying party\r\n- ",
+          "createdAt": "2022-11-15T17:38:22Z",
+          "updatedAt": "2022-11-15T17:39:20Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Quoting Orie:\r\n> What is the shape of a \"transparent statement\" or \"receipt\".\r\n\r\n\"transparent statement\" != \"receipt\", but rather \"transparent statement\"  = \"signed statement\" + \"receipt\".\r\n\r\nAlso, note that nothing is said about how \"signed statement\" and \"receipt\" are transported -- might be bundled together (e.g., using an unprotected header parameter in the \"signed statement\"), might be two files on disk, or something else entirely.\r\n\r\nIf we're clear on the above, then I'm in favor of the new terminology.\r\n\r\nIf anyone has concerns, please speak up.",
+          "createdAt": "2022-11-15T18:53:54Z",
+          "updatedAt": "2022-11-15T18:53:54Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Is the \"receipt\" component contained in a \"transparent statement\" a signed object, i.e. \"transparent statement\" = \"signed statement\" +  signed(receipt)\r\n\r\nIs a transparent statement digitally signed?",
+          "createdAt": "2022-11-15T19:09:54Z",
+          "updatedAt": "2022-11-15T19:09:54Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I prefer \"Claim\" over \"Signed Statement\" as it leaves flexibility of defining properly what a claim is: Today it is a Signed Statement presumably from one signer? Tomorrow it could be multiple signers vouching for the same Artifact thus it is \"Multi Signed Statement\".\r\nI am not too concerned about the overlap with RATS terminology so long as we define that within SCITT Ecosystem a Claim is a Signature of Issuer on the given Statement about an Artifact.",
+          "createdAt": "2022-11-15T19:13:55Z",
+          "updatedAt": "2022-11-15T19:13:55Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "What is an SBOM considered in this taxonomy? A claim, a statement or an artifact which a claim/statement refers to?",
+          "createdAt": "2022-11-15T19:17:41Z",
+          "updatedAt": "2022-11-15T19:17:41Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think we are digressing from the core point of terminology here!\r\n\r\nDepends on the Use Case:\r\nIn Use Case 1: SBOM goes into registry!\r\n \r\nSBOM is a Statement about an Artifact (Software).\r\n\r\nWhen the issuer would Sign a SBOM before submitting it to the Registry, it will become a Claim.\r\n\r\nWhat the Registry returns is a Transparent Claim = Signed Claim + Receipt ",
+          "createdAt": "2022-11-15T19:21:53Z",
+          "updatedAt": "2022-11-15T19:21:53Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "FYI: Some SBOM's can be quite large, i.e. 2 MB of text.",
+          "createdAt": "2022-11-15T19:25:57Z",
+          "updatedAt": "2022-11-15T19:25:57Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, then you need Use Case 2:\r\nUser Makes a statement about SBOM. Here SBOM itself is Artifact!\r\nThe Statement may contain details about SBOM. ( What is SBOM size, what is its hash, who is the owner etc).\r\nWhen user signs the Statement (about SBOM) it becomes a Claim.\r\nClaim enters the SCITT Registry and becomes a Transparent Claim.\r\n",
+          "createdAt": "2022-11-15T19:28:59Z",
+          "updatedAt": "2022-11-15T19:28:59Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Yogesh,\r\n\r\nHow will trust be assured if the user that creates an artifact, then makes a statement about the artifact, which becomes a claim that gets placed into a registry, becoming a \"transparent claim\" - this seems to be missing a critical step, a trusted objective party that assesses the statement for trustworthiness when deciding to create a claim that goes into the registry resulting in a \"Transparent Claim\" that end users can retrieve to verify the trustworthiness of an artifact, i.e. SBOM in this case.\r\n",
+          "createdAt": "2022-11-15T19:37:58Z",
+          "updatedAt": "2022-11-15T19:37:58Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Yogesh,\r\n> \r\n> How will trust be assured if the user that creates an artifact, then makes a statement about the artifact, which becomes a claim that gets placed into a registry, becoming a \"transparent claim\" - this seems to be missing a critical step, a trusted objective party that assesses the statement for trustworthiness when deciding to create a claim that goes into the registry resulting in a \"Transparent Claim\" that end users can retrieve to verify the trustworthiness of an artifact, i.e. SBOM in this case.\r\n\r\nThe Statement including the SBOM Details does not necessarily be only about SBOM, but the statement is open enough to list the details about the Artifact also, which it links to SBOM.\r\nSo basically how the user constructs the Statement is entirely up to the Statement owner. Perhaps we should discuss what the Statements should look like but definitely we are digressing here where the original issue is about the terminologies!\r\n",
+          "createdAt": "2022-11-15T19:43:38Z",
+          "updatedAt": "2022-11-15T19:43:38Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "reminder to read the drafts:\r\n\r\n- https://ietf-scitt.github.io/draft-birkholz-scitt-architecture/draft-birkholz-scitt-architecture.html\r\n- https://ietf-scitt.github.io/draft-birkholz-scitt-receipts/draft-birkholz-scitt-receipts.html\r\n\r\nWhen we discuss terms, we are only discussing changes to these documents. \r\n\r\nThe goal of discussing on Github issues to gather consensus so that a pull request can be opened to make changes to these documents.\r\n\r\nWe are talking about adjusting this section of content:\r\n\r\nhttps://ietf-scitt.github.io/draft-birkholz-scitt-architecture/draft-birkholz-scitt-architecture.html#name-terminology",
+          "createdAt": "2022-11-15T19:54:15Z",
+          "updatedAt": "2022-11-15T19:54:15Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "These are all great discussions to create clarity for the e2e. Much of what @rjb4standards is discussing around larger SBOMs being a statement, is the [statement by reference](#35) conversations. Essentially, yes an SBOM is a statement, we're just discussing if the statement stores a hash of the SBOM that's stored alongside the ledger.\r\nHowever, these are orthogonal to the question in _this_ issue :)\r\n\r\nI'd suggest it's really important for us to simplify terms, not conflate confusion with RATS, which is very close to what we're doing, and move onto triaging all the other topics, such as #33, #35, #28, #36\r\n\r\nIn the spirit that we can't make everyone happy, can we get a thumbs up/down for **\"converging claims to statements\"**. \r\n\r\nBased on the tally, we can decide if we need more time on this, or we can move onto the other issues.",
+          "createdAt": "2022-11-16T04:09:03Z",
+          "updatedAt": "2022-11-16T04:09:03Z"
+        },
+        {
+          "author": "kaywilliams",
+          "authorAssociation": "NONE",
+          "body": "\ud83d\udc4d\ud83c\udffc",
+          "createdAt": "2022-11-16T15:49:48Z",
+          "updatedAt": "2022-11-16T15:49:48Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Steve, in my world an SBOM is an artifact and the SBOM owner makes a \"statement\" indicating the SBOM artifact is trustworthy. A 3rd party examines the Statement and decides to issue a claim indicating that the SBOM artifact is indeed trustworthy and places a \"Transparent Claim\" into the registry indicating that the SBOM artifact is trustworthy.\r\n\r\nAt some later time a consumer acquires the SBOM artifact and want to know, is this artifact trustworthy. A query is issued to the Transparency Service based on information about the artifact, i.e. SHA-256 hash value + SKID used to sign the artifact. Transparency Service returns a set of transparent claims in the registry for the SBOM artifact in question.\r\n\r\nNOTE: I use SBOM here, but this process should work for ANY artifact that a consumer wants to know, \"Is artifact X trustworthy?\"\r\n\r\nIf this scenario is supported within SCITT, then I'm good. Please correct me if I'm off-base in believing this scenario will be supported by SCITT.\r\nNOTE: In this scenario an SBOM is NOT a Statement, it is an artifact. ANY artifact that a consumer can acquire, and wants to check it's trustworthiness should be supported by SCITT, IMO\r\n",
+          "createdAt": "2022-11-16T16:02:03Z",
+          "updatedAt": "2022-11-16T16:31:44Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "@rjb4standards, we've been discussing \"Artifact\" as the root object by which we're creating statements/claims, which may be SBOMs, Vex, VD, etc. \r\n\r\nWhile an SBOM itself can also be an \"artifact\", I'd suggest we find another category. I've been using the term \"evidence\" to support information about an Artifact (see [Artifacts, Claims Evidence](https://scitt.io/components/artifacts--claims-evidence.html), which needs updating. \r\n\r\nUsing your terminology:\r\n\r\n> an SBOM is an artifact and the SBOM owner makes a \"statement\" indicating the SBOM artifact is trustworthy.\r\n\r\nI'd suggest a minor tweak:\r\n\r\n> An SBOM owner submits a signed statement to the Transparency Service (see #38 for more terminology). If the Transparency Service returns a receipt, it's considered it came from a verified identity. \r\n\r\nAt IETF, we did discuss the challenges with putting SBOMs directly on the ledger, which is covered in #35. The end result would be the same. Meaning, you would still get the SBOM back, but it may come as link from a Transparency Service's associated storage, or an external reference if stored elsewhere.\r\n\r\nDoes that help?",
+          "createdAt": "2022-11-18T00:45:42Z",
+          "updatedAt": "2022-11-18T00:45:42Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Steve,Is this accurate:An ARTIFACT is the subject of a TRANSPARENT CLAIM listed in the TRUST REGISTRY of a TRANSPARENCY SERICEConsumers query \u00a0aTRUST SERVICE for TRANSPARENCY CLAIMS for ARTIFACTS in their possessio.\u00a0Im trying to figure out the bookennds.\u00a0Sent from my iPhoneOn Nov 17, 2022, at 7:45 PM, Steve Lasker ***@***.***> wrote:\ufeff\n@rjb4standards, we've been discussing \"Artifact\" as the root object by which we're creating statements/claims, which may be SBOMs, Vex, VD, etc.\nWhile an SBOM itself can also be an \"artifact\", I'd suggest we find another category. I've been using the term \"evidence\" to support information about an Artifact (see Artifacts, Claims Evidence, which needs updating.\nUsing your terminology:\n\nan SBOM is an artifact and the SBOM owner makes a \"statement\" indicating the SBOM artifact is trustworthy.\n\nI'd suggest a minor tweak:\n\nAn SBOM owner submits a signed statement to the Transparency Service (see #38 for more terminology). If the Transparency Service returns a receipt, it's considered it came from a verified identity.\n\nAt IETF, we did discuss the challenges with putting SBOMs directly on the ledger, which is covered in #35. The end result would be the same. Meaning, you would still get the SBOM back, but it may come as link from a Transparency Service's associated storage, or an external reference if stored elsewhere.\nDoes that help?\n\n\u2014Reply to this email directly, view it on GitHub, or unsubscribe.You are receiving this because you were mentioned.Message ID: ***@***.***>",
+          "createdAt": "2022-11-18T01:43:04Z",
+          "updatedAt": "2022-11-18T01:43:04Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Let me correct the record, and mis-spellings while using my cell phone\n\n \n\nIs this accurate:\n\n \n\nAn ARTIFACT is the subject of a TRANSPARENT CLAIM listed in the TRUST REGISTRY of a TRANSPARENCY SERVICE\n\n \n\nConsumers query  a TRANSPARENCY SERVICE for TRANSPARENT CLAIMS for ARTIFACTS in their possession. \n\n \n\nI\u2019m trying to figure out the bookends in the SCITT process. \n\n \n\nThanks,\n\n \n\nDick Brooks\n\n  \n\nActive Member of the CISA Critical Manufacturing Sector, \n\nSector Coordinating Council \u2013 A Public-Private Partnership\n\n \n\n <https://reliableenergyanalytics.com/products> Never trust software, always verify and report! \u2122\n\n <http://www.reliableenergyanalytics.com/> http://www.reliableenergyanalytics.com\n\nEmail:  ***@***.***> ***@***.***\n\nTel: +1 978-696-1788\n\n \n\nFrom: Dick Brooks ***@***.***> \nSent: Thursday, November 17, 2022 8:43 PM\nTo: ietf-scitt/draft-birkholz-scitt-architecture ***@***.***>\nCc: ietf-scitt/draft-birkholz-scitt-architecture ***@***.***>; Dick Brooks ***@***.***>; Mention ***@***.***>\nSubject: Re: [ietf-scitt/draft-birkholz-scitt-architecture] Converge Claim and Statement (Issue #34)\n\n \n\nSteve,\n\n \n\nIs this accurate:\n\nAn ARTIFACT is the subject of a TRANSPARENT CLAIM listed in the TRUST REGISTRY of a TRANSPARENCY SERICE\n\n \n\nConsumers query  aTRUST SERVICE for TRANSPARENCY CLAIMS for ARTIFACTS in their possessio. \n\n \n\nIm trying to figure out the bookennds. \n\nSent from my iPhone\n\n\n\n\n\nOn Nov 17, 2022, at 7:45 PM, Steve Lasker ***@***.***> wrote:\n\n\ufeff\n\n@rjb4standards <https://github.com/rjb4standards> , we've been discussing \"Artifact\" as the root object by which we're creating statements/claims, which may be SBOMs, Vex, VD, etc.\n\nWhile an SBOM itself can also be an \"artifact\", I'd suggest we find another category. I've been using the term \"evidence\" to support information about an Artifact (see Artifacts, Claims Evidence <https://scitt.io/components/artifacts--claims-evidence.html> , which needs updating.\n\nUsing your terminology:\n\nan SBOM is an artifact and the SBOM owner makes a \"statement\" indicating the SBOM artifact is trustworthy.\n\nI'd suggest a minor tweak:\n\nAn SBOM owner submits a signed statement to the Transparency Service (see #38 <https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/38>  for more terminology). If the Transparency Service returns a receipt, it's considered it came from a verified identity.\n\nAt IETF, we did discuss the challenges with putting SBOMs directly on the ledger, which is covered in #35 <https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/35> . The end result would be the same. Meaning, you would still get the SBOM back, but it may come as link from a Transparency Service's associated storage, or an external reference if stored elsewhere.\n\nDoes that help?\n\n\u2014\nReply to this email directly, view it on GitHub <https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/34#issuecomment-1319404328> , or unsubscribe <https://github.com/notifications/unsubscribe-auth/ABFI3NEMZXU6EWN4U3VPGHLWI3GUDANCNFSM6AAAAAARYQYTBM> .\nYou are receiving this because you were mentioned.Message ID: ***@***.***>\n\n",
+          "createdAt": "2022-11-18T20:30:10Z",
+          "updatedAt": "2022-11-18T20:30:10Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "Yup, that would do it. \r\nOf course, the terminology for \u201ctransparent claim\u201d or \u201ctransparent statement\u201d is the topic of this issue.\r\n",
+          "createdAt": "2022-11-19T18:06:31Z",
+          "updatedAt": "2022-11-19T18:06:31Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "Correcting the record for spelling mistakes and other ambiguities....\r\n\r\nAn ARTIFACT is the subject of a TRANSPARENT CLAIM listed in the TRUST REGISTRY of a TRANSPARENCY SERVICE\r\n\r\nConsumers query  a TRANSPARENCY SERVICE for TRANSPARENT CLAIMS for ARTIFACTS in their possession.\r\n\r\n\r\n\r\nI'm trying to figure out the bookends.",
+          "createdAt": "2022-11-19T18:11:46Z",
+          "updatedAt": "2022-11-19T18:11:46Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOG2uWFs5WVnQj",
+      "title": "Statement by reference",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/35",
+      "state": "OPEN",
+      "author": "letmaik",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At IETF 115 there were discussions on having some kind of standard way to deal with statements by reference. Here are also the two relevant slides from https://datatracker.ietf.org/doc/slides-115-scitt-combined-scitt-presentations/:\r\n\r\n![image](https://user-images.githubusercontent.com/530988/201730201-6160b331-33d9-42fa-b5d9-c1e8ac18bd15.png)\r\n![image](https://user-images.githubusercontent.com/530988/201730248-139b8be6-4554-4a09-b6a3-60e8a8e10ecd.png)\r\n\r\nSimply using COSE detached payloads as defined in the RFC would not be sufficient as the payload would still be required during signature validation when registering the signed statement.\r\n\r\nInstead, having a specific content type for referencing external statements may be useful. Note that this format by itself would be a statement.\r\n\r\n[RFC 9054](https://www.rfc-editor.org/rfc/rfc9054.html#name-example-cbor-hash-structure) gives two examples for such hash structures:\r\n\r\n```cddl\r\nCOSE_Hash_V = (\r\n    1 : int / tstr, # Algorithm identifier\r\n    2 : bstr, # Hash value\r\n    ? 3 : tstr, # Location of object that was hashed\r\n    ? 4 : any   # object containing other details and things\r\n    )\r\n```\r\n\r\nand \r\n\r\n```cddl\r\nCOSE_Hash_Find = [\r\n    hashAlg : int / tstr,\r\n    hashValue : bstr\r\n]\r\n```\r\n\r\n[SUIT's digest container](https://www.ietf.org/archive/id/draft-ietf-suit-manifest-21.html#name-suit-digest-container) defines this as:\r\n```cddl\r\nSUIT_Digest = [\r\n  suit-digest-algorithm-id : suit-cose-hash-algs,\r\n  suit-digest-bytes : bstr,\r\n  * $$SUIT_Digest-extensions   ; described as optional extra values required by a hash alg (?)\r\n]\r\n```\r\n\r\nWould having a variant of one of the above as a CBOR content type address this issue?\r\nShould location of the referenced content be included? How? Should location hints be globally unique? Resolvable?\r\nShould a SCITT transparency service know about this content type and at least validate its CDDL schema?",
+      "createdAt": "2022-11-14T18:03:10Z",
+      "updatedAt": "2022-12-02T19:32:45Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Another thing to include in the reference should be the content type.",
+          "createdAt": "2022-11-16T08:29:47Z",
+          "updatedAt": "2022-11-16T08:29:47Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "The COSE representations are killing me... I find them incredibly hard to process.\r\n\r\nHere is an example I am familiar with:\r\n\r\nhttps://blog.cloudflare.com/cloudflare-distributed-web-resolver/\r\nhttps://docs.ipfs.tech/concepts/content-addressing/\r\n\r\nhttps://ipfs.io/ipfs/QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR\r\nhttps://ipfs.io/ipfs/bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi\r\n\r\nhttps://docs.ipfs.tech/how-to/best-practices-for-nft-data/#types-of-ipfs-links-and-when-to-use-them\r\n\r\n```\r\nconst cid = await ipfs.add({ content }, {\r\n  cidVersion: 1,\r\n  hashAlg: 'sha2-256'\r\n})\r\n```\r\n\r\n`ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi`\r\n\r\nIf you don't want to use IPFS, but you want something similar, you can do what docker has been doing:\r\n\r\n`sha256:fc92eec5cac70b0c324cec2933cd7db1c0eae7c9e2649e42d02e77eb6da0d15f`\r\n\r\n^ this won't help you `resolve` or `dereference`, but it will help you `identify`.",
+          "createdAt": "2022-11-17T16:49:48Z",
+          "updatedAt": "2022-11-17T16:50:03Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "FYI: Sha256 ID's have been working well for over a year for our own registry SAG-CTR. Have not seen any collisions yet. ",
+          "createdAt": "2022-11-17T16:55:50Z",
+          "updatedAt": "2022-11-17T16:55:50Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "If you want to build a custom identifier scheme for statements you should consider the precedent of Data URIs:\r\n\r\nhttps://github.com/transmute-industries/did-method-meliorism/blob/f2a7d8673a7b49a6fae84c4348614109ff35409b/src/cli.js#L153\r\n\r\nhttps://en.wikipedia.org/wiki/Data_URI_scheme\r\n\r\n`data:text/vnd-example+xyz;foo=bar;base64,R0lGODdh`\r\n\r\n`data:text/vnd-scitt+claim;hash=sha256;content-type=application/vnd-cid+ipld;base64,R0lGODdh`\r\n\r\nSee also Tag 42: https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml\r\n",
+          "createdAt": "2022-11-17T16:56:45Z",
+          "updatedAt": "2022-11-17T16:56:45Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From back to front:\r\n\r\n> See also Tag 42: https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml\r\n\r\nCIDs use multicodec for identifying content types and those have to registered here: https://github.com/multiformats/multicodec/blob/master/table.csv. I think SCITT should allow CIDs in some way but it doesn't look like a general enough mechanism.\r\n\r\n> If you want to build a custom identifier scheme for statements you should consider the precedent of Data URIs:\r\n\r\nI think what you're suggesting is creating a new media type where the hash of the referenced data is the content and everything else is put into media type parameters, for example:\r\n\r\nMedia type: `application/scitt-statement-by-reference;hash=sha256;content-type=application/spdx`\r\nContent: binary sha256 hash of statement\r\n\r\nYou could put all that into a Data URI by base64 encoding the content (hash), but I don't see where this would go in the COSE envelope and how it interacts with the `cty` parameter. Base64 encoding the hash seems also a bit wasteful. I don't see how decoding such a Data URI is easier than decoding a CBOR structure to be honest.\r\n\r\n> The COSE representations are killing me... I find them incredibly hard to process.\r\n\r\nWhere exactly do you see problems in processing the CBOR representations? Would the same be true for an equivalent JSON representation?\r\n\r\n\r\nMy general feeling is that the detached use case may become the thing that's used exclusively in some settings, and so if we define a standard mechanism for that I think it should be as efficient as possible and not necessarily rely on text representations. In that sense, CBOR CIDs (as mentioned above) go in the right direction but are quite hard to decode (and introduce yet another format next to CBOR) and too limited I think (see above).",
+          "createdAt": "2022-11-18T08:58:41Z",
+          "updatedAt": "2022-11-18T08:58:41Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "Have you considered PURLs:?\r\nHere's one we did a while back, specifically for this purpose: \r\nhttps://github.com/package-url/purl-spec/blob/master/PURL-TYPES.rst#oci\r\n\r\nWe also spent time discussing separating identity from location:\r\n- [Separating Identity From Location](https://stevelasker.blog/2021/09/24/separating-identity-from-location/)\r\n- and the purl discussion: [Decoupling Location from Identity - Is this in the scope of purl?](https://github.com/package-url/purl-spec/issues/127)",
+          "createdAt": "2022-11-21T16:06:31Z",
+          "updatedAt": "2022-11-21T16:08:54Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "> Where exactly do you see problems in processing the CBOR representations?\r\n\r\nReadability and types... getting in the way of \"representative examples\".\r\n\r\nI prefer to argue over a representative example, and then map from it to existing building blocks, not the other way round.",
+          "createdAt": "2022-11-21T16:56:12Z",
+          "updatedAt": "2022-11-21T16:56:12Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Slides: \r\n[Discussion - Statement by reference.pdf](https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/files/10058535/Discussion.-.Statement.by.reference.pdf)\r\n",
+          "createdAt": "2022-11-21T17:03:30Z",
+          "updatedAt": "2022-11-21T17:03:30Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > Where exactly do you see problems in processing the CBOR representations?\r\n> \r\n> Readability and types... getting in the way of \"representative examples\".\r\n> \r\n> I prefer to argue over a representative example, and then map from it to existing building blocks, not the other way round.\r\n\r\nAlright, makes sense. So your concern is not about the implementations but just to facilitate discussions. I guess sometimes the two are intertwined but let's try anyway.",
+          "createdAt": "2022-11-22T10:57:46Z",
+          "updatedAt": "2022-11-22T10:57:46Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@OR13 This is my attempt at representative examples. Is this what you had in mind? Any others you can think of?\r\n\r\n### Statement stored in undeclared location\r\n\r\nhash alg: sha-256\r\nhash: abc\r\ncontent type: application/foo\r\n\r\n### Statement stored on web server\r\n\r\nhash alg: sha-256\r\nhash: abc\r\ncontent type: application/foo\r\nlocation: https://example.com/statements/abc.json\r\n\r\n### Statement stored on IPFS\r\n\r\nhash alg: sha-256\r\nhash: abc\r\ncontent type: application/foo\r\nlocation: ipfs://QmPK1s3pNYLi9ERiq3BDxKa4XosgWwFRQUydHUtz4YgpqB\r\n\r\nNote: The hash embedded within the CID is **not** the hash of the raw content!\r\nSee https://docs.ipfs.tech/concepts/hashing/#content-identifiers-are-not-file-hashes.\r\n\r\nNote2: The content type embedded within the CID cannot be arbitrary.\r\nSee https://github.com/multiformats/multicodec/blob/master/table.csv and search for \"ipld\".\r\nThe `raw` type may be a reasonable fall-back and a specific content type may be stored outside\r\nof the CID.\r\n\r\n### Statement stored in OCI registry\r\n\r\nhash alg: sha-256\r\nhash: abc\r\ncontent type: application/foo\r\nlocation: docker.io/library/example@sha256:def\r\n\r\nNote: The hash in the location is **not** the hash of the raw content, but rather of a manifest.\r\nThere are a few indirections that make it a bit hard to understand.\r\nSee the in-development ORAS artifacts spec at https://github.com/oras-project/artifacts-spec.\r\nDoes referencing the location with hash add any benefit? Would a flexible tag be enough?\r\n\r\nNote2: The Notary project also defines signing over OCI artifacts and may be in conflict.\r\nSee https://github.com/notaryproject/notaryproject.\r\n\r\n### Statement stored in DID service endpoint \r\n\r\nhash alg: sha-256\r\nhash: abc\r\ncontent type: application/foo\r\nlocation: did:example:123?service=files&relativeRef=/statement.json\r\n\r\nNote: DID dereferencing would be used to retrieve the statement from the given location.\r\n\r\nNote2: The DID in the location may be distinct from the issuer of the signed statement.\r\n\r\n",
+          "createdAt": "2022-11-23T11:25:01Z",
+          "updatedAt": "2022-11-23T11:25:01Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "@letmaik these are excellent examples.\r\n\r\n> Statement stored on IPFS\r\n\r\nThe 2 notes are interesting.\r\n\r\nperhaps its not for this repo, but I would love to generate some \"real examples\" from some \"safe / fake data\"\r\n\r\nSo we can see the actual proposed data structures.\r\n\r\nIf there is a repo where I can do that work, I'm happy to tackle the IPFS examples, I did something similar recently for this:\r\n\r\nhttps://github.com/transmute-industries/ns.transmute.org\r\n\r\n\r\n\r\n",
+          "createdAt": "2022-11-30T22:01:43Z",
+          "updatedAt": "2022-11-30T22:01:43Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "We have a generic use case for \"signed statement\" by reference, which I would love to explore as well.\r\n\r\nWhen my statement refers to several \"other signed statements\" or \"transparent statements\" by reference.",
+          "createdAt": "2022-12-02T19:23:14Z",
+          "updatedAt": "2022-12-02T19:32:45Z"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "I_kwDOG2uWFs5WeZeX",
+      "title": "Refine definition of feed",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/36",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "A feed is a great base for how we can create a series of statements for different artifacts, getting freshness for a receipt/or VEX report.\r\nThe current definition likely needs to expand a bit to account for:\r\n- What are the versions of a specific artifact\r\n- What are all the statements for a version of an artifact\r\n- What is the latest statement for a specific contentType of a specific versioned artifact: (eg: what's the latest VEX for the `net-monitor:v1` software?\r\n- If the contentType is a referenced [statement by reference](#35), which stores SBOMs, VEX, Scan Reports, how do we drill into each if they all use the same payload contentType of satementByReference?\r\n",
+      "createdAt": "2022-11-16T04:06:37Z",
+      "updatedAt": "2022-11-16T04:06:37Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 37,
+      "id": "I_kwDOG2uWFs5WkD47",
+      "title": "RATS and SCITT",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/37",
+      "state": "OPEN",
+      "author": "kkarunakaran89",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "Terminology"
+      ],
+      "body": "We need documentation around SCITT and RATS focusing on how they interact, overlap and what specific problems they solve (use case documentation) \r\nIssue created for tracking",
+      "createdAt": "2022-11-16T21:25:40Z",
+      "updatedAt": "2022-11-27T22:43:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "| SCITT Terminology    | Definition                                                                                                                | RATS Terminology | Definition                                                                                                                                          | Similarity | Difference                                               |\r\n|----------------------|---------------------------------------------------------------------------------------------------------------------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|------------|----------------------------------------------------------|\r\n| Artifact             | a physical or non-physical item that is moving along the supply chain.                                                    | Artifact         | Any item produced or consumed by a RATs role                                                                                                        |            |                                                          |\r\n| Statement            | any serializable information about an Artifact, example SBOM etc                                                          | Claim (UCCS)       |  A piece of asserted information, often in the form of a name/value pair.  |            |  |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n| Claim        | an identifiable and non-repudiable Statement about an Artifact made by an Issuer.   | Endorsement            |  An Endorsement in RATS is signed i.e. a secure statement                                                                          |             |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           | Evidence         | A set of claims generated by an Attester. Includes Measurement or Config Data                                                                       |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n| Registry             | Verifiable Append Only Data Structure                                                                                     |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n| Transparency Service |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n|                      |                                                                                                                           |                  |                                                                                                                                                     |            |                                                          |\r\n",
+          "createdAt": "2022-11-23T22:52:07Z",
+          "updatedAt": "2022-11-24T17:17:08Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "| SCITT role name | Description                                                                                                                             | RATS Role Name | Description                                                                                                                                                   |   |   |\r\n|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|---|---|\r\n| Issuer          | A role, that make claims about an artifact in supply chain                                                                              | Attester       | A role performed by en entity, typically a device whose Evidence must be appraosed to infer trustrworthiness                                                  |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n| Endorser        |                                                                                                                                         | Endorser       | Entity that produces Endorsements that help Verifier appraise Evidence                                                                                        |   |   |\r\n| Verifier        | An entity that consuumes transparent claims, verifying their proofs, i.e. presence in transparent registry and inspecting the statement | Verifier       |  an entity that appraises the validity of Evidence about an Attester and produces Attestation Results to be used by a Relying Party.                          |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n| Auditor         |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n| Relying Party   | N/A                                                                                                                                     | Relying party  | A role performed by an entity that depends on the validity of information about an Attester, for purposes of reliably applying application specific actions.  |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |\r\n|                 |                                                                                                                                         |                |                                                                                                                                                               |   |   |",
+          "createdAt": "2022-11-23T22:58:12Z",
+          "updatedAt": "2022-11-23T22:58:12Z"
+        },
+        {
+          "author": "fournet",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Claim is a clear clash, as in RATS's claim would be components in the payload or headers of of SCITT's claims. We could document it, or find a synonym for SCITT. I think it is important to keep separating SCITT's statement and SCITT claim, the former referring to the opaque payload of the latter. RATS's distinction between *relying party* and their trusted delegate *verifier* is fine, but could be kept implicit in SCITT.",
+          "createdAt": "2022-11-24T15:59:53Z",
+          "updatedAt": "2022-11-24T15:59:53Z"
+        },
+        {
+          "author": "fournet",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "(For what it is worth, I am puzzled by the use of \"claim\" in RATS, which in my opinion deviates from its use e.g. in modal logic or authorization logic.)",
+          "createdAt": "2022-11-24T16:09:26Z",
+          "updatedAt": "2022-11-24T16:09:26Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "We had a productive discussion about this issue on Thursday 24th November 2022. Here is a proposal (nothing has been finalized yet) so just pondered over few possibilities which are listed below:\r\n\r\n1) Every one agreed that there is a clear clash of term `claims` between RATS and SCITT.\r\nTeam debated on various other alternatives like :\r\n(a) Calling always a Claim in SCITT as SCITT claim. However this option was ruled out as in IETF the WG name is not allowed as terms for entities/roles.\r\n\r\n(b) Calling SCITT usage of claim as \"signed claim\". This is better as SCITT never has any possibility of an unsigned claim, so this is a best possible option to avoid the confusion with RATS.\r\n\r\n(c) Use \"signed statement\" to refer to a SCITT claim. This usage is not a prefferred option  as not any signed statement is equivalent to a claim in SCITT. The signing has a specific signer associated within SCITT, especially a signing by an issuer is only an acceptable claim.  Hence this option is rejected.\r\n\r\n2) Clear clash in the Role Name : \"Verifier\".\r\n\r\nVerifier in SCITT is actually a shallow verification which only verifies the presence of Claim/Claims in a SCITT registry.\r\nHowever it does not ascertain the complete \"truthfulness\" of claims. This is a role that needs further delegation to an issuer beyond a SCITT boundaries.\r\n\r\nPossible option is to rename SCITT Verifier to Relying Party. However few think that this is too high level as Relying Party often delegates the verification responsibility to another entity.\r\n\r\nTeam decided to ponder for more options to a suitable name close to \"Verification\" but does not overlap with RATS terminology.\r\n",
+          "createdAt": "2022-11-27T22:43:17Z",
+          "updatedAt": "2022-11-27T22:43:17Z"
+        }
+      ]
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOG2uWFs5WrbFt",
+      "title": "Registry & Transparency Service",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/38",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "mprorock",
+        "rjb4standards",
+        "kaywilliams",
+        "fournet",
+        "OR13"
+      ],
+      "labels": [
+        "Terminology"
+      ],
+      "body": "The architecture I-D, and other docs use Registry and Transparency Service (TS) interchangeably. \r\n\r\nThis issue is about consistent naming, and what we should use for an implementation that hosts the SCITT standards.  \r\nAs we've discussed various terms, I'm pasting a \"thousand words\" to highlight conceptual components.\r\n\r\n![image](https://user-images.githubusercontent.com/7647382/202588667-782e7227-ac9b-49f5-b740-0a2a27fd807d.png)\r\n\r\nHow do we finish this sentence:  \r\n*The user will submit a signed statement/claim (see issue #34) to the ___*\r\n\r\n1. The thing we're trying to name here, which is an implementation of a service.\r\n2. The **eNotary** component that evaluates the Registration Policy (3) before proceeding\r\n3. The **Registration Policy**, as the gatekeeper for what may be submitted to the ledger.\r\n4. The **eNotary** counter signing key/service\r\n5. The **ledger**, where statements/claims are persisted\r\n6. The ledger of a ___ (1) may be implemented through various \"ledger databases\", such as [Azure CCF](https://azure.microsoft.com/en-us/products/azure-confidential-ledger/), [QLDB](https://aws.amazon.com/qldb/), [Trillian](https://github.com/google/trillian)\r\n\r\nThis issue is to discuss what we call (1)\r\nPlease \"vote\" with a comment, representing a number, and any supporting thoughts:\r\n\r\n1. Transparency Service (with no acronym)\r\n2. Registry\r\n3. SCITT Implementation\r\n4. Transparency Service (TS as a acronym)\r\n5. _write in your own_",
+      "createdAt": "2022-11-18T00:28:58Z",
+      "updatedAt": "2022-11-18T22:18:34Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Transparency Service.\r\n\r\nWhy: It's much less confusing than \"registry\" which is used in lots of other contexts already.\r\n\r\nSide note: The functionality of eNotary and ledger is sometimes combined (e.g., CCF), and sometimes separate (e.g., Trillian and its personalities). ",
+          "createdAt": "2022-11-18T08:06:27Z",
+          "updatedAt": "2022-11-18T08:06:27Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "+1 for Transparency Service",
+          "createdAt": "2022-11-18T20:31:50Z",
+          "updatedAt": "2022-11-18T20:31:50Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "Sorry, one more clarification. \r\nShould we be using TS as an acronym, or expand out. It's just text :)\r\nI've added an additional (4)",
+          "createdAt": "2022-11-18T20:48:58Z",
+          "updatedAt": "2022-11-18T20:48:58Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "TS acronym is not offensive to me. Either way is ok with me.",
+          "createdAt": "2022-11-18T20:50:38Z",
+          "updatedAt": "2022-11-18T20:50:38Z"
+        },
+        {
+          "author": "kaywilliams",
+          "authorAssociation": "NONE",
+          "body": "I have a preference for expanding out ('Transparency Service') in the general case, and abbreviating as an exception under extreme space constraints (e.g. small box in a diagram).",
+          "createdAt": "2022-11-18T22:18:33Z",
+          "updatedAt": "2022-11-18T22:18:33Z"
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "I_kwDOG2uWFs5W7Pt3",
+      "title": "Define RATS and SCITT Terminology mapping",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/40",
+      "state": "CLOSED",
+      "author": "yogeshbdeshpande",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This issue deals with documenting overlap between SCITT and RATS Terminology and identifying core differences",
+      "createdAt": "2022-11-21T18:08:29Z",
+      "updatedAt": "2022-11-23T10:06:08Z",
+      "closedAt": "2022-11-23T10:06:08Z",
+      "comments": [
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Duplicate of https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/37.",
+          "createdAt": "2022-11-23T10:06:08Z",
+          "updatedAt": "2022-11-23T10:06:08Z"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOG2uWFs5XbEAG",
+      "title": "Change term 'artifact'",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/42",
+      "state": "OPEN",
+      "author": "kaywilliams",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The architecture document currently defines 'artifact' as the 'physical or non-physical item that is moving along the supply chain'. In other forums, different terms are used, for example: 'supplied good', 'product', 'asset'.",
+      "createdAt": "2022-11-28T16:27:29Z",
+      "updatedAt": "2022-11-28T16:31:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOG2uWFs5a7xHB",
+      "title": "Should reg-info be compact?",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/43",
+      "state": "OPEN",
+      "author": "darracott",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Is there a need for reg-info to be compact?\r\nCurrently we use text string labels in the reg-info map, which are less compact than integer labels. ",
+      "createdAt": "2023-01-09T13:42:02Z",
+      "updatedAt": "2023-01-09T13:42:02Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOG2uWFs4zSxHt",
+      "title": "Intro draft 00",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/1",
+      "state": "MERGED",
+      "author": "henkbirkholz",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Preliminary introduction content as a basis for discussion on scope and initial content",
+      "createdAt": "2022-02-22T15:34:57Z",
+      "updatedAt": "2022-02-23T09:21:58Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "2ea8651a8bcf476ba950858d0b94765a49d71ca2",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "intro-draft-00",
+      "headRefOid": "470b2046dc19fadf0bafe01e1b31562ea6261886",
+      "closedAt": "2022-02-23T09:21:58Z",
+      "mergedAt": "2022-02-23T09:21:58Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "96c5c038803deda0f71aad59e791c129998c76c1"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOG2uWFs4zS1k_",
+      "title": "Add initial structure",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/2",
+      "state": "MERGED",
+      "author": "ad-l",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-02-22T15:53:38Z",
+      "updatedAt": "2022-02-23T08:11:25Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "2ea8651a8bcf476ba950858d0b94765a49d71ca2",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "8c16abf3aba4794eb31feeeb74f0282e927a0314",
+      "closedAt": "2022-02-23T08:11:25Z",
+      "mergedAt": "2022-02-23T08:11:25Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "689d3fd8ef155cf91ce694844e060871f3b3763c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41F2lf",
+          "commit": {
+            "abbreviatedOid": "8c16abf"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "I'll merge this one first and then go with #1, massaging the content from here into #1",
+          "createdAt": "2022-02-23T08:10:27Z",
+          "updatedAt": "2022-02-23T08:10:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOG2uWFs4zWa8w",
+      "title": "Starting to scope use cases",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/3",
+      "state": "MERGED",
+      "author": "henkbirkholz",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "added two rough use cases illustrating supply chain logistic challenges",
+      "createdAt": "2022-02-23T15:06:23Z",
+      "updatedAt": "2022-02-28T15:38:56Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "2cc42b24813be29418571ebccd5e84aa7bea1b9e",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "more-use-cases",
+      "headRefOid": "121f36d2e95a917727f9993fe70c87924f4da323",
+      "closedAt": "2022-02-28T15:38:56Z",
+      "mergedAt": "2022-02-28T15:38:56Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "d9a45e42d5b7b7ce1543c341c4f1574a8d3a785b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOG2uWFs4zdKyi",
+      "title": "Terms",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/4",
+      "state": "MERGED",
+      "author": "henkbirkholz",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "added an early list of term candidates (and a terminology section)",
+      "createdAt": "2022-02-25T10:04:43Z",
+      "updatedAt": "2022-02-25T11:07:32Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "a00f1af64f3929a3e29d1837d59b66efc03b6667",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "terms",
+      "headRefOid": "0eadb68de11b540546fc9cca07d4aad799eb8d61",
+      "closedAt": "2022-02-25T11:07:32Z",
+      "mergedAt": "2022-02-25T11:07:32Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "6ff841cad5bd0205f16b01f67551b2417d235c76"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOG2uWFs4zd005",
+      "title": "Re-arrange terminology and use cases; complete terminology",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/5",
+      "state": "MERGED",
+      "author": "ad-l",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-02-25T13:42:42Z",
+      "updatedAt": "2022-02-28T15:17:06Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "6ff841cad5bd0205f16b01f67551b2417d235c76",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "7abe7debcf1367b6e3aeb03932c1c325828851d1",
+      "closedAt": "2022-02-28T15:17:06Z",
+      "mergedAt": "2022-02-28T15:17:06Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "2cc42b24813be29418571ebccd5e84aa7bea1b9e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41UW8K",
+          "commit": {
+            "abbreviatedOid": "7abe7de"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-02-27T17:44:29Z",
+          "updatedAt": "2022-02-27T17:44:29Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41W-wV",
+          "commit": {
+            "abbreviatedOid": "7abe7de"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-02-28T15:16:56Z",
+          "updatedAt": "2022-02-28T15:16:56Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOG2uWFs4zvXX6",
+      "title": "Minor restructuring; we plan to combine format and protocols",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/6",
+      "state": "MERGED",
+      "author": "ad-l",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-03-01T16:37:57Z",
+      "updatedAt": "2022-03-02T16:28:37Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "db1120e3ccaa8d21d15eee4d59798531acc1190b",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "76b02d69e2fb1ecfe205fa2e6c4e34fa7ac2e938",
+      "closedAt": "2022-03-02T16:28:37Z",
+      "mergedAt": "2022-03-02T16:28:37Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "89d4fc26e436fbf5170b7196db718cce23a82266"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41e9X5",
+          "commit": {
+            "abbreviatedOid": "dc46aff"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-02T09:26:45Z",
+          "updatedAt": "2022-03-02T09:26:46Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\nthe service presents attestation evidence that typically includes measurement of the\r\nsoftware it runs in this TEE. and a corresponding endorsement co-located with the\r\nTEE and provisioned by the Endorser. The client verifies the evidence with the help\r\nof a Verifier before using the service as the Relying Party.\r\n```",
+              "createdAt": "2022-03-02T09:26:45Z",
+              "updatedAt": "2022-03-02T09:27:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41e-vg",
+          "commit": {
+            "abbreviatedOid": "dc46aff"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-02T09:31:04Z",
+          "updatedAt": "2022-03-02T09:31:05Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "RATS defines the solution basically as \"via a Verifier role\". Evidence always comes with a proof of its Authenticity as it is signed by an Attesting Environment of the Attester (usually a RoT, that can be a layered Attesting Environment, sometimes called a Bootstrapped RoT).",
+              "createdAt": "2022-03-02T09:31:05Z",
+              "updatedAt": "2022-03-02T09:31:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41fBnn",
+          "commit": {
+            "abbreviatedOid": "dc46aff"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-02T09:40:40Z",
+          "updatedAt": "2022-03-02T09:40:40Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "The conceptual messages provided here (in this scope artifacts or assets) are:\r\n* \"recording of their measurements\", which I assume means nominal measurements, that you can compare actual live measurements coming from the confidential services about itself - that would be Reference Values in Reference Integrity Manifests.\r\n* \"recording of their provenance\", which is bit ambiguously phrase but probably is an SBOM and Endorsements.\r\n\r\nProvided here is the Verifier role that can be taken on by the client, of course. The entity that is a client takes on a lot of a responsibility here, if it also takes on the role of a Relying Party. The Verifier role conducts the \"appraisal of Evidence\", consuming Reference Values, and Endorsements (coming from supply chain entities that are usually manufacturers, oem, and certifying organizations). and Evidence coming from the Confidential Computing Service that takes on the role of an Attester.",
+              "createdAt": "2022-03-02T09:40:40Z",
+              "updatedAt": "2022-03-02T09:40:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41fCiP",
+          "commit": {
+            "abbreviatedOid": "dc46aff"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-02T09:43:45Z",
+          "updatedAt": "2022-03-02T09:43:46Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "In a nutshell:\r\n\r\nCC Service: Attester\r\nClient: Verifier & Relying Party\r\nTransparency Service: Endorser & Reference Value Provider (or a trusted relay for them as the artifact issuer actually take on these roles, I think)",
+              "createdAt": "2022-03-02T09:43:46Z",
+              "updatedAt": "2022-03-02T10:08:07Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOG2uWFs4z0byl",
+      "title": "Corrected Abstract to align with the larger scope of the document",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/7",
+      "state": "MERGED",
+      "author": "yogeshbdeshpande",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Request please review this!",
+      "createdAt": "2022-03-02T10:41:21Z",
+      "updatedAt": "2022-03-02T16:25:40Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "16fae14e9eadbd46fdf17b0c6f648f0783e6b2fc",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "correction-branch",
+      "headRefOid": "c3e4416d34a1252c310ddf54056889f5c29676ab",
+      "closedAt": "2022-03-02T16:25:40Z",
+      "mergedAt": "2022-03-02T16:25:40Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "db1120e3ccaa8d21d15eee4d59798531acc1190b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOG2uWFs4z16O5",
+      "title": "The confidential computing use case now discusses specific machine-learning tasks.",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/8",
+      "state": "MERGED",
+      "author": "fournet",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-03-02T16:56:48Z",
+      "updatedAt": "2022-03-04T13:36:11Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "89d4fc26e436fbf5170b7196db718cce23a82266",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "29729155426c5448df59834889b060803c2ee977",
+      "closedAt": "2022-03-04T13:36:11Z",
+      "mergedAt": "2022-03-04T13:36:11Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "c9e4084103906f1052e7f1f9e0b0707129cb07a4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41pnnh",
+          "commit": {
+            "abbreviatedOid": "463b08b"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-04T11:15:00Z",
+          "updatedAt": "2022-03-04T11:32:29Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\r\nThe first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by storing the signed statement on an, immutable, append-only, transparent ledger. The last guarantee is achieved by implementing the ledger using a verifiable data structure (such as a Merkle Tree), and by the requiring a transparency service (TS) that operates the ledger to endorse its state at the time of registration.\r\n```",
+              "createdAt": "2022-03-04T11:15:00Z",
+              "updatedAt": "2022-03-04T11:32:29Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "```suggestion\r\nThe guarantees and techniques used in this document generalize those of Certificate Transparency ({{-CT}}), which can be re-interpreted as an instance of this architecture for the supply chain of X.509 certificates. However, the range of use cases and applications in this document is much broader, which requires much more flexibility in how each TS implements and operates its ledger. Each service may enforce its own policy for authorizing entities to register their claims on the TS. Some TS may also enforce access control policies to limit who can audit the full ledger, or keep some information on the ledger encrypted. Nevertheless, it is critical to provide global interoperability for all TS instances as the composition and configuration of involved supply chain entities and their system components is ever changing and always in flux.\r\n```",
+              "createdAt": "2022-03-04T11:20:04Z",
+              "updatedAt": "2022-03-04T11:32:29Z"
+            },
+            {
+              "originalPosition": 93,
+              "body": "```suggestion\r\nAs the ever increasing complexity of large software projects requires more modularity and abstractions to manage, keeping track of their full Trusted Computing Base (TCB) is becoming increasingly difficult. Each component may have its own set of dependencies and libraries. Some of these dependencies are binaries, which means their TCB depends not only on their source, but also on the build environment (compilers and tool-chains). Many source and binary packages are distributed through various channels and repositories that may not be trustworthy.\r\n```",
+              "createdAt": "2022-03-04T11:23:27Z",
+              "updatedAt": "2022-03-04T11:32:29Z"
+            },
+            {
+              "originalPosition": 238,
+              "body": "```suggestion\r\nThe combination of ledger, identity, registration policy evaluation, and registration endpoint constitute the trusted part of the TS. Each of these components SHOULD be carefully protected against both external attacks and internal misbehavior by some or all of the operators of the TS. For instance, the code for policy evaluation, ledger extension and endorsement may be protected by running in a TEE; the ledger may be replicated and a consensus algorithm such as PBFT be used to protect against malicious or vulnerable replicas; threshold signatures may be use to protect the service key, etc.\r\n```",
+              "createdAt": "2022-03-04T11:30:57Z",
+              "updatedAt": "2022-03-04T11:32:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41qEXx",
+          "commit": {
+            "abbreviatedOid": "46fb241"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-04T13:25:20Z",
+          "updatedAt": "2022-03-04T13:25:21Z",
+          "comments": [
+            {
+              "originalPosition": 36,
+              "body": "```suggestion\r\nTraceability of physical and digital artifacts in supply chains is a long standing, but increasingly serious security concern. The rise in popularity of verifiable data structures as a mechanism to make actors more accountable for breaching their compliance promises has found some successful applications to specific use cases (such as the supply chain for digital certificates), but lacks a generic and scalable architecture that can address a wider range of use cases.\r\n```",
+              "createdAt": "2022-03-04T13:25:20Z",
+              "updatedAt": "2022-03-04T13:25:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41qEqE",
+          "commit": {
+            "abbreviatedOid": "46fb241"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-04T13:26:29Z",
+          "updatedAt": "2022-03-04T13:26:30Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\nThis memo defines a generic and scalable architecture to enable transparency across any supply chain with minimum adoption barriers for producers (who can register their claims on any transparency service, with the guarantee that all consumers will be able to verify them) and enough flexibility to allow different implementations of transparency services with various auditing and compliance requirements.\r\n```",
+              "createdAt": "2022-03-04T13:26:29Z",
+              "updatedAt": "2022-03-04T13:26:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41qHGa",
+          "commit": {
+            "abbreviatedOid": "2972915"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-04T13:36:04Z",
+          "updatedAt": "2022-03-04T13:36:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOG2uWFs4z41TQ",
+      "title": "Update draft-birkholz-scitt-architecture.md",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/9",
+      "state": "MERGED",
+      "author": "knight-brian",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "These changes address some spelling and grammatical errors.",
+      "createdAt": "2022-03-03T12:24:52Z",
+      "updatedAt": "2022-03-04T13:41:27Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "c9e4084103906f1052e7f1f9e0b0707129cb07a4",
+      "headRepository": "knight-brian/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "b8d414f264f740b330fdd3e57781442f012b4714",
+      "closedAt": "2022-03-04T13:41:26Z",
+      "mergedAt": "2022-03-04T13:41:26Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "9afc2bd492a195dc13d4b877bab026edf2492fd5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41prqY",
+          "commit": {
+            "abbreviatedOid": "4b1906e"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-04T11:33:41Z",
+          "updatedAt": "2022-03-04T11:33:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOG2uWFs40AWYs",
+      "title": "typo and formatting round",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/10",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-03-06T17:55:55Z",
+      "updatedAt": "2022-03-07T11:41:47Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "9afc2bd492a195dc13d4b877bab026edf2492fd5",
+      "headRepository": "cabo/draft-birkholz-scitt-architecture",
+      "headRefName": "typo",
+      "headRefOid": "ce955c0f7343502a88f6e28e2f9016050791c830",
+      "closedAt": "2022-03-07T10:06:14Z",
+      "mergedAt": "2022-03-07T10:06:14Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "4fa5b30cb55749f278d7d2ebba7c71982086d46b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41ukRc",
+          "commit": {
+            "abbreviatedOid": "f887a3f"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T09:00:34Z",
+          "updatedAt": "2022-03-07T09:00:35Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "```suggestion\r\nOnce seafood is caught, its quality is determined -- amongst other criteria -- via the integrity of a cold chain that ensures a regulatory perspective freshness mandating a continuous storing temperature between 1\u00a0{{{\u00b0}}}C and 0\u00a0{{{\u00b0}}}C (or -18\u00a0{{{\u00b0}}}C and lower for frozen seafood). The temperature is recorded by cooling units adhering to certain compliance standards automatically. Batches of seafood can be split or aggregated before arriving in a shelf so that each unit can potentially have a potentially unique cold chain record whose transparency impacts the accuracy of the shelf-life associated with it. Especially in early links of the supply chain, Internet connection or sophisticated IT equipment are typically not available and sometimes temperature measurements are recorded manually and digital records are created in hindsight.\r\n```",
+              "createdAt": "2022-03-07T09:00:34Z",
+              "updatedAt": "2022-03-07T09:00:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41ukt3",
+          "commit": {
+            "abbreviatedOid": "9fd1c81"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T09:02:14Z",
+          "updatedAt": "2022-03-07T09:02:14Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2022-03-07T09:02:14Z",
+              "updatedAt": "2022-03-07T09:02:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41ukyC",
+          "commit": {
+            "abbreviatedOid": "9fd1c81"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T09:02:28Z",
+          "updatedAt": "2022-03-07T09:02:29Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "Will do! :+1: ",
+              "createdAt": "2022-03-07T09:02:28Z",
+              "updatedAt": "2022-03-07T09:02:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41ulL9",
+          "commit": {
+            "abbreviatedOid": "9fd1c81"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-07T09:04:01Z",
+          "updatedAt": "2022-03-07T09:04:01Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41u20s",
+          "commit": {
+            "abbreviatedOid": "ce955c0"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-07T10:06:05Z",
+          "updatedAt": "2022-03-07T10:06:05Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vPqh",
+          "commit": {
+            "abbreviatedOid": "9fd1c81"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T11:41:47Z",
+          "updatedAt": "2022-03-07T11:41:47Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "So what is a regulatory perspective freshness?",
+              "createdAt": "2022-03-07T11:41:47Z",
+              "updatedAt": "2022-03-07T11:41:47Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOG2uWFs40B2aM",
+      "title": "Change of title; details in the first section, notably on service identity, attestation, and registration policies.",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/11",
+      "state": "MERGED",
+      "author": "fournet",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-03-07T09:39:45Z",
+      "updatedAt": "2022-03-07T11:02:36Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "4fa5b30cb55749f278d7d2ebba7c71982086d46b",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "89b413acc05f6504bf1fd77d95d8ae162df17acc",
+      "closedAt": "2022-03-07T11:02:36Z",
+      "mergedAt": "2022-03-07T11:02:36Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "c57d4ef244cd2e72a11d8391929403cff91d90dd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41vDRU",
+          "commit": {
+            "abbreviatedOid": "4da99c1"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:51:41Z",
+          "updatedAt": "2022-03-07T10:51:42Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\nTrust in the TS itself is supported both by protecting their implementation (using, for instance, replication, trusted hardware, and remote attestation of systems) and by enabling independent audits of the correctness and consistency of its ledger, thereby holding the organization accountable that operates it. Unlike CT, where independent auditors are responsible for enforcing the consistency of multiple independent instances of the same global ledger, we require each TS to guarantee the consistency of its own ledger (for instance, through the use of a consensus algorithm between replicas of the ledger), but assume no consistency between different transparency services.\r\n```",
+              "createdAt": "2022-03-07T10:51:41Z",
+              "updatedAt": "2022-03-07T10:51:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vEQw",
+          "commit": {
+            "abbreviatedOid": "4da99c1"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:55:22Z",
+          "updatedAt": "2022-03-07T10:55:22Z",
+          "comments": [
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\n### Service Identity, Remote Attestation, and Keying\r\n```",
+              "createdAt": "2022-03-07T10:55:22Z",
+              "updatedAt": "2022-03-07T10:55:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vE1l",
+          "commit": {
+            "abbreviatedOid": "d2c5a45"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:57:31Z",
+          "updatedAt": "2022-03-07T10:57:32Z",
+          "comments": [
+            {
+              "originalPosition": 123,
+              "body": "```suggestion\r\n##  Envelope and Claim Format\r\n```",
+              "createdAt": "2022-03-07T10:57:31Z",
+              "updatedAt": "2022-03-07T10:57:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vFWh",
+          "commit": {
+            "abbreviatedOid": "d2c5a45"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:59:25Z",
+          "updatedAt": "2022-03-07T10:59:25Z",
+          "comments": [
+            {
+              "originalPosition": 129,
+              "body": "```suggestion\r\nAt a high-level that is the context of this architecture, a Claim is a COSE single-signed object (i.e. `COSE_Sign1`) that contains the correct set of protected headers. Although issuers and relays may attach unprotected headers to claims, transparency services and verifiers MUST NOT rely on the presence or value of unrpotected headers in claims during registration and validation.\r\n```",
+              "createdAt": "2022-03-07T10:59:25Z",
+              "updatedAt": "2022-03-07T10:59:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vFjP",
+          "commit": {
+            "abbreviatedOid": "005a9e7"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T11:00:10Z",
+          "updatedAt": "2022-03-07T11:00:11Z",
+          "comments": [
+            {
+              "originalPosition": 162,
+              "body": "```suggestion\r\n## Claim Issuance\r\n```",
+              "createdAt": "2022-03-07T11:00:11Z",
+              "updatedAt": "2022-03-07T11:00:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vFx2",
+          "commit": {
+            "abbreviatedOid": "3df24d9"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T11:01:03Z",
+          "updatedAt": "2022-03-07T11:01:03Z",
+          "comments": [
+            {
+              "originalPosition": 171,
+              "body": "```suggestion\r\nThere are many types of statements (such as SBOMs, malware scans, audit reports, policy definitions) that Issuers may want to turn into Claims. The Issuer must first decide on a suitable format to serialize the statement, such as:\r\n```",
+              "createdAt": "2022-03-07T11:01:03Z",
+              "updatedAt": "2022-03-07T11:01:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs41vGIH",
+          "commit": {
+            "abbreviatedOid": "89b413a"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Will do a separate check on capitalizing first letters of Term terms tonight",
+          "createdAt": "2022-03-07T11:02:24Z",
+          "updatedAt": "2022-03-07T11:02:24Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOG2uWFs40CXvr",
+      "title": "Polish section 6 a bit",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/12",
+      "state": "MERGED",
+      "author": "ad-l",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-03-07T12:02:50Z",
+      "updatedAt": "2022-03-07T20:27:32Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "c57d4ef244cd2e72a11d8391929403cff91d90dd",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "ee68c659a4451fcb49988d9247bed02dcf8c22b7",
+      "closedAt": "2022-03-07T20:27:32Z",
+      "mergedAt": "2022-03-07T20:27:32Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "0ba563cbef8613e7f8be464dc2887889802936ba"
+      },
+      "comments": [
+        {
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@henkbirkholz added security considerations and architecture picture",
+          "createdAt": "2022-03-07T19:24:37Z",
+          "updatedAt": "2022-03-07T19:24:37Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs41xrQS",
+          "commit": {
+            "abbreviatedOid": "ee68c65"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for the diagram, the sec-sec and all the other additional polish! I thought about tinkering with the diagram, but am in doubt that I'll improve it significantly.\r\n\r\nLGTM!",
+          "createdAt": "2022-03-07T20:27:25Z",
+          "updatedAt": "2022-03-07T20:27:25Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOG2uWFs413tH1",
+      "title": "Architecture changes",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/13",
+      "state": "MERGED",
+      "author": "yogeshbdeshpande",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Use correct terminology(Transparency Registry) reflecting the Transparency Architecture as against an implementation terminology of ledger.",
+      "createdAt": "2022-04-08T12:25:09Z",
+      "updatedAt": "2022-09-07T10:59:04Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "architecture-edits",
+      "headRefOid": "0b5578478b8a7b6a2a6adeac9d0b1bccea7008a1",
+      "closedAt": "2022-09-07T10:59:04Z",
+      "mergedAt": "2022-09-07T10:59:04Z",
+      "mergedBy": "fournet",
+      "mergeCommit": {
+        "oid": "904a1503895435684ada1d8231ad8859580b41a0"
+      },
+      "comments": [
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@henkbirkholz Can you please review and let me know, your thoughts on the PR?",
+          "createdAt": "2022-04-13T08:53:51Z",
+          "updatedAt": "2022-04-13T08:53:51Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs49Lb_k",
+          "commit": {
+            "abbreviatedOid": "bfccf56"
+          },
+          "author": "joshuagl",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Ledger does seem prescriptive, and could be read as implying specific implementation technologies. Registries is more generic (though Cloud folks might disagree).",
+          "createdAt": "2022-07-01T16:09:14Z",
+          "updatedAt": "2022-07-01T16:16:29Z",
+          "comments": [
+            {
+              "originalPosition": 70,
+              "body": "missing space\r\n```suggestion\r\n: An identifier chosen by the Issuer for the Artifact. For every Issuer and Feed, the Registry on a Transparency Service contains a sequence of Claims about the same Artifact.\r\n```",
+              "createdAt": "2022-07-01T16:09:14Z",
+              "updatedAt": "2022-07-01T16:16:29Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "missing space here, too\r\n```suggestion\r\n: the process of submitting a Claim to a Transparency Service, applying its registration policy, storing it in the Registry and producing the Receipt returned to the submitter.\r\n```",
+              "createdAt": "2022-07-01T16:09:52Z",
+              "updatedAt": "2022-07-01T16:16:29Z"
+            },
+            {
+              "originalPosition": 129,
+              "body": "typo: Regisrty -> Registry\r\n```suggestion\r\nTransparency ->       +<------------| Registry| /\r\n```",
+              "createdAt": "2022-07-01T16:10:39Z",
+              "updatedAt": "2022-07-01T16:16:29Z"
+            },
+            {
+              "originalPosition": 307,
+              "body": "typo: Registeries -> Registries\r\n```suggestion\r\n- Policy-based. Within an organization, local Verifiers contact an authoritative SCITT that records the latest policies associated with classes of Artifacts; these policies indicate which Issuers and Registries are trusted for verifying signed Transparent Claims for these Artifacts.\r\n```\r\nRegistries ",
+              "createdAt": "2022-07-01T16:12:17Z",
+              "updatedAt": "2022-07-01T16:16:29Z"
+            },
+            {
+              "originalPosition": 312,
+              "body": "typo: Registeries -> Registries\r\n```suggestion\r\nWe'd like to attach multiple Receipts to the same signed Claims, each Receipt endorsing the Issuer signature and a subset of prior Receipts. This involves down-stream Registries verifying and recording these Receipts before issuing their own Receipts.\r\n```",
+              "createdAt": "2022-07-01T16:12:36Z",
+              "updatedAt": "2022-07-01T16:16:29Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOG2uWFs46gK8X",
+      "title": "ascii art to SVG in HTML mode",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/14",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Needs [aasvg](https://github.com/martinthomson/aasvg#usage)",
+      "createdAt": "2022-06-28T14:44:51Z",
+      "updatedAt": "2022-09-28T09:50:46Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "thomas-fossati/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "91b5a93aa6a58165031d4762ab233beb3423a97a",
+      "closedAt": "2022-09-28T09:50:45Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "@thomas-fossati: is this PR superseded by #23? Could you check?",
+          "createdAt": "2022-09-28T08:41:55Z",
+          "updatedAt": "2022-09-28T08:41:55Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "body": "> @thomas-fossati: is this PR superseded by #23? Could you check?\r\n\r\nLooks like, I see some awesome stuff there!",
+          "createdAt": "2022-09-28T09:50:03Z",
+          "updatedAt": "2022-09-28T09:50:03Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "body": "Superseded by #23 ",
+          "createdAt": "2022-09-28T09:50:45Z",
+          "updatedAt": "2022-09-28T09:50:45Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs4-NKCR",
+          "commit": {
+            "abbreviatedOid": "91b5a93"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:22:00Z",
+          "updatedAt": "2022-07-19T15:22:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NKLC",
+          "commit": {
+            "abbreviatedOid": "91b5a93"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-19T15:22:21Z",
+          "updatedAt": "2022-07-19T15:22:21Z",
+          "comments": [
+            {
+              "originalPosition": 41,
+              "body": "\"registry\" ?",
+              "createdAt": "2022-07-19T15:22:21Z",
+              "updatedAt": "2022-07-19T15:22:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOG2uWFs46hSRN",
+      "title": "Move away from transparency and towards verifiability as a property",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/15",
+      "state": "CLOSED",
+      "author": "chris-wood",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed someone indirectly on the list, it might make sense to accommodate different types of transparency services, in particular those that don't require running and operating a publicly-verifiable ledger. To that end, this change moves away from _transparency_ as a requirement for SCITT and focuses on _verifiability_, allowing for SCITT instances to implement verifiability _with_ transparency (as in CT) if desired, but also allowing for simpler deployments (like those based on a timestamping service) where applicable.",
+      "createdAt": "2022-06-28T19:40:55Z",
+      "updatedAt": "2022-09-28T16:40:34Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "chris-wood/draft-birkholz-scitt-architecture",
+      "headRefName": "caw/transparency-to-verifiability",
+      "headRefOid": "6d3d1bd0c0f2a926d67e60829f6579e9bc2cd87b",
+      "closedAt": "2022-09-28T16:40:33Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "I wonder if we can get a clearer change request, what actions need to be performed to obtain approval.\r\n\r\nperhaps we can open issues and merge as is?",
+          "createdAt": "2022-07-19T15:21:42Z",
+          "updatedAt": "2022-07-19T15:21:42Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "@OR13 , I am under the assumption that making the ledger optional would cut away a significant core concept. Not sure how to accommodate Chris' ask. @chris-wood, could you reply to @ad-l feedback, so we can resolve the discussion?",
+          "createdAt": "2022-09-28T08:40:12Z",
+          "updatedAt": "2022-09-28T08:40:12Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "> it might make sense to accommodate different types of transparency services, in particular those that don't require running and operating a publicly-verifiable ledger.\r\n\r\nMy understanding is that the architecture has already incorporated this feedback.\r\n\r\nIn my latest tests I showed how to do this end to end with a private ledger.\r\n\r\nI agree with the motivation / framing, but the specific word changes don't achieve the objective imo.\r\n\r\nThe ledger isn't `optional` in the architecture, but it does not need to be \"public access\"... and it might now always be needed is a use case / story.\r\n\r\nThere are a lot of changes in this PR, and its got a lot of outdated comments, making it hard to review easily.\r\n\r\nAfter looking at the changes directly, I think they can be accepted as is.",
+          "createdAt": "2022-09-28T13:08:12Z",
+          "updatedAt": "2022-09-28T13:14:01Z"
+        },
+        {
+          "author": "chris-wood",
+          "authorAssociation": "NONE",
+          "body": "> My understanding is that the architecture has already incorporated this feedback.\r\n\r\nIndeed -- I think @ad-l already incorporated a better version of this change into the architecture document (though I've not read the latest version). This can be closed.",
+          "createdAt": "2022-09-28T16:40:33Z",
+          "updatedAt": "2022-09-28T16:40:33Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs49B2I6",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-29T19:36:13Z",
+          "updatedAt": "2022-06-29T19:36:13Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n  I-D.birkholz-scitt-receipts: RECEIPTS\r\n```",
+              "createdAt": "2022-06-29T19:36:13Z",
+              "updatedAt": "2022-06-29T19:36:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs49B37Z",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-06-29T19:43:17Z",
+          "updatedAt": "2022-06-29T19:43:27Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "oh",
+              "createdAt": "2022-06-29T19:43:18Z",
+              "updatedAt": "2022-06-29T19:43:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs49Ld5Q",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "joshuagl",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-01T16:17:25Z",
+          "updatedAt": "2022-07-01T16:17:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "This seems like an unintended typo?",
+              "createdAt": "2022-07-01T16:17:25Z",
+              "updatedAt": "2022-07-01T16:17:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs49PM0A",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-07-04T11:06:11Z",
+          "updatedAt": "2022-07-04T11:17:22Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "Making the ledger optional is a significant weakening of the technical guarantee of SCITT, which is principally defined based on the ledger. We think that most of the costs associated with the implementation and operation of SCITT servers are related to the **persistence and distribution/querying of the ledger** rather than its actual computation. For instance, it is possible to implement a minimal append-only ledger using a single hash (like PCRs in TPMs), which technically meets the requirements of append-only and consistent/fork-free. The implementation overhead for such a ledger is only the computation of an extra hash per claim and the persistence of a single hash value in addition to the receipt signing key, while the benefit is a much stronger a clearly defined security goal for SCITT verifiers. I would like to check there is consensus for this change before it is approved.",
+              "createdAt": "2022-07-04T11:06:11Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 108,
+              "body": "(since the ledger is optional, appending the claim to the ledger is also optional)",
+              "createdAt": "2022-07-04T11:08:45Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 98,
+              "body": "The security property is very underspecified. As written, the baseline guarantee is that the registration policy was satisfied when the claim was registered. Additional guarantees stemming from the addition of the claim to the ledger depend on the use of a ledger, the type of ledger/receipt, and how the server maintains and distributes the ledger.",
+              "createdAt": "2022-07-04T11:11:49Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            },
+            {
+              "originalPosition": 133,
+              "body": "The definition of ledger is no longer valid when the ledger is optional. A receipt is now a witness that a claim has been registered on SCITT service, with optional universally verifiable proof that the claim has been appended to the ledger. ",
+              "createdAt": "2022-07-04T11:15:56Z",
+              "updatedAt": "2022-07-04T11:17:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NIN2",
+          "commit": {
+            "abbreviatedOid": "6d3d1bd"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:17:16Z",
+          "updatedAt": "2022-07-19T15:17:16Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5C85lG",
+          "commit": {
+            "abbreviatedOid": "494a7f8"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-28T08:37:34Z",
+          "updatedAt": "2022-09-28T08:37:34Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "I agree with @ad-l\r\nDo others share Chris' concern?",
+              "createdAt": "2022-09-28T08:37:34Z",
+              "updatedAt": "2022-09-28T08:37:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5C-dI1",
+          "commit": {
+            "abbreviatedOid": "6d3d1bd"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-28T13:14:35Z",
+          "updatedAt": "2022-09-28T13:14:36Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nThe first guarantee is achieved by requiring issuers to sign their statements and associated metadata using a distributed public key infrastructure. The second guarantee is achieved by appending the signed statement to a data structure that logically defines an immutable, append-only, transparent registry for the Registration Service (RS). The last guarantee is achieved by using a verifiable data structure to implement the registry (such as a Merkle Tree), and by requiring a Registration Service that operates the registry to endorse its state at the time of registration.\r\n```",
+              "createdAt": "2022-09-28T13:14:35Z",
+              "updatedAt": "2022-09-28T13:14:36Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOG2uWFs46z0lN",
+      "title": "Minor nits",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/16",
+      "state": "CLOSED",
+      "author": "joshuagl",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Very minor fixes spotted on a first read-through of the draft.\r\n\r\n* Fixes two typos\r\n  * edger -> ledger\r\n  * registraton -> registration \r\n* fixes Markdown formatting for lists in the Federation section\r\n* Clarifies a sentence in Security Considerations",
+      "createdAt": "2022-07-04T16:52:24Z",
+      "updatedAt": "2022-09-07T14:02:59Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "joshuagl/draft-birkholz-scitt-architecture",
+      "headRefName": "joshuagl/minor-nits",
+      "headRefOid": "e5cd1c2cf29c42a251bb104e8e83f9c6d6cb8556",
+      "closedAt": "2022-09-07T14:02:59Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "These has been fixed in other PRs, thanks",
+          "createdAt": "2022-09-07T14:02:59Z",
+          "updatedAt": "2022-09-07T14:02:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs4-NH6U",
+          "commit": {
+            "abbreviatedOid": "e5cd1c2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-19T15:16:30Z",
+          "updatedAt": "2022-07-19T15:16:31Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "do we want to call \"ledger\" registry?",
+              "createdAt": "2022-07-19T15:16:31Z",
+              "updatedAt": "2022-07-19T15:16:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs4-NH93",
+          "commit": {
+            "abbreviatedOid": "e5cd1c2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-07-19T15:16:39Z",
+          "updatedAt": "2022-07-19T15:16:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOG2uWFs4-N5Le",
+      "title": "Cheatsheet",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/17",
+      "state": "CLOSED",
+      "author": "yogeshbdeshpande",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This document define the key roles and terms used in SCITT Architecture",
+      "createdAt": "2022-09-01T14:37:35Z",
+      "updatedAt": "2022-09-07T13:21:08Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "202c61040810b6a58af7b0c1df7c663a97ccdc6d",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "cheatsheet",
+      "headRefOid": "c30cfd9d35b55a0bc155122f525e839afdbcaa08",
+      "closedAt": "2022-09-07T13:21:08Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is superseeded by #19 which integrates the terminology changes in the architecture and is consistent with the latest charter",
+          "createdAt": "2022-09-07T13:20:32Z",
+          "updatedAt": "2022-09-07T13:21:03Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOG2uWFs4-gSsI",
+      "title": "Clean up registration policies and separate design and implementation",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/18",
+      "state": "MERGED",
+      "author": "ad-l",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-09-07T11:43:15Z",
+      "updatedAt": "2022-09-07T16:21:16Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "904a1503895435684ada1d8231ad8859580b41a0",
+      "headRepository": "ad-l/draft-birkholz-scitt-architecture",
+      "headRefName": "main",
+      "headRefOid": "4c4b44a4fdaace3a922062bbaf730c4b00a433ac",
+      "closedAt": "2022-09-07T16:21:16Z",
+      "mergedAt": "2022-09-07T16:21:16Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "1c79e2fa2c43512462df43eeea9724d6b70b12fe"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5BhNvE",
+          "commit": {
+            "abbreviatedOid": "5f83ac2"
+          },
+          "author": "fournet",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-09-07T13:54:20Z",
+          "updatedAt": "2022-09-07T13:54:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5BheDY",
+          "commit": {
+            "abbreviatedOid": "5f83ac2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-07T14:32:23Z",
+          "updatedAt": "2022-09-07T14:32:23Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "This is too strong. We can't expect all implementations to support all listed policies.",
+              "createdAt": "2022-09-07T14:32:23Z",
+              "updatedAt": "2022-09-07T14:32:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Bhs-q",
+          "commit": {
+            "abbreviatedOid": "40b64f8"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-09-07T15:08:05Z",
+          "updatedAt": "2022-09-07T15:22:42Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "```suggestion\r\nA TS that accepts to register any valid claim offered by an issuer would end up providing only limited value to verifiers. In consequence, a baseline transparency guarantee policing the registration of claims is required to ensure completeness of audit, which can help detect equivocation.\r\n```",
+              "createdAt": "2022-09-07T15:08:05Z",
+              "updatedAt": "2022-09-07T15:22:42Z"
+            },
+            {
+              "originalPosition": 24,
+              "body": "```suggestion\r\nMost advanced SCITT scenarios rely on the TS performing additional domain-specific checks before a claim is accepted: TS may only allow trusted authenticated users to register claims, TS may try to check that a new claim is consistent with previous claims from the same issuers or that claims are registered in the correct order and cannot be re-played; some TS may even interpret and validate the payload of claims.\r\n```",
+              "createdAt": "2022-09-07T15:11:17Z",
+              "updatedAt": "2022-09-07T15:22:42Z"
+            },
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\nIn general, registration policies are applied at the discretion of the TS, and verifiers use receipts as witnesses that confirm that the registration policy of the TS was satisfied at the time claim registration. TS implementations SHOULD make their full registration policy public and auditable, e.g. by recording stateful policy inputs at evaluation time in the registry to ensure that policy can be independently validated later. \r\nFrom an interoperability point of view, the policy that was applied by the TS is opaque to the verifier, who is forced to trust the associated registration policy. If the policy of the TS evolves over time, or is different across issuers, the guarantee derived from receipt validation may not be uniform across all claims over time.\r\n```",
+              "createdAt": "2022-09-07T15:16:04Z",
+              "updatedAt": "2022-09-07T15:22:42Z"
+            },
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\r\nTS implementations MUST indicate their support for registration policies and MUST check that all the policies indicated as defined in the `reg_info` map are supported and are satisfied before a claim can be registered. Any unsupported claims MUST be indicated separately and corresponding unknown policy entries in the map of a claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.\r\n```\r\n\r\nMaik, et al. Does this improve the wording?",
+              "createdAt": "2022-09-07T15:21:34Z",
+              "updatedAt": "2022-09-07T15:26:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Bh9-X",
+          "commit": {
+            "abbreviatedOid": "40b64f8"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-07T15:45:01Z",
+          "updatedAt": "2022-09-07T15:45:01Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Agree with the first change but not with the second - audit completeness is the only property that *does not* depend on the registration policy, just the fact that the claim is in the append-only registry.\r\n\r\n```suggestion\r\nA TS that accepts to register any valid claim offered by an issuer only provides the baseline audit completeness of transparency to verifiers., which may help detect equivocation but is not enough to filter and police bad claims.\r\n```",
+              "createdAt": "2022-09-07T15:45:01Z",
+              "updatedAt": "2022-09-07T15:45:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Bh_aM",
+          "commit": {
+            "abbreviatedOid": "40b64f8"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-07T15:48:43Z",
+          "updatedAt": "2022-09-07T15:48:43Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "+1",
+              "createdAt": "2022-09-07T15:48:43Z",
+              "updatedAt": "2022-09-07T15:48:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Bh_cG",
+          "commit": {
+            "abbreviatedOid": "40b64f8"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-07T15:48:47Z",
+          "updatedAt": "2022-09-07T15:48:48Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "+1",
+              "createdAt": "2022-09-07T15:48:47Z",
+              "updatedAt": "2022-09-07T15:48:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5BiFHe",
+          "commit": {
+            "abbreviatedOid": "9431d34"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-09-07T16:03:45Z",
+          "updatedAt": "2022-09-07T16:03:45Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\nTS implementations MUST indicate their support for registration policies and MUST check that all the policies indicated as defined in the `reg_info` map are supported and are satisfied before a claim can be registered. Any unsupported claims MUST be indicated separately and corresponding unknown policy entries in the map of a claim MUST be rejected. This is to ensure that all verifiers get the same guarantee out of the registration policies regardless of where it is registered.\r\n```",
+              "createdAt": "2022-09-07T16:03:45Z",
+              "updatedAt": "2022-09-07T16:03:45Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOG2uWFs4-gVEh",
+      "title": "Terminology",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/19",
+      "state": "MERGED",
+      "author": "fournet",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Terminology update, incorporating changes and discussions from PR#17",
+      "createdAt": "2022-09-07T11:54:22Z",
+      "updatedAt": "2022-09-07T16:26:31Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "904a1503895435684ada1d8231ad8859580b41a0",
+      "headRepository": "fournet/draft-birkholz-scitt-architecture",
+      "headRefName": "terminology",
+      "headRefOid": "f4b8e432835cf048658a2b329e0384a27619a4b7",
+      "closedAt": "2022-09-07T16:26:30Z",
+      "mergedAt": "2022-09-07T16:26:30Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "8bf22f71f19106da13f6da6fec5885a8cf6517ca"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5Bg9SU",
+          "commit": {
+            "abbreviatedOid": "da86dfe"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-09-07T13:17:33Z",
+          "updatedAt": "2022-09-07T13:17:33Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Bh6id",
+          "commit": {
+            "abbreviatedOid": "da86dfe"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-09-07T15:35:56Z",
+          "updatedAt": "2022-09-07T15:55:41Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer or endorser.\r\n```",
+              "createdAt": "2022-09-07T15:35:56Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\nIn COSE, Feed is a dedicated header attribute in the protected header of the Envelope.\r\n```",
+              "createdAt": "2022-09-07T15:37:26Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\r\nRegistry:\r\n```",
+              "createdAt": "2022-09-07T15:38:24Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\n: a verifiable append-only data structure that stores Claims in a Transparency Service. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees. Registry is a synonym to append-only log or ledger.\r\n```",
+              "createdAt": "2022-09-07T15:39:31Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 41,
+              "body": "```suggestion\r\nTransparency Service:\r\n```",
+              "createdAt": "2022-09-07T15:39:48Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\n: an entity that maintains and extends the Registry, and endorses its state. A Transparency Service is often referred to by its synonym Notary. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Registry . The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.\r\n```",
+              "createdAt": "2022-09-07T15:42:10Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            },
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\r\n                \\           /          |  (decentralized) |\r\n```",
+              "createdAt": "2022-09-07T15:54:36Z",
+              "updatedAt": "2022-09-07T15:55:41Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOG2uWFs4-gled",
+      "title": "Threatmodel",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/20",
+      "state": "MERGED",
+      "author": "fournet",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "as discussed on [SCITT] SCITT threat model.\r\nI still need to discuss with Yogesh how to integrate some of his comments. ",
+      "createdAt": "2022-09-07T12:58:12Z",
+      "updatedAt": "2022-09-07T16:34:53Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "8bf22f71f19106da13f6da6fec5885a8cf6517ca",
+      "headRepository": "fournet/draft-birkholz-scitt-architecture",
+      "headRefName": "threatmodel",
+      "headRefOid": "dfcb8c3ae2171ecd0d4c19bc8f978b793453728f",
+      "closedAt": "2022-09-07T16:34:53Z",
+      "mergedAt": "2022-09-07T16:34:53Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "f9ed57fc900a0b58c82dc95fc7b63ffc9235578e"
+      },
+      "comments": [
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@fournet : Thank you for this. I think, we should start Threat Model as a separate document to begin with. The reason been, I expect Supply Chain Security been a complex subject the number of threats and mitigation strategies will be a long document.\r\n\r\nI would prefer a pointer to the document from the master Architecture document, then!\r\n\r\nOnce the document is in final shape post Community review, at that time we can make a final call, should we merge it to Main Arch. Doc or leave it separate. ",
+          "createdAt": "2022-09-07T14:17:57Z",
+          "updatedAt": "2022-09-07T14:18:16Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "> @fournet : Thank you for this. I think, we should start Threat Model as a separate document to begin with. The reason been, I expect Supply Chain Security been a complex subject the number of threats and mitigation strategies will be a long document.\r\n> \r\n> I would prefer a pointer to the document from the master Architecture document, then!\r\n> \r\n> Once the document is in final shape post Community review, at that time we can make a final call, should we merge it to Main Arch. Doc or leave it separate.\r\n\r\nConsidering the scale of the addition and the fact that stand-alone terminology or threat models are a bit frowned upon, I think we should merge this PR for now. If there is a need for a separate threat model I-D we can arrive at that conclusion in the WG and with AD and chair guidance.\r\n\r\nKeeping the number of I-Ds the same during chartering is a pro and not a con, I think.",
+          "createdAt": "2022-09-07T16:07:04Z",
+          "updatedAt": "2022-09-07T16:07:04Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5Bg8pc",
+          "commit": {
+            "abbreviatedOid": "dccf323"
+          },
+          "author": "ad-l",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-09-07T13:15:56Z",
+          "updatedAt": "2022-09-07T13:15:56Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5BiIsD",
+          "commit": {
+            "abbreviatedOid": "dccf323"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-09-07T16:13:59Z",
+          "updatedAt": "2022-09-07T16:19:22Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\n: an entity that makes Claims about Artifacts in the supply chain. The Issuer may be the owner or author of the Artifact, or an independent third party such as a reviewer or an endorser.\r\n```",
+              "createdAt": "2022-09-07T16:13:59Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\r\nRegistry:\r\n```",
+              "createdAt": "2022-09-07T16:14:24Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\n: the verifiable append-only data structure that stores Claims in a Transparency Service often referred to by the synonym log or ledger. SCITT supports multiple Registry and Receipt formats to accommodate different Transparency Service implementations, such as historical Merkle Trees and sparse Merkle Trees.\r\n```",
+              "createdAt": "2022-09-07T16:15:30Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 41,
+              "body": "```suggestion\r\nTransparency Service:\r\n```",
+              "createdAt": "2022-09-07T16:15:45Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\n: an entity that maintains and extends the Registry and endorses its state often referred to its synonym Notary. A Transparency Service can be a complex distributed system, and SCITT requires the TS to provide many security guarantees about its Registry . The identity of a TS is captured by a public key that must be known by Verifiers in order to validate Receipts.\r\n```",
+              "createdAt": "2022-09-07T16:16:50Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 63,
+              "body": "```suggestion\r\nVerifier:\r\n```",
+              "createdAt": "2022-09-07T16:17:25Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 65,
+              "body": "```suggestion\r\n: an entity that consumes Transparent Claims (a specialization of Claim Consumer), verifying their proofs and inspecting their Statements, either before using their Artifacts, or later to audit their provenance on the supply chain.\r\n```",
+              "createdAt": "2022-09-07T16:18:13Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 70,
+              "body": "```suggestion\r\n: an entity that checks the correctness and consistency of all Claim registered by a TS (a specialization of Claim Consumer).\r\n```",
+              "createdAt": "2022-09-07T16:18:43Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            },
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\r\n                \\           /          | (decentralized)  |\r\n```",
+              "createdAt": "2022-09-07T16:19:01Z",
+              "updatedAt": "2022-09-07T16:19:22Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOG2uWFs4-h4Hn",
+      "title": "Refreshing our placeholder for TS Federation",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/21",
+      "state": "MERGED",
+      "author": "fournet",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Cleaning up the Federation section, still TBD. ",
+      "createdAt": "2022-09-07T17:59:48Z",
+      "updatedAt": "2022-10-21T16:15:05Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "75d68e6cf12c0de5d419fb8ee30c76db677da4ea",
+      "headRepository": "fournet/draft-birkholz-scitt-architecture",
+      "headRefName": "federation-tdb",
+      "headRefOid": "eb85ae381b74c647c51c1e436a7a927b6279304c",
+      "closedAt": "2022-10-21T16:15:05Z",
+      "mergedAt": "2022-10-21T16:15:05Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "78ccf903850d290a877461182efe07a9f865504b"
+      },
+      "comments": [
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "Also:\r\n> *** Run 'make fix-lint' to automatically fix some errors",
+          "createdAt": "2022-09-28T08:31:32Z",
+          "updatedAt": "2022-09-28T08:31:32Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "Linting errors need to be addressed. @henkbirkholz if this blocks publishing / merging perhaps we can merge and then fix?",
+          "createdAt": "2022-10-21T14:12:53Z",
+          "updatedAt": "2022-10-21T14:12:53Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "> Linting errors need to be addressed. @henkbirkholz if this blocks publishing / merging perhaps we can merge and then fix?\r\n\r\nYes, I can fix the lint after merging. If this would be a branch and not a fork, I could do it here more easily.",
+          "createdAt": "2022-10-21T14:18:06Z",
+          "updatedAt": "2022-10-21T14:18:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5C81Dd",
+          "commit": {
+            "abbreviatedOid": "56edc1e"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "lgtm, any objections? still in early stage",
+          "createdAt": "2022-09-28T08:26:02Z",
+          "updatedAt": "2022-09-28T08:26:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Dp3a6",
+          "commit": {
+            "abbreviatedOid": "56edc1e"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-10-07T20:33:37Z",
+          "updatedAt": "2022-10-07T20:33:37Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOG2uWFs4-uL0A",
+      "title": "Updated architecture diagram to make it compile with aasvg.",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/23",
+      "state": "MERGED",
+      "author": "eckelmeckel",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #22.\r\nSigned-off-by: Michael Eckel <michael.eckel@sit.fraunhofer.de>",
+      "createdAt": "2022-09-10T17:24:34Z",
+      "updatedAt": "2022-10-21T16:13:08Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "75d68e6cf12c0de5d419fb8ee30c76db677da4ea",
+      "headRepository": "eckelmeckel/draft-birkholz-scitt-architecture",
+      "headRefName": "fix-diagram-for-aasvg",
+      "headRefOid": "12ea02bdc54b775e1d790a05bae64e613561ae0b",
+      "closedAt": "2022-10-21T16:11:37Z",
+      "mergedAt": "2022-10-21T16:11:37Z",
+      "mergedBy": "henkbirkholz",
+      "mergeCommit": {
+        "oid": "869a617e1fca9a74c6d9726ddf0575453a57c496"
+      },
+      "comments": [
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "Much improved, I suggest we merge.",
+          "createdAt": "2022-09-29T16:01:13Z",
+          "updatedAt": "2022-09-29T16:01:13Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5DFvn0",
+          "commit": {
+            "abbreviatedOid": "12ea02b"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-09-29T16:00:58Z",
+          "updatedAt": "2022-09-29T16:00:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5EnkMN",
+          "commit": {
+            "abbreviatedOid": "12ea02b"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-10-21T16:12:30Z",
+          "updatedAt": "2022-10-21T16:12:30Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "We discussed a future revision where claim and receipt are visualized next to each other.",
+              "createdAt": "2022-10-21T16:12:30Z",
+              "updatedAt": "2022-10-21T16:12:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5EnkY2",
+          "commit": {
+            "abbreviatedOid": "12ea02b"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-10-21T16:13:07Z",
+          "updatedAt": "2022-10-21T16:13:08Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/32",
+              "createdAt": "2022-10-21T16:13:07Z",
+              "updatedAt": "2022-10-21T16:13:08Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOG2uWFs5AadFs",
+      "title": "Replace TS with SCITT Instance and other nit fixes",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/30",
+      "state": "OPEN",
+      "author": "SteveLasker",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Steve Lasker <stevenlasker@hotmail.com>",
+      "createdAt": "2022-10-07T18:29:42Z",
+      "updatedAt": "2022-11-18T00:31:39Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "75d68e6cf12c0de5d419fb8ee30c76db677da4ea",
+      "headRepository": "SteveLasker/draft-birkholz-scitt-architecture",
+      "headRefName": "nit-fixes",
+      "headRefOid": "c4519b153bd13a63b1e46273599f1ad4506d0425",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "fournet",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I still prefer TS to SCITT instance, as in this architecture it refers specifically to the core transparency service for SCITT. Perhaps SCITTS if TS is too overloaded?  ",
+          "createdAt": "2022-10-21T13:10:43Z",
+          "updatedAt": "2022-10-21T13:10:43Z"
+        },
+        {
+          "author": "yogeshbdeshpande",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Same comment as Cedric:\r\n\r\nI prefer Transparency Service, which is more logical term.\r\n\r\nSCITT Instance feels more like Implementation aspect!\r\n\r\n@SteveLasker Shall we close this PR then, without merging?",
+          "createdAt": "2022-11-17T12:17:47Z",
+          "updatedAt": "2022-11-17T12:17:47Z"
+        },
+        {
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "body": "+1 Transparency Service",
+          "createdAt": "2022-11-17T12:25:32Z",
+          "updatedAt": "2022-11-17T12:25:32Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "+1 to Transparency Service",
+          "createdAt": "2022-11-17T13:29:15Z",
+          "updatedAt": "2022-11-17T13:29:15Z"
+        },
+        {
+          "author": "SteveLasker",
+          "authorAssociation": "NONE",
+          "body": "After IETF, we've landed one set of terminology that SCITT is a set of standards and protocols, so changing this to SCITT Instance does feel wrong.\r\n\r\nWe also discussed not using acronyms, so would we expand TS to Transparency Service?\r\n\r\nWe also use the terminology Registry, interchangeably with TS/Transparency Service See [here](https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/30/files#diff-1812d688e87fa061cf31763fd9aa9d2426e327c292d4b3f03d604f7975220b79L518)\r\n\r\nI'm converting this to a draft, with (#38) to define what we should call an instance of the SCITT standards.",
+          "createdAt": "2022-11-18T00:30:37Z",
+          "updatedAt": "2022-11-18T00:30:37Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5EhFl0",
+          "commit": {
+            "abbreviatedOid": "c4519b1"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-10-20T15:45:45Z",
+          "updatedAt": "2022-10-20T15:45:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5EnkcU",
+          "commit": {
+            "abbreviatedOid": "c4519b1"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "Postponed the proposal for discussion at IETF 115",
+          "createdAt": "2022-10-21T16:13:17Z",
+          "updatedAt": "2022-10-21T16:13:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOG2uWFs5BBOqu",
+      "title": "Add temporary header labels",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/31",
+      "state": "MERGED",
+      "author": "letmaik",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This adds temporary integer header parameter labels to have something to prototype against until the new fields are registered.\r\nI used 391 as starting offset as that's S+C+I+T+T.",
+      "createdAt": "2022-10-18T13:53:04Z",
+      "updatedAt": "2022-10-21T14:35:22Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "75d68e6cf12c0de5d419fb8ee30c76db677da4ea",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "letmaik/labels",
+      "headRefOid": "7e0a8f9794afc40fd6e1c441f8f8e210bbabd9a6",
+      "closedAt": "2022-10-21T14:35:16Z",
+      "mergedAt": "2022-10-21T14:35:16Z",
+      "mergedBy": "letmaik",
+      "mergeCommit": {
+        "oid": "f25d7cb5e91b61851e4733246e02bd4a22e6d4c1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5EhFw8",
+          "commit": {
+            "abbreviatedOid": "7e0a8f9"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-10-20T15:46:11Z",
+          "updatedAt": "2022-10-20T15:46:11Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5EhF2B",
+          "commit": {
+            "abbreviatedOid": "7e0a8f9"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-10-20T15:46:23Z",
+          "updatedAt": "2022-10-20T15:46:23Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "+1 to this.",
+              "createdAt": "2022-10-20T15:46:23Z",
+              "updatedAt": "2022-10-20T15:46:23Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOG2uWFs5DSrww",
+      "title": "Nits from WG Adoption review",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/39",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Technical comments to follow later",
+      "createdAt": "2022-11-19T22:31:36Z",
+      "updatedAt": "2022-11-20T13:50:31Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "78ccf903850d290a877461182efe07a9f865504b",
+      "headRepository": "cabo/draft-birkholz-scitt-architecture",
+      "headRefName": "adopt-nits",
+      "headRefOid": "0c1b8504d5595b3207e678a207be3d0fd2ffcbc8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5GxE1X",
+          "commit": {
+            "abbreviatedOid": "0c1b850"
+          },
+          "author": "mprorock",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "really appreciate the detailed eye towards grammar and structure here.\r\n\r\nthanks!",
+          "createdAt": "2022-11-20T13:50:31Z",
+          "updatedAt": "2022-11-20T13:50:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 41,
+      "id": "PR_kwDOG2uWFs5Dzkev",
+      "title": "Disambiguate registration policy definitions",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/41",
+      "state": "OPEN",
+      "author": "darracott",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR contains a few small changes:\r\n- Specifies a timestamp format that registration policies should expect. \r\n- Specifies the `issuance_ts` policy should not accept issuance timestamps with a date in the future. \r\n- Adds missing attribute info for the `NoReplay` registration policy.",
+      "createdAt": "2022-11-28T14:00:43Z",
+      "updatedAt": "2023-01-09T14:47:07Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "78ccf903850d290a877461182efe07a9f865504b",
+      "headRepository": "darracott/draft-birkholz-scitt-architecture",
+      "headRefName": "disambiguate-reg-info",
+      "headRefOid": "4484d22b3cf457320d64c5ec6cd98cfc1158f91b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "plietar",
+          "authorAssociation": "NONE",
+          "body": "Is there such a thing as a unit value in CBOR? That seems more appropriate for `no_replay` than a boolean, since the presence of the attribute is normally what determines whether the policy applies. What would `no_replay = false` even mean on a claim?",
+          "createdAt": "2022-11-29T10:13:37Z",
+          "updatedAt": "2022-11-29T10:13:37Z"
+        },
+        {
+          "author": "darracott",
+          "authorAssociation": "NONE",
+          "body": "> Is there such a thing as a unit value in CBOR? That seems more appropriate for `no_replay` than a boolean, since the presence of the attribute is normally what determines whether the policy applies. What would `no_replay = false` even mean on a claim?\r\n\r\nAgree a unit type would be neater than a bool as `no_replay = false` suggests explicitly allowing replays which is not likely to be useful anywhere. On a quick look, there is no unit type defined for CBOR yet: https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml, lets discuss if it's worth defining one ",
+          "createdAt": "2022-11-29T16:35:31Z",
+          "updatedAt": "2022-11-29T16:35:46Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@darracott CI is failing with trailing whitespace errors. Could you fix those?",
+          "createdAt": "2022-12-12T16:42:40Z",
+          "updatedAt": "2022-12-12T16:42:40Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "I fixed them in main (as this is a fork). You can run the local toolchain with \"make fix-lint\"\r\ntoochain in mainly xml2rfc (via pip) and gem install kramdown-rfc2629 (via gem)\r\nmore infos on toolchain: https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md (no mmark required)",
+          "createdAt": "2022-12-13T14:17:21Z",
+          "updatedAt": "2022-12-13T14:17:21Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "Having just written that... I just realized that you want to constrain the value to uint.\nPlease disregard my comment. There is a similar topic discussed here: https://github.com/ietf-rats-wg/eat/issues/343\nWe could run with `uint` for now, but using `~time .and uint` might be more clear, semantically.",
+          "createdAt": "2022-12-13T15:22:52Z",
+          "updatedAt": "2022-12-13T15:22:52Z"
+        },
+        {
+          "author": "laurencelundblade",
+          "authorAssociation": "NONE",
+          "body": "This is a peanut-gallery comment as I'm not really up to speed on this spec.\r\n\r\nIf you want to constrain an integer's range in CDDL use the .lt, .gt,... control operators. For example make it greater than zero, a uint.\r\n\r\nIt's probably better to use ~time as defined in CBOR rather than specifying UNIX time.  They're effectively the same, but ~time is better specified and the universal way to do time in CBOR.\r\n\r\nThe one thing about ~time is that floating point is allowed. However you can define your use to disallow it.\r\n\r\nEAT has a problem of trying constrain an existing CDDL definition because it is re using CWT. If you're not trying to do that, you don't have any of the issues that EAT has and should be able to create a good CDDL solution.\r\n",
+          "createdAt": "2022-12-13T17:21:14Z",
+          "updatedAt": "2022-12-13T17:21:14Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@laurencelundblade Do you think Henk's proposal of `~time .and uint` is the right one then? I'm afraid it's still hard to understand what this means for the average reader, so while including it is probably good it needs a bit of explanatory text just saying that this is time according to  [CBOR tag 1](https://www.rfc-editor.org/rfc/rfc8949.html#name-epoch-based-date-time) but without the tag and always an uint, commonly known as UNIX timestamp. What do you think?",
+          "createdAt": "2022-12-13T18:36:08Z",
+          "updatedAt": "2022-12-13T18:36:08Z"
+        },
+        {
+          "author": "laurencelundblade",
+          "authorAssociation": "NONE",
+          "body": "Yes \"~time .and uint\" seems workable, but doesn't exclude floating-point values.\r\n\r\nI think it's good to have the clear reference to Posix time for that clear handling of leap seconds. ~time give you that. Note that Posix time is only defined for positive values because there's not a good specification for leap seconds and such for negative values.\r\n\r\nFor EAT we exclude floating-point time in prose, not using the CDDL because we are modifying an existing CWT claim. You could do that too.\r\n\r\nAn alternative to \"~time .and uint\" might be to define a type like time-int = uint with the specification that it is a Posix time, never negative and never floating point. You can always copy a time-int into a ~time, but it is an error to copy a ~time to a time-int if it is negative or floating point . (I wish CBOR would have defined tag 1 more like this)",
+          "createdAt": "2022-12-13T19:25:17Z",
+          "updatedAt": "2022-12-13T19:25:17Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Yes \"~time .and uint\" seems workable, but doesn't exclude floating-point values.\r\n\r\nIt does.  `.and` is a conjunction (type intersection), so both need to match.\r\n\r\nObviously, just `uint` is the same syntactic constraint.\r\nIt does lose the semantic flavor added by the `~time`.\r\n\r\n`~time .and uint`, `uint .and ~time`, and `uint .within ~time` are equivalent here (*); I'd prefer the last one for style.\r\n\r\nNote that the cddl tool (not cddlc) has a limitation that requires putting the (~time) in parentheses here, so it would be nicer to CI to write:\r\n\r\n``` cddl \r\n{ ...\r\n  issued_at: uint .within (~time)\r\n}\r\n```\r\n\r\n(*) `~time .within uint` might lead to a warning if a tool implements the checks discussed in the last paragraph of Section 3.8.5 of RFC8610, so I'm not proposing this form.",
+          "createdAt": "2022-12-14T11:54:28Z",
+          "updatedAt": "2022-12-14T11:54:28Z"
+        },
+        {
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "body": "> issued_at: uint .within (~time)\r\n\r\nthanks! works for me",
+          "createdAt": "2022-12-14T12:09:21Z",
+          "updatedAt": "2022-12-14T12:09:21Z"
+        },
+        {
+          "author": "laurencelundblade",
+          "authorAssociation": "NONE",
+          "body": "my mistake about floating point.  What Cabo sez.",
+          "createdAt": "2022-12-14T17:28:46Z",
+          "updatedAt": "2022-12-14T17:28:46Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5HTKvc",
+          "commit": {
+            "abbreviatedOid": "4277e49"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-11-28T17:07:02Z",
+          "updatedAt": "2022-11-28T17:08:00Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nTimeLimited | `register_by: uint` | Returns true if now () < register_by at registration time. The ledger MUST store the ledger time at registration along with the claim, and SHOULD indicate it in receipts. The value provided for `register_by` MUST be a Unix timestamp, i.e., a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, without leap seconds.\r\n```",
+              "createdAt": "2022-11-28T17:07:03Z",
+              "updatedAt": "2022-11-28T17:08:00Z"
+            },
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\nTemporal | `issuance_ts: uint` | Returns true if and only if there is no claim in the ledger with the same issuer and feed with a greater `issuance_ts`. The value provided for `issuance_ts` MUST be a Unix timestamp, i.e., a `uint` representing the number of seconds since 00:00:00 UTC, 1 January 1970, without leap seconds.\r\n```",
+              "createdAt": "2022-11-28T17:07:34Z",
+              "updatedAt": "2022-11-28T17:08:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5IWuBI",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-12-12T16:34:54Z",
+          "updatedAt": "2022-12-12T16:34:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5IdCZw",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2022-12-13T14:21:24Z",
+          "updatedAt": "2022-12-13T14:23:11Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "there is a cddl type for that (`time`) that maps to CBOR type  `#6.1`, see:\r\n* https://www.rfc-editor.org/rfc/rfc8610.html#appendix-D\r\n*  https://www.rfc-editor.org/rfc/rfc8949.html#name-epoch-based-date-time",
+              "createdAt": "2022-12-13T14:21:24Z",
+              "updatedAt": "2022-12-13T14:23:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5IjpSC",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-12-14T11:39:51Z",
+          "updatedAt": "2022-12-14T11:39:51Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "more idiomatic would be `? no_replay: true`.\r\n(Of course, a \"Unit\" [single-element] type could be created from a tag, but that is unnecessary here, I think.)",
+              "createdAt": "2022-12-14T11:39:51Z",
+              "updatedAt": "2022-12-14T11:39:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ijpyp",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-12-14T11:41:29Z",
+          "updatedAt": "2022-12-14T11:41:29Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "I'm looking closer for the first time -- is there no need for a reg-info to be compact?\r\n(You are using text string labels, which are less compact than integer labels would be, which is OK if they don't have to be compact.)",
+              "createdAt": "2022-12-14T11:41:29Z",
+              "updatedAt": "2022-12-14T11:41:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ijw4E",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-12-14T12:02:11Z",
+          "updatedAt": "2022-12-14T12:02:11Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "\"without leap seconds\" is ambiguous.\r\nPlease refer to Section 3.4.2 of RFC 8949 for a precise definition; of course, you would limit this to unsigned integers (which is analog to the last sentence of the penultimate paragraph of that Section).\r\n(See [my other comment](https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/41#issuecomment-1351160877) for how to make this evident in the CDDL too, based on Henk's comment.)",
+              "createdAt": "2022-12-14T12:02:11Z",
+              "updatedAt": "2022-12-14T12:02:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5J8Iby",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "darracott",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-01-09T13:37:19Z",
+          "updatedAt": "2023-01-09T13:37:19Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The CDDL is now meaningful, reflecting your other comments. That makes this explanation redundant, however I'm inclined to keep a brief explanation to aid most readers, so I've updated the wording to reflect Section 3.4.2 of RFC 8949 as you suggest.    ",
+              "createdAt": "2023-01-09T13:37:19Z",
+              "updatedAt": "2023-01-09T13:37:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5J8KQ4",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "darracott",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-01-09T13:42:25Z",
+          "updatedAt": "2023-01-09T13:42:25Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "This may be desirable, but I call it out of scope for this PR. I've opened an issue to track it: https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/issues/43 ",
+              "createdAt": "2023-01-09T13:42:25Z",
+              "updatedAt": "2023-01-09T13:42:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5J8RGY",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "darracott",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-01-09T14:01:00Z",
+          "updatedAt": "2023-01-09T14:01:01Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Viewing reg-info as mapping between policies and their required attributes, then `null` makes more sense as `no_replay` has no required attributes. \r\n(I also worry that using `true` will invite the mistake of trying to set `no_replay` to `false`.)",
+              "createdAt": "2023-01-09T14:01:00Z",
+              "updatedAt": "2023-01-09T14:01:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5J8jR5",
+          "commit": {
+            "abbreviatedOid": "f614c20"
+          },
+          "author": "darracott",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-01-09T14:44:34Z",
+          "updatedAt": "2023-01-09T14:44:35Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "In the not too distant future it might make sense to change to structure of reg-info to make it more clearly a mapping between policies and their required attributes or some similar structure, perhaps motivated by policies with multiple required attributes - but I don't think it's worth doing that in this PR.  ",
+              "createdAt": "2023-01-09T14:44:34Z",
+              "updatedAt": "2023-01-09T14:44:35Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
