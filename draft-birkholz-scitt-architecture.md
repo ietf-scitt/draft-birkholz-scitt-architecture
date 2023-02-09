@@ -544,6 +544,29 @@ Editor's Note: This may be moved to appendix.
 
 ## Messages
 
+All messages are sent as HTTP GET or POST requests.
+
+All errors are returned with HTTP 4xx or 5xx status code as JSON objects following the OData JSON (ISO/IEC 20802-2:2016) schema below:
+
+~~~
+{
+  "error": {
+    "code": "<code>",
+    "message": "<message>"
+  }
+}
+~~~
+
+Error codes are machine-readable and defined in this document while error messages are human-readable and implementation-specific. Implementations may return additional error codes not defined in this document.
+
+All error responses must be sent with the `Content-Type: application/json` header.
+
+Error responses common to all messages are the following:
+
+- Status `503` - Service not ready, retry later.
+  - Error code: implementation-defined
+  - (Optional) Header: `Retry-Later: <seconds>`
+
 ### Register Signed Claims
 
 #### Request
@@ -552,64 +575,94 @@ Editor's Note: This may be moved to appendix.
 POST <Base URL>/entries
 ~~~
 
+Headers:
+
+- `Content-Type: application/cose`
+
 Body: SCITT COSE_Sign1 message
 
 #### Response
 
 One of the following:
 
-- HTTP Status `201` - Registration was tentatively successful pending service consensus.
-- HTTP Status `400` - Registration was unsuccessful.
-  - Error code `AwaitingDIDResolutionTryLater`
+- Status `201` - Registration was successful.
+  - Header `Location: <Base URL>/entries/<Entry ID>`
+  - Header `Content-Type: application/json`
+  - Body `{ "entryId": "<Entry ID>", "status": "registered" }`
+- Status `202` - Registration was tentatively successful pending further processing.
+  - Header `Location: <Base URL>/entries/<Entry ID>`
+  - Header `Content-Type: application/json`
+  - Body `{ "entryId": "<Entry ID>", "status": "pending" }`
+- Status `400` - Registration was unsuccessful due to invalid input.
   - Error code `InvalidInput`
 
-[TODO] Use 5xx for AwaitingDIDResolutionTryLater
+A 2xx response must only be returned if all registration policies have passed including signature validation. Clients should retrieve a receipt as proof of registration.
 
-The `201` response contains the `x-ms-ccf-transaction-id` HTTP header which can be used to retrieve the Registration Receipt with the given transaction ID. [TODO] this has to be made generic
+A 202 response may be returned if registration policies have passed but further required processing has not finished yet and may still lead to a failure of registration. Clients must check the registration status and may re-submit if registration failed.
 
-[TODO] probably a bad idea to define a new header, or is it ok? can we register a new one? https://www.iana.org/assignments/http-fields/http-fields.xhtml
-
-The `400` response has a `Content-Type: application/json` header and a body containing details about the error:
-
-```json
-{
-  "error": {
-    "code": "<error code>",
-    "message": "<message>"
-  }
-}
-```
-
-`AwaitingDIDResolutionTryLater` means the service does not have an up-to-date DID document of the DID referenced in the Signed Claims but is performing or will perform a DID resolution after which the client may retry the request. The response may contain the HTTP header `Retry-After` to inform the client about the expected wait time.
-
-`InvalidInput` means either the Signed Claims message is syntactically malformed, violates the signing profile (e.g. signing algorithm), or has an invalid signature relative to the currently resolved DID document.
-
-### Retrieve Registration Receipt
+### Retrieve Registration Entry
 
 #### Request
 
 ~~~
-GET <Base URL>/entries/<Transaction ID>/receipt
+GET <Base URL>/entries/<Entry ID>
 ~~~
 
 #### Response
 
 One of the following:
 
-- HTTP Status `200` - Registration was successful and the Receipt is returned.
-- HTTP Status `400` - Transaction exists but does not correspond to a Registration Request.
-  - Error code `TransactionMismatch`
-- HTTP Status `404` - Transaction is pending, unknown, or invalid.
-  - Error code `TransactionPendingOrUnknown`
-  - Error code `TransactionInvalid`
+- Status `200`.
+  - Header `Content-Type: application/json`
+  - Body `{ "entryId": "<Entry ID>", "status": "registered|pending|failed" }`
+- Status `404` - Entry not found.
+  - Error code: `NotFound`
 
-The `200` response contains the SCITT_Receipt in the body.
+In eventually consistent systems, implementations must return HTTP status 200 with status code `pending` even if the contacted server is not aware of the newly created entry yet.
 
-The `400` and `404` responses return the error details as described earlier.
+### Retrieve Registered Claim
+
+#### Request
+
+~~~
+GET <Base URL>/entries/<Entry ID>/claim
+~~~
+
+Query parameters:
+
+- (Optional) `embedReceipt=true`
+
+If the query parameter `embedReceipt=true` is provided, then the claim is returned with the corresponding registration receipt embedded in the claim's COSE unprotected header. 
+
+#### Response
+
+One of the following:
+
+- Status `200`.
+  - Header: `Content-Type: application/cose`
+  - Body: COSE_Sign1 claim
+- Status `404` - Invalid Entry ID or registration pending or failed.
+  - Error `NotFound`
+
+### Retrieve Registration Receipt
+
+#### Request
+
+~~~
+GET <Base URL>/entries/<Entry ID>/receipt
+~~~
+
+#### Response
+
+One of the following:
+
+- Status `200`.
+  - Header: `Content-Type: application/cbor`
+  - Body: SCITT_Receipt
+- Status `404` - Invalid Entry ID or registration pending or failed.
+  - Error `NotFound`
 
 The retrieved Receipt may be embedded in the corresponding COSE_Sign1 document in the unprotected header, see TBD.
-
-[TODO] There's also the `GET <Base URL>/entries/<Transaction ID>` endpoint which returns the submitted COSE_Sign1 with the Receipt already embedded. Is this useful?
 
 
 # Privacy Considerations
