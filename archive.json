@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-01-17T00:36:56.589410+00:00",
+  "timestamp": "2023-02-09T00:36:18.771246+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -521,7 +521,7 @@
       "labels": [],
       "body": "At IETF 115 there were discussions on having some kind of standard way to deal with statements by reference. Here are also the two relevant slides from https://datatracker.ietf.org/doc/slides-115-scitt-combined-scitt-presentations/:\r\n\r\n![image](https://user-images.githubusercontent.com/530988/201730201-6160b331-33d9-42fa-b5d9-c1e8ac18bd15.png)\r\n![image](https://user-images.githubusercontent.com/530988/201730248-139b8be6-4554-4a09-b6a3-60e8a8e10ecd.png)\r\n\r\nSimply using COSE detached payloads as defined in the RFC would not be sufficient as the payload would still be required during signature validation when registering the signed statement.\r\n\r\nInstead, having a specific content type for referencing external statements may be useful. Note that this format by itself would be a statement.\r\n\r\n[RFC 9054](https://www.rfc-editor.org/rfc/rfc9054.html#name-example-cbor-hash-structure) gives two examples for such hash structures:\r\n\r\n```cddl\r\nCOSE_Hash_V = (\r\n    1 : int / tstr, # Algorithm identifier\r\n    2 : bstr, # Hash value\r\n    ? 3 : tstr, # Location of object that was hashed\r\n    ? 4 : any   # object containing other details and things\r\n    )\r\n```\r\n\r\nand \r\n\r\n```cddl\r\nCOSE_Hash_Find = [\r\n    hashAlg : int / tstr,\r\n    hashValue : bstr\r\n]\r\n```\r\n\r\n[SUIT's digest container](https://www.ietf.org/archive/id/draft-ietf-suit-manifest-21.html#name-suit-digest-container) defines this as:\r\n```cddl\r\nSUIT_Digest = [\r\n  suit-digest-algorithm-id : suit-cose-hash-algs,\r\n  suit-digest-bytes : bstr,\r\n  * $$SUIT_Digest-extensions   ; described as optional extra values required by a hash alg (?)\r\n]\r\n```\r\n\r\nWould having a variant of one of the above as a CBOR content type address this issue?\r\nShould location of the referenced content be included? How? Should location hints be globally unique? Resolvable?\r\nShould a SCITT transparency service know about this content type and at least validate its CDDL schema?",
       "createdAt": "2022-11-14T18:03:10Z",
-      "updatedAt": "2022-12-02T19:32:45Z",
+      "updatedAt": "2023-02-08T23:44:47Z",
       "closedAt": null,
       "comments": [
         {
@@ -607,6 +607,20 @@
           "body": "We have a generic use case for \"signed statement\" by reference, which I would love to explore as well.\r\n\r\nWhen my statement refers to several \"other signed statements\" or \"transparent statements\" by reference.",
           "createdAt": "2022-12-02T19:23:14Z",
           "updatedAt": "2022-12-02T19:32:45Z"
+        },
+        {
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@OR13 Let's experiment here: https://github.com/ietf-scitt/statements-by-reference",
+          "createdAt": "2023-02-08T17:09:46Z",
+          "updatedAt": "2023-02-08T17:09:46Z"
+        },
+        {
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "body": "I filed: https://github.com/ietf-scitt/statements-by-reference/pull/1",
+          "createdAt": "2023-02-08T23:44:46Z",
+          "updatedAt": "2023-02-08T23:44:46Z"
         }
       ]
     },
@@ -2845,24 +2859,26 @@
       "id": "PR_kwDOG2uWFs5DSrww",
       "title": "Nits from WG Adoption review",
       "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/39",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Technical comments to follow later",
       "createdAt": "2022-11-19T22:31:36Z",
-      "updatedAt": "2022-11-20T13:50:31Z",
+      "updatedAt": "2023-02-08T17:13:10Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "78ccf903850d290a877461182efe07a9f865504b",
       "headRepository": "cabo/draft-birkholz-scitt-architecture",
       "headRefName": "adopt-nits",
       "headRefOid": "0c1b8504d5595b3207e678a207be3d0fd2ffcbc8",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-02-08T17:13:09Z",
+      "mergedAt": "2023-02-08T17:13:09Z",
+      "mergedBy": "letmaik",
+      "mergeCommit": {
+        "oid": "57f43fe8ee8cd068c26bbfa71b173dfec724bfbb"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2877,6 +2893,19 @@
           "createdAt": "2022-11-20T13:50:31Z",
           "updatedAt": "2022-11-20T13:50:31Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5M3mE1",
+          "commit": {
+            "abbreviatedOid": "0c1b850"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-02-08T17:12:51Z",
+          "updatedAt": "2023-02-08T17:12:51Z",
+          "comments": []
         }
       ]
     },
@@ -2885,24 +2914,26 @@
       "id": "PR_kwDOG2uWFs5Dzkev",
       "title": "Disambiguate registration policy definitions",
       "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/41",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "darracott",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This PR contains a few small changes:\r\n- Specifies a timestamp format that registration policies should expect. \r\n- Specifies the `issuance_ts` policy should not accept issuance timestamps with a date in the future. \r\n- Adds missing attribute info for the `NoReplay` registration policy.",
       "createdAt": "2022-11-28T14:00:43Z",
-      "updatedAt": "2023-01-09T14:47:07Z",
+      "updatedAt": "2023-02-08T17:11:55Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "78ccf903850d290a877461182efe07a9f865504b",
       "headRepository": "darracott/draft-birkholz-scitt-architecture",
       "headRefName": "disambiguate-reg-info",
       "headRefOid": "4484d22b3cf457320d64c5ec6cd98cfc1158f91b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-02-08T17:11:55Z",
+      "mergedAt": "2023-02-08T17:11:55Z",
+      "mergedBy": "letmaik",
+      "mergeCommit": {
+        "oid": "80c7f9da2057859c37aaa6ebe6234d5dbded707a"
+      },
       "comments": [
         {
           "author": "plietar",
@@ -2913,7 +2944,7 @@
         },
         {
           "author": "darracott",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Is there such a thing as a unit value in CBOR? That seems more appropriate for `no_replay` than a boolean, since the presence of the attribute is normally what determines whether the policy applies. What would `no_replay = false` even mean on a claim?\r\n\r\nAgree a unit type would be neater than a bool as `no_replay = false` suggests explicitly allowing replays which is not likely to be useful anywhere. On a quick look, there is no unit type defined for CBOR yet: https://www.iana.org/assignments/cbor-tags/cbor-tags.xhtml, lets discuss if it's worth defining one ",
           "createdAt": "2022-11-29T16:35:31Z",
           "updatedAt": "2022-11-29T16:35:46Z"
@@ -3108,7 +3139,7 @@
             "abbreviatedOid": "f614c20"
           },
           "author": "darracott",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-01-09T13:37:19Z",
@@ -3128,7 +3159,7 @@
             "abbreviatedOid": "f614c20"
           },
           "author": "darracott",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-01-09T13:42:25Z",
@@ -3148,7 +3179,7 @@
             "abbreviatedOid": "f614c20"
           },
           "author": "darracott",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-01-09T14:01:00Z",
@@ -3168,7 +3199,7 @@
             "abbreviatedOid": "f614c20"
           },
           "author": "darracott",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2023-01-09T14:44:34Z",
