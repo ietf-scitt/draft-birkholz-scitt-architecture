@@ -662,7 +662,7 @@ Query parameters:
 
 - (Optional) `embedReceipt=true`
 
-If the query parameter `embedReceipt=true` is provided, then the claim is returned with the corresponding registration receipt embedded in the claim's COSE unprotected header. 
+If the query parameter `embedReceipt=true` is provided, then the claim is returned with the corresponding registration receipt embedded in the claim's COSE unprotected header.
 
 #### Response
 
