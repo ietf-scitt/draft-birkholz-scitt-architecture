@@ -559,11 +559,11 @@ All errors are returned with HTTP 4xx or 5xx status code as JSON objects followi
 
 Error codes are machine-readable and defined in this document while error messages are human-readable and implementation-specific. Implementations may return additional error codes not defined in this document.
 
-All error responses must be sent with the `Content-Type: application/json` header.
+All error responses must be sent with the `Content-Type: application/json` HTTP header.
 
 Error responses common to all messages are the following:
 
-- Status `503` - Service not ready, retry later.
+- Status 503 - Service not ready, retry later.
   - Error code: implementation-defined
   - (Optional) Header: `Retry-Later: <seconds>`
 
@@ -585,20 +585,52 @@ Body: SCITT COSE_Sign1 message
 
 One of the following:
 
-- Status `201` - Registration was successful.
-  - Header `Location: <Base URL>/entries/<Entry ID>`
+- Status 202 - Registration is successful.
+  - Header `Location: <Base URL>/operations/<Operation ID>`
   - Header `Content-Type: application/json`
-  - Body `{ "entryId": "<Entry ID>", "status": "registered" }`
-- Status `202` - Registration was tentatively successful pending further processing.
-  - Header `Location: <Base URL>/entries/<Entry ID>`
+  - Body `{ "operationId": "<Operation ID>", "status": "registered", "entryId": "<Entry ID"> }`
+
+- Status 202 - Registration is pending.
+  - Header `Location: <Base URL>/operations/<Operation ID>`
   - Header `Content-Type: application/json`
-  - Body `{ "entryId": "<Entry ID>", "status": "pending" }`
-- Status `400` - Registration was unsuccessful due to invalid input.
+  - Body `{ "operationId": "<Operation ID>", "status": "pending" }`
+
+- Status 400 - Registration was unsuccessful due to invalid input.
   - Error code `InvalidInput`
 
-A 2xx response must only be returned if all registration policies have passed including signature validation. Clients should retrieve a receipt as proof of registration.
+If 202 is returned with status `pending`, then clients should wait until registration succeeded or failed by polling the registration status using the Operation ID returned in the response. Clients should always obtain a receipt as a proof that registration has succeeded.
 
-A 202 response may be returned if registration policies have passed but further required processing has not finished yet and may still lead to a failure of registration. Clients must check the registration status and may re-submit if registration failed.
+### Retrieve Operation Status
+
+#### Request
+
+~~~
+GET <Base URL>/operations/<Operation ID>
+~~~
+
+#### Response
+
+One of the following:
+
+- Status 200 - Registration is pending
+    - Header: `Content-Type: application/json`
+    - Body: `{ "operationId": "<Operation ID>", "status": "pending" }`
+
+- Status 200 - Registration was successful
+    - Header: `Location: <Base URL>/entries/<Entry ID>`
+    - Header: `Content-Type: application/json`
+    - Body: `{ "operationId": "<Operation ID>", "status": "registered", "entryId": "<Entry ID>" }`
+
+- Status 200 - Registration failed
+    - Header `Content-Type: application/json`
+    - Body: `{ "operationId": "<Operation ID>", "status": "failed", "error": { "code": "<code>", "message": "<message>" } }`
+    - Error code: `InvalidInput`
+
+- Status 404 - Unknown Operation ID
+    - Error code: `NotFound`
+    - This can happen if the operation ID has expired and been deleted.
+
+If an operation ID is invalid (i.e., it does not correspond to any submit operation), a service may return either a 404 or a `pending` status. This is because differentiating between the two may not be possible in an eventually consistent system.
 
 ### Retrieve Registration Entry
 
@@ -612,13 +644,11 @@ GET <Base URL>/entries/<Entry ID>
 
 One of the following:
 
-- Status `200`.
+- Status 200.
   - Header `Content-Type: application/json`
-  - Body `{ "entryId": "<Entry ID>", "status": "registered|pending|failed" }`
-- Status `404` - Entry not found.
+  - Body `{ "entryId": "<Entry ID>", "status": "registered" }`
+- Status 404 - Entry not found.
   - Error code: `NotFound`
-
-In eventually consistent systems, implementations must return HTTP status 200 with status code `pending` even if the contacted server is not aware of the newly created entry yet.
 
 ### Retrieve Registered Claim
 
@@ -638,11 +668,12 @@ If the query parameter `embedReceipt=true` is provided, then the claim is return
 
 One of the following:
 
-- Status `200`.
+- Status 200.
   - Header: `Content-Type: application/cose`
   - Body: COSE_Sign1 claim
-- Status `404` - Invalid Entry ID or registration pending or failed.
-  - Error `NotFound`
+
+- Status 404 - Entry not found.
+  - Error code: `NotFound`
 
 ### Retrieve Registration Receipt
 
@@ -656,11 +687,11 @@ GET <Base URL>/entries/<Entry ID>/receipt
 
 One of the following:
 
-- Status `200`.
+- Status 200.
   - Header: `Content-Type: application/cbor`
   - Body: SCITT_Receipt
-- Status `404` - Invalid Entry ID or registration pending or failed.
-  - Error `NotFound`
+- Status 404 - Entry not found.
+  - Error code: `NotFound`
 
 The retrieved Receipt may be embedded in the corresponding COSE_Sign1 document in the unprotected header, see TBD.
 
