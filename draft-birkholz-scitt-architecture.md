@@ -565,7 +565,7 @@ Error responses common to all messages are the following:
 
 - Status 503 - Service not ready, retry later.
   - Error code: implementation-defined
-  - (Optional) Header: `Retry-Later: <seconds>`
+  - (Optional) Header: `Retry-After: <seconds>`
 
 ### Register Signed Claims
 
@@ -614,6 +614,7 @@ One of the following:
 
 - Status 200 - Registration is pending
     - Header: `Content-Type: application/json`
+    - (Optional) Header: `Retry-After: <seconds>`
     - Body: `{ "operationId": "<Operation ID>", "status": "pending" }`
 
 - Status 200 - Registration was successful
