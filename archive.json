@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-02-09T00:36:18.771246+00:00",
+  "timestamp": "2023-02-14T00:38:39.543815+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -3214,6 +3214,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 44,
+      "id": "PR_kwDOG2uWFs5J1i99",
+      "title": "Cleanup of REST API",
+      "url": "https://github.com/ietf-scitt/draft-birkholz-scitt-architecture/pull/44",
+      "state": "OPEN",
+      "author": "letmaik",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "It's not clear yet whether and in what form a REST API will be standardized but this PR cleans up the existing section and makes the API vendor-neutral (previously, some CCF-specific bits had leaked into it) including allowing for registration of claims to be a long-running operation which provides more flexibility for implementations.",
+      "createdAt": "2023-02-13T10:41:45Z",
+      "updatedAt": "2023-02-13T10:51:04Z",
+      "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "baseRefName": "main",
+      "baseRefOid": "57f43fe8ee8cd068c26bbfa71b173dfec724bfbb",
+      "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
+      "headRefName": "letmaik/rest-api",
+      "headRefOid": "fc3e6962a8e0768cb67e4a0e7533a97ad4efebf7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
