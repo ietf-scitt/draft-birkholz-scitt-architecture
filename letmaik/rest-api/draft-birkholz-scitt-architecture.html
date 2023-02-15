@@ -2058,7 +2058,7 @@ to ensure complete auditing for a specific use case, and possibly require additi
         </ul>
 <p id="section-8.1-4">Error responses <span class="bcp14">SHOULD</span> be sent with the <code>Content-Type: application/problem+json</code> HTTP header.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
 <p id="section-8.1-5">As an example, submitting a claim with an unsupported signature algorithm would return a <code>400 Bad Request</code> status code and the following body:<a href="#section-8.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-8.1-6">
+<div class="lang-json sourcecode" id="section-8.1-6">
 <pre>
 {
   "type": "urn:ietf:params:scitt:error:badSignatureAlgorithm",
