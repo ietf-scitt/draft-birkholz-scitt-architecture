@@ -560,7 +560,7 @@ As an example, submitting a claim with an unsupported signature algorithm would 
 
 ~~~
 {
-  "type": "urn:ietf:params:scitt:error:badSignatureAlgorithm"
+  "type": "urn:ietf:params:scitt:error:badSignatureAlgorithm",
   "detail": "The claim was signed with an algorithm the server does not support"
 }
 ~~~
