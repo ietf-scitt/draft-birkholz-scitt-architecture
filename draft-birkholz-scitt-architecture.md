@@ -588,7 +588,7 @@ One of the following:
 - Status 202 - Registration is successful.
   - Header `Location: <Base URL>/operations/<Operation ID>`
   - Header `Content-Type: application/json`
-  - Body `{ "operationId": "<Operation ID>", "status": "registered", "entryId": "<Entry ID"> }`
+  - Body `{ "operationId": "<Operation ID>", "status": "succeeded", "entryId": "<Entry ID"> }`
 
 - Status 202 - Registration is pending.
   - Header `Location: <Base URL>/operations/<Operation ID>`
@@ -620,7 +620,7 @@ One of the following:
 - Status 200 - Registration was successful
     - Header: `Location: <Base URL>/entries/<Entry ID>`
     - Header: `Content-Type: application/json`
-    - Body: `{ "operationId": "<Operation ID>", "status": "registered", "entryId": "<Entry ID>" }`
+    - Body: `{ "operationId": "<Operation ID>", "status": "succeeded", "entryId": "<Entry ID>" }`
 
 - Status 200 - Registration failed
     - Header `Content-Type: application/json`
@@ -647,7 +647,7 @@ One of the following:
 
 - Status 200.
   - Header `Content-Type: application/json`
-  - Body `{ "entryId": "<Entry ID>", "status": "registered" }`
+  - Body `{ "entryId": "<Entry ID>" }`
 - Status 404 - Entry not found.
   - Error code: `NotFound`
 
