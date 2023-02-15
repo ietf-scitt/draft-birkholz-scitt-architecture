@@ -558,7 +558,7 @@ Error responses SHOULD be sent with the `Content-Type: application/problem+json`
 
 As an example, submitting a claim with an unsupported signature algorithm would return a `400 Bad Request` status code and the following body:
 
-~~~
+~~~json
 {
   "type": "urn:ietf:params:scitt:error:badSignatureAlgorithm",
   "detail": "The claim was signed with an algorithm the server does not support"
