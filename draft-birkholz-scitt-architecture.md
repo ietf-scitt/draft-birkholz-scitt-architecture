@@ -53,6 +53,8 @@ normative:
 #  RFC9054: COSE-HASH
   RFC9162: CT
   RFC6838:
+  RFC7807:
+  RFC7231:
   IANA.cose:
   DID-CORE:
     target: https://www.w3.org/TR/did-core/
@@ -546,26 +548,28 @@ Editor's Note: This may be moved to appendix.
 
 All messages are sent as HTTP GET or POST requests.
 
-All errors are returned with HTTP 4xx or 5xx status code as JSON objects following the OData JSON (ISO/IEC 20802-2:2016) schema below:
+If the transparency service cannot process a client's request, it MUST return an HTTP 4xx or 5xx status code, and the body SHOULD be a JSON problem details object ({{RFC6838}}) containing:
+
+- type: A URI reference identifying the problem. To facilitate automated response to errors, this document defines a set of standard tokens for use in the type field within the URN namespace of: "urn:ietf:params:scitt:error:".
+
+- detail: A human-readable string describing the error that prevented the transparency service from processing the request, ideally with sufficient detail to enable the error to be rectified.
+
+Error responses SHOULD be sent with the `Content-Type: application/problem+json` HTTP header.
+
+As an example, submitting a claim with an unsupported signature algorithm would return a `400 Bad Request` status code and the following body:
 
 ~~~
 {
-  "error": {
-    "code": "<code>",
-    "message": "<message>"
-  }
+  "type": "urn:ietf:params:scitt:error:badSignatureAlgorithm"
+  "detail": "The claim was signed with an algorithm the server does not support"
 }
 ~~~
 
-Error codes are machine-readable and defined in this document while error messages are human-readable and implementation-specific. Implementations may return additional error codes not defined in this document.
+Most error types are specific to the type of request and are defined in the respective subsections below. The one exception is the "malformed" error type, which indicates that the transparency service could not parse the client's request because it did not comply with this document:
 
-All error responses must be sent with the `Content-Type: application/json` HTTP header.
+- Error code: `malformed` (The request could not be parsed).
 
-Error responses common to all messages are the following:
-
-- Status 503 - Service not ready, retry later.
-  - Error code: implementation-defined
-  - (Optional) Header: `Retry-After: <seconds>`
+Clients SHOULD treat 500 and 503 HTTP status code responses as transient failures and MAY retry the same request without modification at a later date. Note that in the case of a 503 response, the transparency service MAY include a `Retry-After` header field per {{RFC7231}} in order to request a minimum time for the client to wait before retrying the request. In the absence of this header field, this document does not specify a minimum.
 
 ### Register Signed Claims
 
@@ -596,7 +600,8 @@ One of the following:
   - Body `{ "operationId": "<Operation ID>", "status": "pending" }`
 
 - Status 400 - Registration was unsuccessful due to invalid input.
-  - Error code `InvalidInput`
+  - Error code `badSignatureAlgorithm`
+  - Error code `TBD`
 
 If 202 is returned with status `pending`, then clients should wait until registration succeeded or failed by polling the registration status using the Operation ID returned in the response. Clients should always obtain a receipt as a proof that registration has succeeded.
 
@@ -624,12 +629,15 @@ One of the following:
 
 - Status 200 - Registration failed
     - Header `Content-Type: application/json`
-    - Body: `{ "operationId": "<Operation ID>", "status": "failed", "error": { "code": "<code>", "message": "<message>" } }`
-    - Error code: `InvalidInput`
+    - Body: `{ "operationId": "<Operation ID>", "status": "failed", "error": { "type": "<type>", "detail": "<detail>" } }`
+    - Error code: `badSignatureAlgorithm`
+    - Error code: `TBD`
 
 - Status 404 - Unknown Operation ID
-    - Error code: `NotFound`
+    - Error code: `operationNotFound`
     - This can happen if the operation ID has expired and been deleted.
+
+If an operation failed, then error details are embedded as a JSON problem details object in the `"error"` field.
 
 If an operation ID is invalid (i.e., it does not correspond to any submit operation), a service may return either a 404 or a `pending` status. This is because differentiating between the two may not be possible in an eventually consistent system.
 
@@ -649,7 +657,7 @@ One of the following:
   - Header `Content-Type: application/json`
   - Body `{ "entryId": "<Entry ID>" }`
 - Status 404 - Entry not found.
-  - Error code: `NotFound`
+  - Error code: `entryNotFound`
 
 ### Retrieve Registered Claim
 
@@ -674,7 +682,7 @@ One of the following:
   - Body: COSE_Sign1 claim
 
 - Status 404 - Entry not found.
-  - Error code: `NotFound`
+  - Error code: `entryNotFound`
 
 ### Retrieve Registration Receipt
 
@@ -692,7 +700,7 @@ One of the following:
   - Header: `Content-Type: application/cbor`
   - Body: SCITT_Receipt
 - Status 404 - Entry not found.
-  - Error code: `NotFound`
+  - Error code: `entryNotFound`
 
 The retrieved Receipt may be embedded in the corresponding COSE_Sign1 document in the unprotected header, see TBD.
 
