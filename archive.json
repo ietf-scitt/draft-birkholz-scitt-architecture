@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-02-14T00:38:39.543815+00:00",
+  "timestamp": "2023-02-16T00:37:59.517433+00:00",
   "repo": "ietf-scitt/draft-birkholz-scitt-architecture",
   "labels": [
     {
@@ -3227,19 +3227,773 @@
       "labels": [],
       "body": "It's not clear yet whether and in what form a REST API will be standardized but this PR cleans up the existing section and makes the API vendor-neutral (previously, some CCF-specific bits had leaked into it) including allowing for registration of claims to be a long-running operation which provides more flexibility for implementations.",
       "createdAt": "2023-02-13T10:41:45Z",
-      "updatedAt": "2023-02-13T10:51:04Z",
+      "updatedAt": "2023-02-15T14:56:29Z",
       "baseRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "baseRefName": "main",
       "baseRefOid": "57f43fe8ee8cd068c26bbfa71b173dfec724bfbb",
       "headRepository": "ietf-scitt/draft-birkholz-scitt-architecture",
       "headRefName": "letmaik/rest-api",
-      "headRefOid": "fc3e6962a8e0768cb67e4a0e7533a97ad4efebf7",
+      "headRefOid": "92f81ef43dcba7318d82d2c425fcdc0505cb84af",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOG2uWFs5NWHhM",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T13:52:21Z",
+          "updatedAt": "2023-02-14T13:52:21Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "May be worth shortening `\"operationId\"` to `\"id\"` since it's obvious from context.",
+              "createdAt": "2023-02-14T13:52:21Z",
+              "updatedAt": "2023-02-14T13:52:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NWISc",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T13:54:05Z",
+          "updatedAt": "2023-02-14T13:54:06Z",
+          "comments": [
+            {
+              "originalPosition": 97,
+              "body": "Status codes should probably be application-agnostic, like `running`, `succeeded`, and `failed`. ",
+              "createdAt": "2023-02-14T13:54:05Z",
+              "updatedAt": "2023-02-14T13:54:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NWI1l",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T13:55:17Z",
+          "updatedAt": "2023-02-14T13:55:18Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "Probably `\"status\"` should be removed from this response since any other case would return a 404 anyway.",
+              "createdAt": "2023-02-14T13:55:18Z",
+              "updatedAt": "2023-02-14T13:55:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NWKMr",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "rjb4standards",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T13:58:19Z",
+          "updatedAt": "2023-02-14T13:58:19Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "NIST labeling requires a date. I suggest replacing status with EffectiveDate.",
+              "createdAt": "2023-02-14T13:58:19Z",
+              "updatedAt": "2023-02-14T13:58:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NWqyo",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T15:04:21Z",
+          "updatedAt": "2023-02-14T15:04:21Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Question: why defining a custom format when you can use the standardised \"Problem Details\" envelope, which is available for both [CoAP](https://datatracker.ietf.org/doc/rfc9290/) and [HTTP](https://datatracker.ietf.org/doc/draft-ietf-httpapi-rfc7807bis/) ?",
+              "createdAt": "2023-02-14T15:04:21Z",
+              "updatedAt": "2023-02-14T15:04:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NWsXQ",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T15:07:30Z",
+          "updatedAt": "2023-02-14T15:07:30Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "why not 200 here?  Isn't \"registered\" a final state?",
+              "createdAt": "2023-02-14T15:07:30Z",
+              "updatedAt": "2023-02-14T15:07:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NW0Jh",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T15:21:49Z",
+          "updatedAt": "2023-02-14T15:21:50Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "shouldn't this be 202?",
+              "createdAt": "2023-02-14T15:21:50Z",
+              "updatedAt": "2023-02-14T15:21:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NW1Wf",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T15:24:15Z",
+          "updatedAt": "2023-02-14T15:24:16Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "STD96 defines `application/cose; cose-type=\"cose-sign1\"` for this",
+              "createdAt": "2023-02-14T15:24:15Z",
+              "updatedAt": "2023-02-14T15:24:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NW1v1",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T15:25:03Z",
+          "updatedAt": "2023-02-14T15:25:04Z",
+          "comments": [
+            {
+              "originalPosition": 177,
+              "body": "is there any plan to add a media type for SCITT Receipts?",
+              "createdAt": "2023-02-14T15:25:03Z",
+              "updatedAt": "2023-02-14T15:25:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXJvU",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T16:03:33Z",
+          "updatedAt": "2023-02-14T16:03:34Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "I'm not sure why you say custom. The format I used is standardised in ISO/IEC 20802-2:2016, see the sentence above.",
+              "createdAt": "2023-02-14T16:03:33Z",
+              "updatedAt": "2023-02-14T16:03:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXKhL",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T16:05:14Z",
+          "updatedAt": "2023-02-14T16:05:15Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "We required tagged COSE, so I'd rather avoid repeating it here for the sake of simpler clients.",
+              "createdAt": "2023-02-14T16:05:14Z",
+              "updatedAt": "2023-02-14T16:05:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXMcl",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T16:09:18Z",
+          "updatedAt": "2023-02-14T16:09:19Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "The operation resource itself is not pending, it just exists. Similarly, you wouldn't return 400 if the operation failed, since the operation resource itself has been returned just fine.",
+              "createdAt": "2023-02-14T16:09:18Z",
+              "updatedAt": "2023-02-14T16:09:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXNF_",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T16:10:20Z",
+          "updatedAt": "2023-02-14T16:10:20Z",
+          "comments": [
+            {
+              "originalPosition": 177,
+              "body": "I assume so. Consider it a valid placeholder.",
+              "createdAt": "2023-02-14T16:10:20Z",
+              "updatedAt": "2023-02-14T16:10:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXPKm",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T16:14:31Z",
+          "updatedAt": "2023-02-14T16:14:31Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "The idea is that every submission is uniformly treated as a long-running operation from an API standpoint, even if the operation finishes immediately. This makes clients a little easier to write. Returning the operation object makes really only sense with 202. For 200/201 I would expect either a redirect to the created object or the response being the actual created object. Doing that, clients would have to support both cases.",
+              "createdAt": "2023-02-14T16:14:31Z",
+              "updatedAt": "2023-02-14T16:14:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXn2l",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:08:20Z",
+          "updatedAt": "2023-02-14T17:08:21Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "it's preferable to depend on open standards rather than standards behind paywalls",
+              "createdAt": "2023-02-14T17:08:20Z",
+              "updatedAt": "2023-02-14T17:08:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXuCB",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:23:50Z",
+          "updatedAt": "2023-02-14T17:23:51Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "I am not sure I understand the simplicity argument, but regardless that doesn't really match HTTP semantics (see [\u00a715.3.3 of STD97](https://www.rfc-editor.org/rfc/rfc9110.html#name-202-accepted)):\r\n\r\n_\"[...] the request has been accepted for processing, but the processing has not been completed.\"_",
+              "createdAt": "2023-02-14T17:23:50Z",
+              "updatedAt": "2023-02-14T17:24:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXu5I",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:26:03Z",
+          "updatedAt": "2023-02-14T17:26:04Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "oh yes, you are right, sorry for the noise :-)",
+              "createdAt": "2023-02-14T17:26:03Z",
+              "updatedAt": "2023-02-14T17:26:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXv2l",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:28:35Z",
+          "updatedAt": "2023-02-14T17:28:36Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Sure, I agree. The OData JSON Format is openly standardised under OASIS, see https://docs.oasis-open.org/odata/odata-json-format/v4.01/odata-json-format-v4.01.html#_Toc38457793, and has been republished in ISO, behind a paywall. I proposed this because it's simple (e.g., does not require minting URIs for error codes) and is already widely in use (e.g., all of Microsoft is using it). Happy to continue the discussion though! :)",
+              "createdAt": "2023-02-14T17:28:35Z",
+              "updatedAt": "2023-02-14T17:28:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXxdu",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:32:47Z",
+          "updatedAt": "2023-02-14T17:32:47Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "sure, but these are different layers.\r\n\r\nunless you are only ever allowing COSE Sign1 in the body, in which case the type qualifier is redundant, this approach is prone to MIME sniffing, which in the long term makes clients more complex rather than simpler.\r\n\r\n",
+              "createdAt": "2023-02-14T17:32:47Z",
+              "updatedAt": "2023-02-14T17:32:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NXzmQ",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:38:29Z",
+          "updatedAt": "2023-02-14T17:38:29Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "cool, maybe change the ref to OASIS.\r\n\r\nFWIW, RFC7807 too is quite widely used (see https://github.com/search?q=RFC+7807), also IETF dogfooding and whatnot :-)",
+              "createdAt": "2023-02-14T17:38:29Z",
+              "updatedAt": "2023-02-14T17:38:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NX38P",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:48:25Z",
+          "updatedAt": "2023-02-14T17:48:26Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "With simplicity, I mean this: https://github.com/scitt-community/scitt-api-emulator/blob/4a56fad2171a4a0fd32075a5378d21b3aa66aab4/scitt_emulator/client.py#L78-L92. If you have two possible answer types (one creating and returning an operation, the other not) then the code to handle that gets more complicated. I found some reference for this here: https://github.com/microsoft/api-guidelines/blob/vNext/Guidelines.md#132-stepwise-long-running-operations \"For an API that's defined as a Stepwise Long Running Operation the service MUST go through the Stepwise Long Running Operation flow even if the operation can be completed immediately.\"\r\nIf we have two separate responses, 202 for long-running, and 201 for immediate, which would you return in the 201 case?",
+              "createdAt": "2023-02-14T17:48:26Z",
+              "updatedAt": "2023-02-14T17:48:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NX6zF",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T17:53:30Z",
+          "updatedAt": "2023-02-14T17:53:30Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "My main worry with using a media type with parameter is that it's not trivial to match it. Some clients will add a whitespace, some won't, and the server has to decode the media type and parameters, instead of doing a simple string match.",
+              "createdAt": "2023-02-14T17:53:30Z",
+              "updatedAt": "2023-02-14T17:53:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NYPWh",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T18:34:28Z",
+          "updatedAt": "2023-02-14T18:34:29Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "my preference would be:\r\n\r\n### Request\r\n\r\n```http\r\nPOST /entries HTTP/1.1\r\nHost: scitt.example\r\nAccept: application/json\r\nContent-Type: application/cose\r\n\r\n[ COSE Sign1 claims ]\r\n```\r\n\r\n### Response\r\n\r\n#### Immediate\r\n\r\n```http\r\nHTTP/1.1 201 Created\r\nLocation: /entries/{entry-id}\r\nContent-Type: application/json\r\n\r\n{ \"entry-representation\": \"...\" }\r\n```\r\n\r\n#### Pending\r\n\r\n```http\r\nHTTP/1.1 202 Accepted\r\nLocation: {operation-monitor-url}\r\nContent-Type: application/json\r\n\r\n{ \"operation-monitor-resource-representation\": \"...\" }\r\n```\r\n",
+              "createdAt": "2023-02-14T18:34:28Z",
+              "updatedAt": "2023-02-14T18:34:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NYShH",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T18:44:06Z",
+          "updatedAt": "2023-02-14T18:44:07Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "If we can avoid normative requirements for media type parameters, we should... not sure if thats possible in this case.",
+              "createdAt": "2023-02-14T18:44:06Z",
+              "updatedAt": "2023-02-14T18:44:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NYTk8",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "OR13",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "Excellent set of changes.",
+          "createdAt": "2023-02-14T18:47:22Z",
+          "updatedAt": "2023-02-14T18:47:22Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NYZnD",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "henkbirkholz",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-14T19:05:23Z",
+          "updatedAt": "2023-02-14T19:05:23Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "@letmaik Are you sure that we will stick with \"COSE Sign1 only\" forever?",
+              "createdAt": "2023-02-14T19:05:23Z",
+              "updatedAt": "2023-02-14T19:05:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NcVIY",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T11:00:40Z",
+          "updatedAt": "2023-02-15T11:00:41Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "@henkbirkholz No, but I think it'll be more likely that we use more concrete media types in the future, rather than the generic `application/cose;type=..`, like `application/scitt-claim+cose`. So, I'd prefer to treat this (`application/cose`) like for receipts (`application/cbor`) a valid placeholder.",
+              "createdAt": "2023-02-15T11:00:40Z",
+              "updatedAt": "2023-02-15T11:00:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NcXcp",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T11:06:34Z",
+          "updatedAt": "2023-02-15T11:06:34Z",
+          "comments": [
+            {
+              "originalPosition": 157,
+              "body": "> @henkbirkholz No, but I think it'll be more likely that we use more concrete media types in the future, rather than the generic `application/cose;type=..`, like `application/scitt-claim+cose`. So, I'd prefer to treat this (`application/cose`) like for receipts (`application/cbor`) a valid placeholder.\r\n\r\nIf the plan is to move to more precise typing info (i.e., `application/scitt-claim+cose`) in the near future, then I'm happy.\r\n\r\n(Note though that `+cose` is not a registered [\"structured syntax suffix\"](https://www.iana.org/assignments/media-type-structured-suffix/media-type-structured-suffix.xhtml), so you'd need to either register it or fall back to `+cbor`.)",
+              "createdAt": "2023-02-15T11:06:34Z",
+              "updatedAt": "2023-02-15T11:09:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Nccnp",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T11:21:37Z",
+          "updatedAt": "2023-02-15T11:21:37Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Alright, in combination with https://datatracker.ietf.org/doc/rfc7807/referencedby/ I think it's worth following the lead of CT 2.0 https://www.rfc-editor.org/rfc/rfc9162.html#name-log-client-messages and use urns for error types:\r\n```json\r\n    {\r\n        \"type\": \"urn:ietf:params:scitt:error:invalidInput\",\r\n        \"detail\": \"...\"\r\n    }\r\n```",
+              "createdAt": "2023-02-15T11:21:37Z",
+              "updatedAt": "2023-02-15T11:21:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Nce0O",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T11:28:03Z",
+          "updatedAt": "2023-02-15T11:28:04Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "\ud83d\udc4d awesome",
+              "createdAt": "2023-02-15T11:28:03Z",
+              "updatedAt": "2023-02-15T11:28:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ncq7g",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T12:03:30Z",
+          "updatedAt": "2023-02-15T12:03:31Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Done, please check.",
+              "createdAt": "2023-02-15T12:03:30Z",
+              "updatedAt": "2023-02-15T12:03:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ncrr6",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T12:05:29Z",
+          "updatedAt": "2023-02-15T12:05:29Z",
+          "comments": [
+            {
+              "originalPosition": 131,
+              "body": "I removed `\"status\"` without adding more fields for now. Registration date is part of the receipt already, but we can discuss in separate issues what kind of metadata this entry resource should have.",
+              "createdAt": "2023-02-15T12:05:29Z",
+              "updatedAt": "2023-02-15T12:05:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ncr06",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T12:05:51Z",
+          "updatedAt": "2023-02-15T12:05:51Z",
+          "comments": [
+            {
+              "originalPosition": 97,
+              "body": "Changed `registered` to `succeeded`.",
+              "createdAt": "2023-02-15T12:05:51Z",
+              "updatedAt": "2023-02-15T12:05:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NcsIE",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "letmaik",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T12:06:39Z",
+          "updatedAt": "2023-02-15T12:06:40Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "I'll leave it as-is for now to keep it clear.",
+              "createdAt": "2023-02-15T12:06:39Z",
+              "updatedAt": "2023-02-15T12:06:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5NdeVx",
+          "commit": {
+            "abbreviatedOid": "0359dc4"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T14:11:04Z",
+          "updatedAt": "2023-02-15T14:11:05Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "```suggestion\r\n  \"type\": \"urn:ietf:params:scitt:error:badSignatureAlgorithm\",\r\n```",
+              "createdAt": "2023-02-15T14:11:04Z",
+              "updatedAt": "2023-02-15T14:11:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Nde-5",
+          "commit": {
+            "abbreviatedOid": "0359dc4"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T14:12:26Z",
+          "updatedAt": "2023-02-15T14:12:26Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "BTW, I _think_ that if you tag the code block with the right \"language\" (e.g., json, http-message), the build pipeline can run the validators for you.",
+              "createdAt": "2023-02-15T14:12:26Z",
+              "updatedAt": "2023-02-15T14:12:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Ndkeh",
+          "commit": {
+            "abbreviatedOid": "0359dc4"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T14:24:16Z",
+          "updatedAt": "2023-02-15T14:24:16Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "I made a test: it looks like json validation is done with no extra effort but tagging:\r\n\r\n```\r\n~~~json\r\n{}\r\n~~~\r\n```\r\n\r\nwhilst for http validation you need to tag:\r\n\r\n\r\n```\r\n~~~http-message\r\nPOST /stuff HTTP/1.1\r\nHost: stuff.example\r\nAccept: application/stuff\r\nContent-Type: application/cbor\r\n\r\n[ CBOR-encoded things ]\r\n~~~\r\n```\r\n\r\nas well as adding the http-lint tool as a lint precondition to the Makefile:\r\n\r\n```\r\nlint:: http-lint\r\n\r\nrfc-http-validate ?= rfc-http-validate\r\n.SECONDARY: $(drafts_xml)\r\n.PHONY: http-lint\r\nhttp-lint: $(drafts_xml) http-lint-install\r\n\t$(rfc-http-validate) $(filter-out http-lint-install,$^)\r\n\r\n.PHONY: http-lint-install\r\nhttp-lint-install:\r\n\t@hash $(rfc-http-validate) 2>/dev/null || pip3 install rfc-http-validate typing_extensions\r\n```",
+              "createdAt": "2023-02-15T14:24:16Z",
+              "updatedAt": "2023-02-15T14:24:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOG2uWFs5Nd0bH",
+          "commit": {
+            "abbreviatedOid": "0a4fcf2"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-02-15T14:56:29Z",
+          "updatedAt": "2023-02-15T14:56:29Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "thanks",
+              "createdAt": "2023-02-15T14:56:29Z",
+              "updatedAt": "2023-02-15T14:56:29Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
