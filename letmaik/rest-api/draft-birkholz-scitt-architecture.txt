@@ -5,11 +5,11 @@
 SCITT                                                        H. Birkholz
 Internet-Draft                                            Fraunhofer SIT
 Intended status: Standards Track                      A. Delignat-Lavaud
-Expires: 19 August 2023                                       C. Fournet
+Expires: 20 August 2023                                       C. Fournet
                                                       Microsoft Research
                                                             Y. Deshpande
                                                                      ARM
-                                                        15 February 2023
+                                                        16 February 2023
 
 
  An Architecture for Trustworthy and Transparent Digital Supply Chains
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 August 2023.
+   This Internet-Draft will expire on 20 August 2023.
 
 Copyright Notice
 
@@ -1154,20 +1154,21 @@ Table of Contents
 
    One of the following:
 
-   *  Status 202 - Registration is successful.
+   *  Status 201 - Registration is successful.
 
-      -  Header Location: <Base URL>/operations/<Operation ID>
+      -  Header Location: <Base URL>/entries/<Entry ID>
 
       -  Header Content-Type: application/json
 
-      -  Body { "operationId": "<Operation ID>", "status": "succeeded",
-         "entryId": "<Entry ID"> }
+      -  Body { "entryId": "<Entry ID"> }
 
    *  Status 202 - Registration is pending.
 
       -  Header Location: <Base URL>/operations/<Operation ID>
 
       -  Header Content-Type: application/json
+
+      -  (Optional) Header: Retry-After: <seconds>
 
       -  Body { "operationId": "<Operation ID>", "status": "pending" }
 
@@ -1177,11 +1178,10 @@ Table of Contents
 
       -  Error code TBD
 
-   If 202 is returned with status pending, then clients should wait
-   until registration succeeded or failed by polling the registration
-   status using the Operation ID returned in the response.  Clients
-   should always obtain a receipt as a proof that registration has
-   succeeded.
+   If 202 is returned, then clients should wait until registration
+   succeeded or failed by polling the registration status using the
+   Operation ID returned in the response.  Clients should always obtain
+   a receipt as a proof that registration has succeeded.
 
 8.1.2.  Retrieve Operation Status
 
@@ -1228,8 +1228,8 @@ Table of Contents
       -  This can happen if the operation ID has expired and been
          deleted.
 
-   If an operation failed, then error details are embedded as a JSON
-   problem details object in the "error" field.
+   If an operation failed, then error details SHOULD be embedded as a
+   JSON problem details object in the "error" field.
 
    If an operation ID is invalid (i.e., it does not correspond to any
    submit operation), a service may return either a 404 or a pending
