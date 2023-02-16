@@ -589,21 +589,22 @@ Body: SCITT COSE_Sign1 message
 
 One of the following:
 
-- Status 202 - Registration is successful.
-  - Header `Location: <Base URL>/operations/<Operation ID>`
+- Status 201 - Registration is successful.
+  - Header `Location: <Base URL>/entries/<Entry ID>`
   - Header `Content-Type: application/json`
-  - Body `{ "operationId": "<Operation ID>", "status": "succeeded", "entryId": "<Entry ID"> }`
+  - Body `{ "entryId": "<Entry ID"> }`
 
 - Status 202 - Registration is pending.
   - Header `Location: <Base URL>/operations/<Operation ID>`
   - Header `Content-Type: application/json`
+  - (Optional) Header: `Retry-After: <seconds>`
   - Body `{ "operationId": "<Operation ID>", "status": "pending" }`
 
 - Status 400 - Registration was unsuccessful due to invalid input.
   - Error code `badSignatureAlgorithm`
   - Error code `TBD`
 
-If 202 is returned with status `pending`, then clients should wait until registration succeeded or failed by polling the registration status using the Operation ID returned in the response. Clients should always obtain a receipt as a proof that registration has succeeded.
+If 202 is returned, then clients should wait until registration succeeded or failed by polling the registration status using the Operation ID returned in the response. Clients should always obtain a receipt as a proof that registration has succeeded.
 
 ### Retrieve Operation Status
 
@@ -637,7 +638,7 @@ One of the following:
     - Error code: `operationNotFound`
     - This can happen if the operation ID has expired and been deleted.
 
-If an operation failed, then error details are embedded as a JSON problem details object in the `"error"` field.
+If an operation failed, then error details SHOULD be embedded as a JSON problem details object in the `"error"` field.
 
 If an operation ID is invalid (i.e., it does not correspond to any submit operation), a service may return either a 404 or a `pending` status. This is because differentiating between the two may not be possible in an eventually consistent system.
 
